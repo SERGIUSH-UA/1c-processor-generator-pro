@@ -9,7 +9,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-3776ab.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-[**Документація**](docs/LLM_CORE.md) · [**Приклади**](examples/yaml/) · [**PRO версія**](https://itdeo.tech/1c-processor-generator/)
+[**Документація**](docs/LLM_CORE.md) · [**Приклади**](examples/yaml/) · [**PRO версія**](https://itdeo.tech/1c-processor-generator/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_content=header)
 
 <img src="docs/marketing/Hello world 1C short final.gif" alt="Demo: AI generates 1C processor in 30 seconds" width="750">
 
@@ -125,7 +125,7 @@ EndProcedure
 | **Без водяного знаку** | — | ✓ |
 
 <p align="center">
-  <a href="https://itdeo.tech/1c-processor-generator/">
+  <a href="https://itdeo.tech/1c-processor-generator/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_content=badge">
     <img src="https://img.shields.io/badge/GET_PRO-itdeo.tech-orange?style=for-the-badge" alt="Get PRO">
   </a>
 </p>
@@ -171,13 +171,13 @@ pip install -r requirements.txt
 ## Ліцензія
 
 - **FREE** — MIT License (open source)
-- **PRO** — [Комерційна ліцензія](https://itdeo.tech/1c-processor-generator/)
+- **PRO** — [Комерційна ліцензія](https://itdeo.tech/1c-processor-generator/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_content=license)
 
 ---
 
 <div align="center">
 
-**[Документація](docs/LLM_CORE.md)** · **[Приклади](examples/yaml/)** · **[PRO версія](https://itdeo.tech/1c-processor-generator/)** · **[Підтримка](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/issues)**
+**[Документація](docs/LLM_CORE.md)** · **[Приклади](examples/yaml/)** · **[PRO версія](https://itdeo.tech/1c-processor-generator/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_content=footer)** · **[Підтримка](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/issues)**
 
 Made with ❤️ by [SERGIUSH](https://github.com/SERGIUSH-UA)
 
