@@ -1,0 +1,45 @@
+1C Processor Generator PRO - Proprietary License
+
+Copyright (c) 2025 ITDEO (SERGIUSH)
+All Rights Reserved.
+
+This software and associated documentation files (the "PRO Module") located in
+the 1c_processor_generator/pro/ directory are proprietary and confidential.
+
+TERMS AND CONDITIONS:
+
+1. GRANT OF LICENSE
+   A valid PRO license purchased from https://itdeo.tech/1c-processor-generator/#pricing
+   grants you a non-exclusive, non-transferable right to use the PRO Module for:
+   - EPF compilation (compile XML to .epf files)
+   - CheckConfig validation
+   - CheckModules validation
+
+2. RESTRICTIONS
+   You may NOT:
+   - Copy, modify, merge, publish, distribute, sublicense, or sell the PRO Module
+   - Reverse engineer, decompile, or disassemble the compiled (.pyd) files
+   - Remove or alter any proprietary notices or labels
+   - Use the PRO Module without a valid license
+   - Share your license key with others
+
+3. OWNERSHIP
+   The PRO Module remains the exclusive property of ITDEO. This license does not
+   grant you any ownership rights.
+
+4. TERMINATION
+   This license is effective until terminated. It will terminate automatically
+   if you fail to comply with any term. Upon termination, you must destroy all
+   copies of the PRO Module.
+
+5. WARRANTY DISCLAIMER
+   THE PRO MODULE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. ITDEO
+   DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY
+   AND FITNESS FOR A PARTICULAR PURPOSE.
+
+6. LIMITATION OF LIABILITY
+   IN NO EVENT SHALL ITDEO BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+   OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OF THE PRO MODULE.
+
+For licensing inquiries: itdeo.tech@gmail.com
+Purchase PRO license: https://itdeo.tech/1c-processor-generator/#pricing

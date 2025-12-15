@@ -1,0 +1,58 @@
+processor:
+  name: Калькулятор
+  platform_version: '2.11'
+  tests_file: tests/calculator_tests.yaml
+  synonym:
+    ru: Калькулятор
+    uk: Калькулятор
+attributes:
+  - name: Число1
+    type: number
+    digits: 15
+    fraction_digits: 2
+    synonym:
+      ru: Число 1
+      uk: Число 1
+  - name: Число2
+    type: number
+    digits: 15
+    fraction_digits: 2
+    synonym:
+      ru: Число 2
+      uk: Число 2
+  - name: Результат
+    type: number
+    digits: 15
+    fraction_digits: 2
+    synonym:
+      ru: Результат
+      uk: Результат
+forms:
+  - name: Форма
+    default: true
+    elements:
+      - type: InputField
+        name: Число1
+        attribute: Число1
+      - type: InputField
+        name: Число2
+        attribute: Число2
+      - type: InputField
+        name: Результат
+        attribute: Результат
+    commands:
+      - name: Добавить
+        handler: Добавить
+        title:
+          ru: Сложить
+          uk: Додати
+      - name: Вычесть
+        handler: Вычесть
+        title:
+          ru: Вычесть
+          uk: Відняти
+      - name: Умножить
+        handler: Умножить
+        title:
+          ru: Умножить
+          uk: Помножити

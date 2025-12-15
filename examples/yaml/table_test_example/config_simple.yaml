@@ -1,0 +1,64 @@
+processor:
+  name: ТестированиеПростое
+  comment: Простий приклад для демонстрації тестування форм
+  platform_version: '2.11'
+  synonym:
+    ru: Тестирование Простое
+    uk: Тестування Просте
+attributes:
+  - name: Число1
+    type: number
+    digits: 10
+    fraction_digits: 0
+    synonym:
+      ru: Число 1
+  - name: Число2
+    type: number
+    digits: 10
+    fraction_digits: 0
+    synonym:
+      ru: Число 2
+  - name: Результат
+    type: number
+    digits: 10
+    fraction_digits: 0
+    synonym:
+      ru: Результат
+forms:
+  - name: Форма
+    default: true
+    commands:
+      - name: Сложить
+        handler: Сложить
+        title:
+          ru: Сложить
+          uk: Додати
+      - name: Очистить
+        handler: Очистить
+        title:
+          ru: Очистить
+          uk: Очистити
+    elements:
+      - type: InputField
+        name: ПолеЧисло1
+        attribute: Число1
+      - type: InputField
+        name: ПолеЧисло2
+        attribute: Число2
+      - type: InputField
+        name: ПолеРезультат
+        attribute: Результат
+        read_only: true
+      - type: UsualGroup
+        name: ГрупаКнопок
+        group: HorizontalIfPossible
+        elements:
+          - type: Button
+            name: КнопкаСложить
+            command: Сложить
+          - type: Button
+            name: КнопкаОчистить
+            command: Очистить
+    title:
+      ru: Форма калькулятора
+      uk: Форма калькулятора

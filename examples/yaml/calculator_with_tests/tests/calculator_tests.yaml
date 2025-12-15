@@ -1,0 +1,61 @@
+# Автоматичні тести для калькулятора (v2.23.2+ - new architecture)
+
+# ObjectModule тести (виконуються через External Connection - швидко, без UI)
+objectmodule_tests:
+  declarative:
+    # Тест додавання
+    - name: test_addition
+      description: "Перевірка додавання двох чисел"
+      setup:
+        attributes:
+          Число1: 10
+          Число2: 20
+      execute_command: Добавить
+      assert:
+        attributes:
+          Результат: 30
+
+    # Тест віднімання
+    - name: test_subtraction
+      description: "Перевірка віднімання"
+      setup:
+        attributes:
+          Число1: 50
+          Число2: 15
+      execute_command: Вычесть
+      assert:
+        attributes:
+          Результат: 35
+
+    # Тест множення
+    - name: test_multiplication
+      description: "Перевірка множення"
+      setup:
+        attributes:
+          Число1: 5
+          Число2: 7
+      execute_command: Умножить
+      assert:
+        attributes:
+          Результат: 35
+
+    # Тест нулів
+    - name: test_zero_addition
+      description: "Додавання нуля"
+      setup:
+        attributes:
+          Число1: 0
+          Число2: 0
+      execute_command: Добавить
+      assert:
+        attributes:
+          Результат: 0
+
+  procedural:
+    file: custom_tests.bsl
+    procedures:
+      - Тест_ПоследовательныеОперації
+      - Тест_БольшиеЧисла
+
+# Налаштування виконання
+timeout: 300

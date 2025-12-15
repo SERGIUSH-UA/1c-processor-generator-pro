@@ -1,0 +1,326 @@
+# TaskManager - Task Management Example (v2.46.0+)
+# Demonstrates: Master-Detail, CRUD operations, Status filtering, Priority indicators
+
+processor:
+  name: МенеджерЗадач
+  synonym:
+    ru: Менеджер задач
+    uk: Менеджер завдань
+    en: Task Manager
+
+attributes:
+  # Filter attributes
+  - name: ФильтрСтатус
+    type: string
+    length: 20
+    synonym_ru: Статус
+  - name: ФильтрПриоритет
+    type: string
+    length: 20
+    synonym_ru: Приоритет
+  - name: ПоказыватьЗавершенные
+    type: boolean
+    synonym_ru: Показывать завершенные
+
+  # Selected task details (for detail panel)
+  - name: ВыбраннаяЗадачаНомер
+    type: number
+    digits: 10
+  - name: ВыбраннаяЗадачаНазвание
+    type: string
+    synonym_ru: Название
+  - name: ВыбраннаяЗадачаОписание
+    type: string
+    synonym_ru: Описание
+  - name: ВыбраннаяЗадачаСтатус
+    type: string
+    length: 20
+    synonym_ru: Статус
+  - name: ВыбраннаяЗадачаПриоритет
+    type: string
+    length: 20
+    synonym_ru: Приоритет
+  - name: ВыбраннаяЗадачаСрок
+    type: date
+    synonym_ru: Срок выполнения
+  - name: ВыбраннаяЗадачаСоздана
+    type: date
+    synonym_ru: Дата создания
+
+  # Statistics
+  - name: ВсегоЗадач
+    type: number
+    digits: 10
+  - name: Активных
+    type: number
+    digits: 10
+  - name: Завершенных
+    type: number
+    digits: 10
+
+forms:
+  - name: Форма
+    default: true
+    events:
+      OnCreateAtServer: ПриСозданииНаСервере
+
+    # Tasks table (ValueTable) - MUST be inside form, not at root level!
+    value_tables:
+      - name: СписокЗадач
+        columns:
+          - name: Номер
+            type: number
+            digits: 10
+          - name: Название
+            type: string
+            length: 200
+          - name: Описание
+            type: string
+          - name: Статус
+            type: string
+            length: 20
+          - name: Приоритет
+            type: string
+            length: 20
+          - name: Срок
+            type: date
+          - name: Создана
+            type: date
+          - name: Завершена
+            type: date
+
+    elements:
+      # Header
+      - type: LabelDecoration
+        name: Заголовок
+        title_ru: "МЕНЕДЖЕР ЗАДАЧ"
+        title_uk: "МЕНЕДЖЕР ЗАВДАНЬ"
+        font:
+          bold: true
+          height: 14
+        horizontal_align: Center
+
+      # Toolbar row
+      - type: UsualGroup
+        name: ГруппаПанельИнструментов
+        group_direction: Horizontal
+        representation: None
+        child_items:
+          - type: Button
+            name: КнопкаДобавить
+            command: ДобавитьЗадачу
+          - type: Button
+            name: КнопкаРедактировать
+            command: РедактироватьЗадачу
+          - type: Button
+            name: КнопкаУдалить
+            command: УдалитьЗадачу
+          - type: LabelDecoration
+            name: Разделитель1
+            title: " | "
+          - type: InputField
+            name: ФильтрСтатус
+            attribute: ФильтрСтатус
+            width: 15
+            title_ru: "Статус"
+            list_choice_mode: true
+            choice_list:
+              - value: ""
+                presentation_ru: "Все"
+              - value: "Новая"
+                presentation_ru: "Новая"
+              - value: "В работе"
+                presentation_ru: "В работе"
+              - value: "Завершена"
+                presentation_ru: "Завершена"
+            events:
+              OnChange: ФильтрИзменен
+          - type: InputField
+            name: ФильтрПриоритет
+            attribute: ФильтрПриоритет
+            width: 15
+            title_ru: "Приоритет"
+            list_choice_mode: true
+            choice_list:
+              - value: ""
+                presentation_ru: "Все"
+              - value: "Высокий"
+                presentation_ru: "Высокий"
+              - value: "Средний"
+                presentation_ru: "Средний"
+              - value: "Низкий"
+                presentation_ru: "Низкий"
+            events:
+              OnChange: ФильтрИзменен
+          - type: CheckBoxField
+            name: ПоказыватьЗавершенные
+            attribute: ПоказыватьЗавершенные
+            title_ru: "Показывать завершенные"
+            events:
+              OnChange: ФильтрИзменен
+
+      # Main content: Master-Detail layout
+      - type: UsualGroup
+        name: ГруппаОсновная
+        group_direction: Horizontal
+        child_items:
+          # Master: Task list
+          - type: UsualGroup
+            name: ГруппаСписок
+            group_direction: Vertical
+            width: 50
+            child_items:
+              - type: LabelDecoration
+                name: ЗаголовокСписок
+                title_ru: "Список задач"
+                title_uk: "Список завдань"
+                font:
+                  bold: true
+              - type: Table
+                name: ТаблицаСписокЗадач
+                tabular_section: СписокЗадач
+                height: 15
+                events:
+                  OnActivateRow: СписокЗадачПриАктивизацииСтроки
+                  Selection: СписокЗадачВыбор
+                columns:
+                  - name: Номер
+                    attribute: СписокЗадач.Номер
+                    width: 5
+                    title_ru: "#"
+                  - name: Название
+                    attribute: СписокЗадач.Название
+                    width: 25
+                    title_ru: "Название"
+                  - name: Статус
+                    attribute: СписокЗадач.Статус
+                    width: 10
+                    title_ru: "Статус"
+                  - name: Приоритет
+                    attribute: СписокЗадач.Приоритет
+                    width: 10
+                    title_ru: "Приоритет"
+                  - name: Срок
+                    attribute: СписокЗадач.Срок
+                    width: 10
+                    title_ru: "Срок"
+
+          # Detail: Selected task info
+          - type: UsualGroup
+            name: ГруппаДетали
+            group_direction: Vertical
+            representation: StrongSeparation
+            child_items:
+              - type: LabelDecoration
+                name: ЗаголовокДетали
+                title_ru: "Детали задачи"
+                title_uk: "Деталі завдання"
+                font:
+                  bold: true
+              - type: InputField
+                name: ВыбраннаяЗадачаНазвание
+                attribute: ВыбраннаяЗадачаНазвание
+                title_ru: "Название"
+                read_only: true
+              - type: InputField
+                name: ВыбраннаяЗадачаОписание
+                attribute: ВыбраннаяЗадачаОписание
+                title_ru: "Описание"
+                height: 5
+                multi_line: true
+                read_only: true
+              - type: UsualGroup
+                name: ГруппаСтатусПриоритет
+                group_direction: Horizontal
+                representation: None
+                child_items:
+                  - type: InputField
+                    name: ВыбраннаяЗадачаСтатус
+                    attribute: ВыбраннаяЗадачаСтатус
+                    title_ru: "Статус"
+                    width: 15
+                    read_only: true
+                  - type: InputField
+                    name: ВыбраннаяЗадачаПриоритет
+                    attribute: ВыбраннаяЗадачаПриоритет
+                    title_ru: "Приоритет"
+                    width: 15
+                    read_only: true
+              - type: UsualGroup
+                name: ГруппаДаты
+                group_direction: Horizontal
+                representation: None
+                child_items:
+                  - type: InputField
+                    name: ВыбраннаяЗадачаСрок
+                    attribute: ВыбраннаяЗадачаСрок
+                    title_ru: "Срок"
+                    width: 12
+                    read_only: true
+                  - type: InputField
+                    name: ВыбраннаяЗадачаСоздана
+                    attribute: ВыбраннаяЗадачаСоздана
+                    title_ru: "Создана"
+                    width: 12
+                    read_only: true
+              - type: UsualGroup
+                name: ГруппаДействияСписокЗадач
+                group_direction: Horizontal
+                representation: None
+                child_items:
+                  - type: Button
+                    name: КнопкаВзятьВРаботу
+                    command: ВзятьВРаботу
+                  - type: Button
+                    name: КнопкаЗавершить
+                    command: ЗавершитьЗадачу
+
+      # Statistics panel
+      - type: UsualGroup
+        name: ГруппаСтатистика
+        group_direction: Horizontal
+        representation: WeakSeparation
+        child_items:
+          - type: LabelField
+            name: ВсегоЗадач
+            attribute: ВсегоЗадач
+            title_ru: "Всего задач:"
+          - type: LabelField
+            name: Активных
+            attribute: Активных
+            title_ru: "Активных:"
+          - type: LabelField
+            name: Завершенных
+            attribute: Завершенных
+            title_ru: "Завершенных:"
+
+    commands:
+      - name: ДобавитьЗадачу
+        title_ru: Добавить
+        title_uk: Додати
+        handler: ДобавитьЗадачуКоманда
+        picture: StdPicture.CreateListItem
+
+      - name: РедактироватьЗадачу
+        title_ru: Редактировать
+        title_uk: Редагувати
+        handler: РедактироватьЗадачуКоманда
+        picture: StdPicture.Change
+
+      - name: УдалитьЗадачу
+        title_ru: Удалить
+        title_uk: Видалити
+        handler: УдалитьЗадачуКоманда
+        picture: StdPicture.Delete
+
+      - name: ВзятьВРаботу
+        title_ru: В работу
+        title_uk: В роботу
+        handler: ВзятьВРаботуКоманда
+        picture: StdPicture.ExecuteTask
+
+      - name: ЗавершитьЗадачу
+        title_ru: Завершить
+        title_uk: Завершити
+        handler: ЗавершитьЗадачуКоманда
+        picture: StdPicture.CheckAll

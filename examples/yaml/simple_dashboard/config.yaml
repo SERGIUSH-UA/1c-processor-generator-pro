@@ -1,0 +1,252 @@
+# SimpleDashboard - KPI Dashboard Example (v2.46.0+)
+# Demonstrates: Loading State, KPI cards with colored trends, Period navigation
+
+processor:
+  name: ПростойДашборд
+  synonym:
+    ru: Простой дашборд показателей
+    uk: Простий дашборд показників
+    en: Simple KPI Dashboard
+
+attributes:
+  # Period filters
+  - name: ПериодС
+    type: date
+    synonym_ru: Период с
+  - name: ПериодПо
+    type: date
+    synonym_ru: Период по
+
+  # KPI values
+  - name: ВсегоПродаж
+    type: number
+    digits: 15
+    fraction_digits: 2
+    synonym_ru: Всего продаж
+  - name: КоличествоЗаказов
+    type: number
+    digits: 10
+    synonym_ru: Количество заказов
+  - name: СреднийЧек
+    type: number
+    digits: 15
+    fraction_digits: 2
+    synonym_ru: Средний чек
+  - name: Конверсия
+    type: number
+    digits: 5
+    fraction_digits: 2
+    synonym_ru: Конверсия %
+
+  # Trend indicators (up/down/stable)
+  - name: ТрендПродаж
+    type: string
+    length: 10
+  - name: ТрендЗаказов
+    type: string
+    length: 10
+  - name: ТрендЧека
+    type: string
+    length: 10
+  - name: ТрендКонверсии
+    type: string
+    length: 10
+
+  # Trend change percentages
+  - name: ИзменениеПродаж
+    type: number
+    digits: 5
+    fraction_digits: 1
+  - name: ИзменениеЗаказов
+    type: number
+    digits: 5
+    fraction_digits: 1
+  - name: ИзменениеЧека
+    type: number
+    digits: 5
+    fraction_digits: 1
+  - name: ИзменениеКонверсии
+    type: number
+    digits: 5
+    fraction_digits: 1
+
+forms:
+  - name: Форма
+    default: true
+    events:
+      OnCreateAtServer: ПриСозданииНаСервере
+
+    elements:
+      # Header with title
+      - type: LabelDecoration
+        name: Заголовок
+        title_ru: "ПАНЕЛЬ ПОКАЗАТЕЛЕЙ"
+        title_uk: "ПАНЕЛЬ ПОКАЗНИКІВ"
+        font:
+          bold: true
+          height: 14
+        horizontal_align: Center
+
+      # Period selector row
+      - type: UsualGroup
+        name: ГруппаПериод
+        group_direction: Horizontal
+        representation: None
+        child_items:
+          - type: InputField
+            name: ПериодС
+            attribute: ПериодС
+            width: 12
+            title_ru: "с"
+            title_uk: "з"
+            events:
+              OnChange: ПериодИзменен
+          - type: InputField
+            name: ПериодПо
+            attribute: ПериодПо
+            width: 12
+            title_ru: "по"
+            title_uk: "по"
+            events:
+              OnChange: ПериодИзменен
+          - type: Button
+            name: КнопкаОбновить
+            command: Обновить
+
+      # Loading/Content Pages (Loading State Pattern)
+      - type: Pages
+        name: СтраницыКонтент
+        pages_representation: None
+        pages:
+          # Loading page
+          - name: СтраницаЗагрузка
+            child_items:
+              - type: UsualGroup
+                name: ГруппаЗагрузка
+                group_direction: Vertical
+                horizontal_align: Center
+                child_items:
+                  - type: PictureDecoration
+                    name: КартинкаЗагрузка
+                    picture: StdPicture.Information
+                    width: 5
+                    height: 5
+                  - type: LabelDecoration
+                    name: ТекстЗагрузка
+                    title_ru: "Загрузка данных..."
+                    title_uk: "Завантаження даних..."
+                    horizontal_align: Center
+                    font:
+                      height: 12
+
+          # KPI Cards page
+          - name: СтраницаПоказатели
+            child_items:
+              # Row 1: Sales and Orders
+              - type: UsualGroup
+                name: РядПоказателей1
+                group_direction: Horizontal
+                child_items:
+                  # Card 1: Total Sales
+                  - type: UsualGroup
+                    name: КарточкаПродажи
+                    group_direction: Vertical
+                    representation: StrongSeparation
+                    child_items:
+                      - type: LabelDecoration
+                        name: ЗаголовокПродажи
+                        title_ru: "ПРОДАЖИ"
+                        title_uk: "ПРОДАЖІ"
+                        font:
+                          bold: true
+                          height: 10
+                        horizontal_align: Center
+                      - type: LabelField
+                        name: ЗначениеПродажи
+                        attribute: ВсегоПродаж
+                        horizontal_align: Center
+                      - type: LabelDecoration
+                        name: ТрендПродажи
+                        title_ru: ""
+                        horizontal_align: Center
+
+                  # Card 2: Orders Count
+                  - type: UsualGroup
+                    name: КарточкаЗаказы
+                    group_direction: Vertical
+                    representation: StrongSeparation
+                    child_items:
+                      - type: LabelDecoration
+                        name: ЗаголовокЗаказы
+                        title_ru: "ЗАКАЗЫ"
+                        title_uk: "ЗАМОВЛЕННЯ"
+                        font:
+                          bold: true
+                          height: 10
+                        horizontal_align: Center
+                      - type: LabelField
+                        name: ЗначениеЗаказы
+                        attribute: КоличествоЗаказов
+                        horizontal_align: Center
+                      - type: LabelDecoration
+                        name: ТрендЗаказы
+                        title_ru: ""
+                        horizontal_align: Center
+
+              # Row 2: Average Check and Conversion
+              - type: UsualGroup
+                name: РядПоказателей2
+                group_direction: Horizontal
+                child_items:
+                  # Card 3: Average Check
+                  - type: UsualGroup
+                    name: КарточкаЧек
+                    group_direction: Vertical
+                    representation: StrongSeparation
+                    child_items:
+                      - type: LabelDecoration
+                        name: ЗаголовокЧек
+                        title_ru: "СРЕДНИЙ ЧЕК"
+                        title_uk: "СЕРЕДНІЙ ЧЕК"
+                        font:
+                          bold: true
+                          height: 10
+                        horizontal_align: Center
+                      - type: LabelField
+                        name: ЗначениеЧек
+                        attribute: СреднийЧек
+                        horizontal_align: Center
+                      - type: LabelDecoration
+                        name: ТрендЧек
+                        title_ru: ""
+                        horizontal_align: Center
+
+                  # Card 4: Conversion
+                  - type: UsualGroup
+                    name: КарточкаКонверсия
+                    group_direction: Vertical
+                    representation: StrongSeparation
+                    child_items:
+                      - type: LabelDecoration
+                        name: ЗаголовокКонверсия
+                        title_ru: "КОНВЕРСИЯ"
+                        title_uk: "КОНВЕРСІЯ"
+                        font:
+                          bold: true
+                          height: 10
+                        horizontal_align: Center
+                      - type: LabelField
+                        name: ЗначениеКонверсия
+                        attribute: Конверсия
+                        horizontal_align: Center
+                      - type: LabelDecoration
+                        name: ТрендКонверсия
+                        title_ru: ""
+                        horizontal_align: Center
+
+    commands:
+      - name: Обновить
+        title_ru: Обновить
+        title_uk: Оновити
+        handler: ОбновитьДанные
+        picture: StdPicture.Refresh

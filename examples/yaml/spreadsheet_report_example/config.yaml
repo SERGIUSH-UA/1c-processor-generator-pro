@@ -1,0 +1,51 @@
+processor:
+  name: ПримерОтчета
+  platform_version: '2.11'
+  synonym:
+    ru: Пример отчета
+    uk: Приклад звіту
+    en: Report Example
+attributes:
+  - name: Период
+    type: date
+    synonym:
+      ru: Период
+      uk: Період
+      en: Period
+forms:
+  - name: Форма
+    default: true
+    form_attributes:
+      - name: Отчет
+        type: spreadsheet_document
+        synonym:
+          ru: Отчет
+          uk: Звіт
+          en: Report
+    elements:
+      - type: InputField
+        name: Период
+        attribute: Период
+      - type: SpreadSheetDocumentField
+        name: ОтчетПоле
+        attribute: Отчет
+        title_location: None
+        vertical_scrollbar: true
+        horizontal_scrollbar: true
+        events:
+          DetailProcessing: ОтчетПолеОбработкаРасшифровки
+    auto_command_bar:
+      - type: Button
+        name: Сформувати
+        command: Сформувати
+    commands:
+      - name: Сформувати
+        handler: Сформувати
+        picture: StdPicture.GenerateReport
+        shortcut: F5
+        title:
+          ru: Сформировать
+          uk: Сформувати
+          en: Generate
+    events:
+      OnCreateAtServer: ПриСозданииНаСервере
