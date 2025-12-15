@@ -8,7 +8,6 @@
 [![Version](https://img.shields.io/badge/version-2.55.0-blue.svg)](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/releases)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-3776ab.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/workflows/Tests/badge.svg)](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/actions)
 
 [**Документація**](docs/LLM_CORE.md) · [**Приклади**](examples/yaml/) · [**PRO версія**](https://itdeo.tech/1c-processor-generator/)
 
