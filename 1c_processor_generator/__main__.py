@@ -492,6 +492,12 @@ def cmd_license_status(args):
     return 0
 
 
+def cmd_setup_1c(args):
+                                 
+    from .pro._ccm import run_setup_command
+    return run_setup_command(check=args.check, dry_run=args.dry_run)
+
+
 def cmd_trial(args):
                                                     
     print(f"🎁 Запит trial ліцензії для: {args.email}")
@@ -959,6 +965,15 @@ def create_parser():
     parser_trial.add_argument("email",
                              help="Email адреса для отримання trial")
     parser_trial.set_defaults(func=cmd_trial)
+
+                                 
+    parser_setup = subparsers.add_parser("setup-1c",
+                                         help="Налаштувати 1C для EPF компіляції")
+    parser_setup.add_argument("--dry-run", action="store_true",
+                             help="Показати зміни без застосування")
+    parser_setup.add_argument("--check", action="store_true",
+                             help="Перевірити конфігурацію (exit code 0/1)")
+    parser_setup.set_defaults(func=cmd_setup_1c)
 
     return parser
 
