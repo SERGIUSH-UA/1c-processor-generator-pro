@@ -795,9 +795,133 @@
           "description": "Enable semantic validation - may be slower"
         }
       }
+    },
+    "bsp": {
+      "type": "object",
+      "description": "BSP Integration (v2.57.0+ PRO Feature) - Generate external processors compatible with 1C Standard Subsystems Library (БСП). Includes СведенияОВнешнейОбработке() and Печать() generation.",
+      "required": [
+        "type",
+        "targets",
+        "commands"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "print_form",
+            "object_filling",
+            "creation_of_related",
+            "report",
+            "additional_processor",
+            "additional_report",
+            "message_template"
+          ],
+          "description": "BSP processing type: print_form (печатная форма), object_filling (заполнение объекта), creation_of_related (создание связанных объектов), report (отчет), additional_processor (дополнительная обработка), additional_report (дополнительный отчет), message_template (шаблон сообщения)"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+$",
+          "default": "1.0",
+          "description": "Processing version in X.Y format"
+        },
+        "safe_mode": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run in safe mode (БезопасныйРежим)"
+        },
+        "information": {
+          "type": "string",
+          "description": "Processing description for administrator (Информация)"
+        },
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^(Документ|Справочник|Document|Catalog)\\.[а-яА-ЯёЁa-zA-Z0-9_]+$"
+          },
+          "description": "Target objects for this processing (Назначение). Use format: Документ.ИмяДокумента or Document.DocumentName"
+        },
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/BSPCommand"
+          },
+          "description": "Processing commands (Команды)"
+        },
+        "print_handler": {
+          "type": "string",
+          "default": "Печать",
+          "description": "Custom print handler name (default: Печать)"
+        }
+      }
     }
   },
   "definitions": {
+    "BSPCommand": {
+      "type": "object",
+      "description": "BSP command definition for СведенияОВнешнейОбработке()",
+      "required": [
+        "id",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$",
+          "description": "Command identifier (Идентификатор)"
+        },
+        "title": {
+          "$ref": "#/definitions/LocalizedString",
+          "description": "Command presentation (Представление)"
+        },
+        "usage": {
+          "type": "string",
+          "enum": [
+            "server_method",
+            "client_method",
+            "open_form",
+            "filling_form",
+            "data_import",
+            "safe_mode_scenario"
+          ],
+          "default": "server_method",
+          "description": "Command usage type (Использование): server_method (ВызовСерверногоМетода), client_method (ВызовКлиентскогоМетода), open_form (ОткрытиеФормы), filling_form (ЗаполнениеФормы), data_import (ЗагрузкаДанныхИзФайла), safe_mode_scenario (СценарийВБезопасномРежиме)"
+        },
+        "modifier": {
+          "type": "string",
+          "description": "Command modifier (Модификатор). Use 'ПечатьMXL' for spreadsheet print forms, 'ПечатьOFD' for Office documents"
+        },
+        "handler": {
+          "type": "string",
+          "description": "Custom handler procedure name"
+        },
+        "template_name": {
+          "type": "string",
+          "description": "Associated template name (e.g., ПФ_MXL_СчетНаОплату)"
+        },
+        "show_notification": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show notification during execution (ПоказыватьОповещение)"
+        },
+        "check_posting": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check document posting before print"
+        },
+        "hide": {
+          "type": "boolean",
+          "default": false,
+          "description": "Hide command from user (Скрыть)"
+        },
+        "replaced_commands": {
+          "type": "string",
+          "description": "Commands to replace (ЗаменяемыеКоманды)"
+        }
+      }
+    },
     "LocalizedString": {
       "description": "Multilingual string - nested object {ru, uk, en} or simple string",
       "oneOf": [

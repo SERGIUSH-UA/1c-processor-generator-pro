@@ -1727,6 +1727,7 @@ For comprehensive UI excellence guide with:
 |-----------|-----------|
 | **Data model questions** | [LLM_DATA_GUIDE.md](LLM_DATA_GUIDE.md) |
 | **UI pattern selection** | [LLM_PATTERNS_ESSENTIAL.md](LLM_PATTERNS_ESSENTIAL.md) |
+| **BSP print forms** | [LLM_BSP_PRINT_FORMS.md](LLM_BSP_PRINT_FORMS.md) |
 | **HTML/CSS/JS interfaces** | [LLM_HTML_GUIDE.md](LLM_HTML_GUIDE.md) |
 | **Code quality & style** | [LLM_PRACTICES.md](LLM_PRACTICES.md) |
 | **Full pattern library** | [reference/ALL_PATTERNS.md](reference/ALL_PATTERNS.md) |
@@ -1736,6 +1737,6 @@ For comprehensive UI excellence guide with:
 
 ---
 
-**Last updated:** 2025-11-26
+**Last updated:** 2025-12-16
 **Optimized for:** Claude Sonnet 4.5, GPT-4 Turbo, and other frontier LLMs
-**Generator version:** 2.41.0+ (Templates Automation)
+**Generator version:** 2.57.0+ (BSP Integration)

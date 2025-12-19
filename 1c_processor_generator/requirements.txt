@@ -8,11 +8,14 @@ ruamel.yaml>=0.17.0  # YAML parsing with formatting preservation
 lxml>=4.9.0  # XML parsing and XPath support (required for sync tool)
 
 # SVG support dependencies (v2.23.0+)
-cairosvg>=2.7.0  # SVG→PNG conversion
+cairosvg>=2.7.0  # SVG->PNG conversion
 Pillow>=10.0.0   # Image optimization and fallback
 
 # PRO module dependencies (v2.51.0+)
 cryptography>=41.0.0  # Token cache encryption
+
+# Excel -> MXL conversion (v2.58.0+)
+openpyxl>=3.1.0  # Excel file reading for MXL template generation
 
 # Testing dependencies
 pytest>=7.4.0
@@ -20,7 +23,7 @@ pytest-cov>=4.1.0
 pytest-watch>=4.2.0
 
 # EPF Testing dependencies (optional, Windows only)
-# Needed for runtime testing через COM (v2.16.0+)
+# Needed for runtime testing through COM (v2.16.0+)
 # pywin32>=305  # Uncomment to enable COM testing
 
 # Development dependencies (optional)

@@ -30,12 +30,14 @@ class MetadataRequirements:
     catalogs: Set[str] = field(default_factory=set)
     documents: Set[str] = field(default_factory=set)
     common_pictures: Set[str] = field(default_factory=set)
+    common_modules: Set[str] = field(default_factory=set)                             
                                                                                   
     stub_metadata: Dict[str, StubMetadata] = field(default_factory=dict)
 
     def is_empty(self) -> bool:
                                                            
-        return len(self.catalogs) == 0 and len(self.documents) == 0 and len(self.common_pictures) == 0
+        return (len(self.catalogs) == 0 and len(self.documents) == 0 and
+                len(self.common_pictures) == 0 and len(self.common_modules) == 0)
 
     def has_metadata(self) -> bool:
                                                                                                         
@@ -78,6 +80,9 @@ class MetadataAnalyzer:
     DOCUMENT_MAIN_TABLE_PATTERN = re.compile(r'Document\.(\w+)')
     COMMON_PICTURE_PATTERN = re.compile(r'CommonPicture\.(\w+)')
 
+                                                               
+    COMMON_MODULE_PATTERN = re.compile(r'\b([А-Яа-яЁё][А-Яа-яЁёA-Za-z0-9_]+)\.(Нужно|Вывести|Задать|Сведения|Выполнить|Получить|Установить)\w*\(', re.UNICODE)
+
     @staticmethod
     def analyze_processor(processor: Processor) -> MetadataRequirements:
                    
@@ -116,6 +121,10 @@ class MetadataAnalyzer:
 
                                                                
             MetadataAnalyzer._extract_pictures_from_elements(form.elements, requirements)
+
+                                                                               
+        if processor.bsp_config:
+            MetadataAnalyzer._add_bsp_required_modules(processor.bsp_config, requirements)
 
         return requirements
 
@@ -181,6 +190,18 @@ class MetadataAnalyzer:
                                                        
             if elem.child_items:
                 MetadataAnalyzer._extract_pictures_from_elements(elem.child_items, requirements)
+
+    @staticmethod
+    def _add_bsp_required_modules(bsp_config, requirements: MetadataRequirements) -> None:
+                   
+                                              
+        if bsp_config.type == "PrintForm":
+            requirements.common_modules.add("УправлениеПечатью")
+            logger.info("Added BSP module stub: УправлениеПечатью")
+
+                                                    
+                                                                        
+                                              
 
     @staticmethod
     def _extract_stub_attributes_from_dynamic_list(

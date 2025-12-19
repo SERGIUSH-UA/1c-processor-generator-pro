@@ -25,6 +25,9 @@ from .models import (
     TemplateAssets,
     FormAttribute,
     FormParameter,
+                              
+    BSPConfig,
+    BSPCommand,
 )
 from .test_parser import parse_tests_yaml
 from .parsing import ElementParser, normalize_multilang
@@ -157,6 +160,9 @@ class YAMLParser:
 
         try:
             processor = self._create_processor()
+
+                                                    
+            self._parse_bsp_config(processor)
 
                                     
             self._parse_attributes(processor)
@@ -720,6 +726,98 @@ class YAMLParser:
             print(f"❌ Помилка читання ObjectModule файлу: {e}")
             import traceback
             traceback.print_exc()
+
+                                                                               
+                                            
+                                                                               
+
+    def _parse_bsp_config(self, processor: Processor) -> None:
+                   
+        if "bsp" not in self.config:
+            return
+
+        bsp_data = self.config["bsp"]
+
+                           
+        from .constants import is_bsp_pro_feature
+
+        if is_bsp_pro_feature():
+            try:
+                from .pro import get_license_manager
+                mgr = get_license_manager()
+                is_licensed, error = mgr.check_pro_feature("bsp_integration")
+
+                if not is_licensed:
+                    print(f"⚠️  BSP integration requires PRO license: {error}")
+                    raise ValueError(
+                        "BSP integration is a PRO feature. "
+                        "Purchase license at https://itdeo.tech/1c-processor-generator/#pricing"
+                    )
+            except ImportError:
+                                                        
+                raise ValueError(
+                    "BSP integration requires PRO license. "
+                    "PRO modules not found. Install the PRO version."
+                )
+
+                                                        
+        from .pro.bsp_generator_impl import (
+            get_bsp_type_mapping,
+            get_bsp_usage_mapping,
+        )
+
+        bsp_type_mapping = get_bsp_type_mapping()
+        bsp_usage_mapping = get_bsp_usage_mapping()
+
+                    
+        raw_type = bsp_data.get("type", "print_form")
+        internal_type = bsp_type_mapping.get(raw_type)
+        if not internal_type:
+            valid_types = ", ".join(bsp_type_mapping.keys())
+            raise ValueError(f"Invalid bsp.type: '{raw_type}'. Valid types: {valid_types}")
+
+                        
+        commands = []
+        for cmd_data in bsp_data.get("commands", []):
+            cmd_data = normalize_multilang(cmd_data)
+
+                         
+            raw_usage = cmd_data.get("usage", "server_method")
+            internal_usage = bsp_usage_mapping.get(raw_usage)
+            if not internal_usage:
+                valid_usages = ", ".join(bsp_usage_mapping.keys())
+                raise ValueError(
+                    f"Invalid bsp.commands[].usage: '{raw_usage}'. Valid usages: {valid_usages}"
+                )
+
+            cmd = BSPCommand(
+                id=cmd_data["id"],
+                title_ru=cmd_data.get("title_ru", cmd_data["id"]),
+                title_uk=cmd_data.get("title_uk"),
+                title_en=cmd_data.get("title_en"),
+                usage=internal_usage,
+                modifier=cmd_data.get("modifier"),
+                handler=cmd_data.get("handler"),
+                template_name=cmd_data.get("template_name"),
+                show_notification=cmd_data.get("show_notification", True),
+                check_posting=cmd_data.get("check_posting", True),
+                hide=cmd_data.get("hide", False),
+                replaced_commands=cmd_data.get("replaced_commands"),
+            )
+            commands.append(cmd)
+
+                          
+        processor.bsp_config = BSPConfig(
+            type=internal_type,
+            version=bsp_data.get("version", "1.0"),
+            safe_mode=bsp_data.get("safe_mode", True),
+            information=bsp_data.get("information"),
+            targets=bsp_data.get("targets", []),
+            commands=commands,
+            print_handler=bsp_data.get("print_handler", "Печать"),
+        )
+
+        print(f"✅ BSP config parsed: type={internal_type}, {len(commands)} command(s)")
 
                                                                                
                

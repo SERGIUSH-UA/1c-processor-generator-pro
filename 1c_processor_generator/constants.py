@@ -25,6 +25,8 @@ from ._protected import (
                                             
     get_embedded_template,
     has_embedded_templates,
+                                
+    is_bsp_pro_feature,
 )
 
                                                  
@@ -335,3 +337,12 @@ STANDARD_FORM_COMMANDS = {
     "OK",            
                                                           
 }
+
+                                                                              
+                                                    
+                                                                              
+                                                                                     
+                                            
+ 
+                                                                      
+                                                                   

@@ -410,6 +410,68 @@ class ValidationConfig:
         return self.semantic_check_enabled
 
 
+                                                      
+
+
+@dataclass
+class BSPCommand:
+           
+    id: str                                                                       
+    title_ru: str                                                                
+    title_uk: Optional[str] = None                                
+    title_en: Optional[str] = None                                
+    usage: str = "CallOfServerMethod"                                                                          
+    modifier: Optional[str] = None                                                        
+    handler: Optional[str] = None                                                                      
+    template_name: Optional[str] = None                                               
+    show_notification: bool = True                                                                  
+    check_posting: bool = True                                                    
+    hide: bool = False                                                      
+    replaced_commands: Optional[str] = None                                               
+    uuid: str = field(default_factory=generate_uuid)
+
+    def __post_init__(self):
+        if not self.title_uk:
+            self.title_uk = self.title_ru
+        if not self.title_en:
+            self.title_en = self.title_ru
+
+
+@dataclass
+class BSPConfig:
+           
+    type: str                                                                                        
+    version: str = "1.0"                                                     
+    safe_mode: bool = True                                                         
+    information: Optional[str] = None                                                 
+    targets: List[str] = field(default_factory=list)                                     
+    commands: List[BSPCommand] = field(default_factory=list)                   
+    print_handler: str = "Печать"                                              
+    uuid: str = field(default_factory=generate_uuid)
+
+                          
+    VALID_TYPES = {
+        "PrintForm",                          
+        "ObjectFilling",                          
+        "CreationOfRelatedObjects",                             
+        "Report",                     
+        "AdditionalDataProcessor",                            
+        "AdditionalReport",                         
+        "MessageTemplate",                      
+    }
+
+    def __post_init__(self):
+        if self.type not in self.VALID_TYPES:
+            raise ValueError(
+                f"BSPConfig: Invalid type '{self.type}'. "
+                f"Valid types: {self.VALID_TYPES}"
+            )
+        if not self.targets:
+            raise ValueError("BSPConfig: 'targets' cannot be empty")
+        if not self.commands:
+            raise ValueError("BSPConfig: 'commands' cannot be empty")
+
+
 @dataclass
 class Processor:
                              
@@ -446,6 +508,10 @@ class Processor:
                                         
                                                                                                                                       
     long_operation_handlers: Dict[str, str] = field(default_factory=dict)
+
+                                              
+                                                                                        
+    bsp_config: Optional[BSPConfig] = None
 
     def __post_init__(self):
         if not self.synonym_ru:

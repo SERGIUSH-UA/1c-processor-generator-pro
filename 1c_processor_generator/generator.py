@@ -121,6 +121,29 @@ class ProcessorGenerator:
                    
         import re
 
+                                                                                   
+        if self.processor.bsp_config:
+            from .pro.bsp_generator_impl import generate_bsp_object_module
+
+                                               
+            user_handlers = None
+            if self.processor.object_module_bsl:
+                user_handlers = self.processor.object_module_bsl
+
+            raw_code = generate_bsp_object_module(
+                bsp_config=self.processor.bsp_config,
+                user_handlers=user_handlers
+            )
+
+                                                                                      
+            result = finalize_module(
+                module_code=raw_code,
+                seed=self.processor.name,
+                current_element_id=self._id_allocator.current_id if hasattr(self, '_id_allocator') else 1,
+                module_type="object"
+            )
+            return result["code"]
+
                                                                    
         if not should_add_test_infrastructure(self.processor) or not self.processor.forms:
             raw_code = OBJECT_MODULE_TEMPLATE

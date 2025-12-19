@@ -5,13 +5,19 @@
 ### Генерація обробок 1С за допомогою AI — від ідеї до .epf за 30 секунд
 
 [![GitHub stars](https://img.shields.io/github/stars/SERGIUSH-UA/1c-processor-generator-pro?style=social)](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/stargazers)
-[![Version](https://img.shields.io/badge/version-2.55.0-blue.svg)](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/releases)
+[![Version](https://img.shields.io/badge/version-2.58.0-blue.svg)](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/releases)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-3776ab.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 [**Документація**](docs/LLM_CORE.md) · [**Приклади**](examples/yaml/) · [**PRO версія**](https://itdeo.tech/1c-processor-generator/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_content=header)
 
 <img src="docs/marketing/Hello world 1C short final.gif" alt="Demo: AI generates 1C processor in 30 seconds" width="750">
+
+### 🎬 Відео-туторіал: Monobank API інтеграція за 10 хвилин
+
+[![YouTube Tutorial](https://img.shields.io/badge/YouTube-Дивитись_туторіал-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=4RpeyCzV1po)
+
+3 рівні AI для 1С-розробника — FREE → MID → PRO
 
 </div>
 
@@ -144,6 +150,42 @@ EndProcedure
 
 ---
 
+## AI Асистенти (Web)
+
+### ChatGPT Custom GPT
+
+Готовий асистент для генерації обробок прямо в ChatGPT:
+
+<p align="center">
+  <a href="https://chatgpt.com/g/g-69441faa0c8081919bcf14fb6b038bc3-1c-processor-generator">
+    <img src="https://img.shields.io/badge/ChatGPT-1C_Processor_Generator-10a37f?style=for-the-badge&logo=openai&logoColor=white" alt="ChatGPT Custom GPT">
+  </a>
+</p>
+
+**Що вміє:**
+- Генерує `config.yaml` + `handlers.bsl` за описом українською/російською
+- Знає всі елементи форми, типи даних, патерни
+- Видає команду для запуску генератора
+
+**Як використовувати:**
+1. Відкрийте [Custom GPT](https://chatgpt.com/g/g-69441faa0c8081919bcf14fb6b038bc3-1c-processor-generator)
+2. Опишіть обробку: *"Створи форму для розрахунку знижки"*
+3. Скопіюйте згенеровані файли
+4. Запустіть: `python -m 1c_processor_generator yaml --config config.yaml --handlers-file handlers.bsl`
+
+### Інші платформи
+
+| Платформа | Як використовувати |
+|-----------|-------------------|
+| **Claude.ai** | Підключіть GitHub репозиторій або завантажте [LLM_WEB_LITE.md](docs/LLM_WEB_LITE.md) |
+| **Gemini** | Завантажте [LLM_WEB_LITE.md](docs/LLM_WEB_LITE.md) у чат |
+
+Детальний гайд: **[docs/WEB_CHAT_GUIDE.md](docs/WEB_CHAT_GUIDE.md)**
+
+Шаблони для створення власних асистентів: **[templates/](templates/)**
+
+---
+
 ## Документація
 
 | Документ | Опис |
@@ -181,6 +223,6 @@ pip install -r requirements.txt
 
 Made with ❤️ by [SERGIUSH](https://github.com/SERGIUSH-UA)
 
-**v2.55.0** · 1C:Enterprise 8.3.25+
+**v2.58.0** · 1C:Enterprise 8.3.25+
 
 </div>
