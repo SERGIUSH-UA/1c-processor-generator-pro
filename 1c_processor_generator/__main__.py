@@ -12,7 +12,7 @@ try:
     from .test_generator import TestGenerator
     from .sync_tool import run_sync
     from .pro._lc import LicensedEPFCompiler
-    from .pro._lic import get_license_manager
+    from .pro._lic import get_license_manager, send_first_run_telemetry
 except ImportError:
                                                     
     from generator import ProcessorGenerator, create_minimal_processor
@@ -22,7 +22,7 @@ except ImportError:
     from test_generator import TestGenerator
     from sync_tool import run_sync
     from pro._lc import LicensedEPFCompiler
-    from pro._lic import get_license_manager
+    from pro._lic import get_license_manager, send_first_run_telemetry
 
 
 def create_example_processor() -> Processor:
@@ -980,6 +980,9 @@ def create_parser():
 
 def main():
                              
+                                                             
+    send_first_run_telemetry()
+
     parser = create_parser()
     args = parser.parse_args()
 
