@@ -1,0 +1,592 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "2.45.0",
+  "generated": "2025-12-03T13:53:15.985697",
+  "description": "Machine-readable feature registry for 1C Processor Generator. For AI agents: use this file for programmatic feature discovery.",
+  "categories": {
+    "elements": {
+      "description": "Form element types for building UI",
+      "count": 19,
+      "items": [
+        {
+          "name": "Button",
+          "description": "Action button linked to command",
+          "docs": "docs/reference/API_REFERENCE.md#button",
+          "since": "1.0.0"
+        },
+        {
+          "name": "ButtonGroup",
+          "description": "Container for grouping buttons",
+          "docs": "docs/reference/API_REFERENCE.md#buttongroup",
+          "since": "2.15.0"
+        },
+        {
+          "name": "CheckBoxField",
+          "description": "Checkbox for boolean attributes",
+          "docs": "docs/reference/API_REFERENCE.md#checkboxfield",
+          "since": "1.0.0"
+        },
+        {
+          "name": "ColumnGroup",
+          "description": "Multi-level table column headers",
+          "docs": "docs/reference/API_REFERENCE.md#columngroup",
+          "since": "2.37.0"
+        },
+        {
+          "name": "HTMLDocumentField",
+          "description": "HTML content display with hyperlink click handling",
+          "docs": "docs/reference/API_REFERENCE.md#htmldocumentfield",
+          "since": "2.39.0"
+        },
+        {
+          "name": "InputField",
+          "description": "Text/number/date input with validation, styling, and choice support",
+          "docs": "docs/reference/API_REFERENCE.md#inputfield",
+          "since": "1.0.0"
+        },
+        {
+          "name": "LabelDecoration",
+          "description": "Static text decoration (no data binding). Supports formatted: true for HTML tags (<b>, <font>)",
+          "docs": "docs/reference/API_REFERENCE.md#labeldecoration",
+          "since": "1.0.0",
+          "updated": "2.45.0"
+        },
+        {
+          "name": "LabelField",
+          "description": "Read-only label bound to data attribute",
+          "docs": "docs/reference/API_REFERENCE.md#labelfield",
+          "since": "1.0.0"
+        },
+        {
+          "name": "Pages",
+          "description": "Tabbed/paged interface container",
+          "docs": "docs/reference/API_REFERENCE.md#pages",
+          "since": "1.0.0"
+        },
+        {
+          "name": "PictureDecoration",
+          "description": "Static image/SVG decoration (no data binding)",
+          "docs": "docs/reference/API_REFERENCE.md#picturedecoration",
+          "since": "2.23.0"
+        },
+        {
+          "name": "PictureField",
+          "description": "Editable image field bound to binary_data attribute",
+          "docs": "docs/reference/API_REFERENCE.md#picturefield",
+          "since": "2.36.0"
+        },
+        {
+          "name": "Popup",
+          "description": "Popup menu/dropdown",
+          "docs": "docs/reference/API_REFERENCE.md#popup",
+          "since": "1.0.0"
+        },
+        {
+          "name": "RadioButtonField",
+          "description": "Radio button selection for choice attributes",
+          "docs": "docs/reference/API_REFERENCE.md#radiobuttonfield",
+          "since": "2.2.0"
+        },
+        {
+          "name": "SpreadSheetDocumentField",
+          "description": "Excel-like spreadsheet display with drill-down support",
+          "docs": "docs/reference/API_REFERENCE.md#spreadsheetdocumentfield",
+          "since": "2.15.0"
+        },
+        {
+          "name": "Table",
+          "description": "Tabular data display (TabularSection, ValueTable, DynamicList)",
+          "docs": "docs/reference/API_REFERENCE.md#table",
+          "since": "1.0.0"
+        },
+        {
+          "name": "UsualGroup",
+          "description": "Container for grouping elements (vertical/horizontal)",
+          "docs": "docs/reference/API_REFERENCE.md#usualgroup",
+          "since": "1.0.0"
+        },
+        {
+          "name": "CalendarField",
+          "description": "Calendar field for date selection with OnActivateDate event",
+          "docs": "docs/reference/API_REFERENCE.md#calendarfield",
+          "since": "2.46.0"
+        },
+        {
+          "name": "ChartField",
+          "description": "Chart/diagram field for business analytics (Pie, Line, Bar, Area)",
+          "docs": "docs/reference/API_REFERENCE.md#chartfield",
+          "since": "2.46.0"
+        },
+        {
+          "name": "PlannerField",
+          "description": "Planner/scheduler field for calendar/kanban views with drag-drop",
+          "docs": "docs/reference/API_REFERENCE.md#plannerfield",
+          "since": "2.46.0"
+        }
+      ]
+    },
+    "events": {
+      "description": "Event handlers for forms and elements",
+      "count": 24,
+      "items": [
+        {
+          "name": "BeforeAddRow",
+          "description": "Before adding table row (can cancel)",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПередДобавлениемСтроки"
+        },
+        {
+          "name": "BeforeClose",
+          "description": "Before form closes (can cancel)",
+          "docs": "docs/reference/API_REFERENCE.md#form-events",
+          "context": "form",
+          "directive": "НаКлиенте",
+          "handler": "ПередЗакрытием"
+        },
+        {
+          "name": "BeforeDeleteRow",
+          "description": "Before deleting table row (can cancel)",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПередУдалениемСтроки"
+        },
+        {
+          "name": "BeforeRowChange",
+          "description": "Before table row modification (can cancel)",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПередИзменениемСтроки"
+        },
+        {
+          "name": "ChoiceProcessing",
+          "description": "Selected value processing (InputField)",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ОбработкаВыбора"
+        },
+        {
+          "name": "Clearing",
+          "description": "Clear button pressed (InputField)",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "Очистка"
+        },
+        {
+          "name": "Click",
+          "description": "Element clicked (LabelDecoration hyperlink)",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "Нажатие"
+        },
+        {
+          "name": "DetailProcessing",
+          "description": "SpreadSheet cell drill-down click",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ОбработкаРасшифровки"
+        },
+        {
+          "name": "OnActivateRow",
+          "description": "Table row selection changed (master-detail pattern)",
+          "docs": "docs/LLM_DATA_GUIDE.md#table-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПриАктивизацииСтроки"
+        },
+        {
+          "name": "OnChange",
+          "description": "Element value changed (auto-generates server pair)",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПриИзменении"
+        },
+        {
+          "name": "OnClick",
+          "description": "HTMLDocumentField hyperlink click",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПриНажатии"
+        },
+        {
+          "name": "OnClose",
+          "description": "Form closing handler",
+          "docs": "docs/reference/API_REFERENCE.md#form-events",
+          "context": "form",
+          "directive": "НаКлиенте",
+          "handler": "ПриЗакрытии"
+        },
+        {
+          "name": "OnCreateAtServer",
+          "description": "Server-side form initialization (set defaults, load data)",
+          "docs": "docs/reference/API_REFERENCE.md#form-events",
+          "context": "form",
+          "directive": "НаСервере",
+          "handler": "ПриСозданииНаСервере"
+        },
+        {
+          "name": "OnOpen",
+          "description": "Client-side form open (UI initialization)",
+          "docs": "docs/reference/API_REFERENCE.md#form-events",
+          "context": "form",
+          "directive": "НаКлиенте",
+          "handler": "ПриОткрытии"
+        },
+        {
+          "name": "OnStartEdit",
+          "description": "Table cell edit started",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПриНачалеРедактирования"
+        },
+        {
+          "name": "Selection",
+          "description": "Table row double-click or Enter",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "Выбор"
+        },
+        {
+          "name": "StartChoice",
+          "description": "Choice button pressed (InputField)",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "НачалоВыбора"
+        },
+        {
+          "name": "OnActivateDate",
+          "description": "CalendarField date selected",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПриАктивизацииДаты"
+        },
+        {
+          "name": "ChartSelection",
+          "description": "ChartField point/series selection",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ВыборДиаграммы"
+        },
+        {
+          "name": "Drag",
+          "description": "PlannerField element dragged",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "Перетаскивание"
+        },
+        {
+          "name": "DragCheck",
+          "description": "PlannerField drag validation",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПроверкаПеретаскивания"
+        },
+        {
+          "name": "BeforeCreate",
+          "description": "PlannerField before new item creation",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПередСозданием"
+        },
+        {
+          "name": "OnEditEnd",
+          "description": "PlannerField editing finished",
+          "docs": "docs/reference/API_REFERENCE.md#element-events",
+          "context": "element",
+          "directive": "НаКлиенте",
+          "handler": "ПриОкончанииРедактирования"
+        }
+      ]
+    },
+    "types": {
+      "description": "Data types for attributes and columns",
+      "count": 10,
+      "items": [
+        {
+          "name": "string",
+          "description": "Text string (length=0 for unlimited, or specify length)",
+          "docs": "docs/reference/API_REFERENCE.md#data-types",
+          "xml_type": "xs:string",
+          "since": "1.0.0"
+        },
+        {
+          "name": "boolean",
+          "description": "True/False value",
+          "docs": "docs/reference/API_REFERENCE.md#data-types",
+          "xml_type": "xs:boolean",
+          "since": "1.0.0"
+        },
+        {
+          "name": "number",
+          "description": "Numeric value (digits, fraction_digits)",
+          "docs": "docs/reference/API_REFERENCE.md#data-types",
+          "xml_type": "xs:decimal",
+          "since": "1.0.0"
+        },
+        {
+          "name": "date",
+          "description": "Date/time value",
+          "docs": "docs/reference/API_REFERENCE.md#data-types",
+          "xml_type": "xs:dateTime",
+          "since": "1.0.0"
+        },
+        {
+          "name": "spreadsheet_document",
+          "description": "Excel-like document (for SpreadSheetDocumentField)",
+          "docs": "docs/reference/API_REFERENCE.md#data-types",
+          "xml_type": "mxl:SpreadsheetDocument",
+          "since": "2.15.0"
+        },
+        {
+          "name": "binary_data",
+          "description": "Binary storage (for PictureField images)",
+          "docs": "docs/reference/API_REFERENCE.md#data-types",
+          "xml_type": "v8:ValueStorage",
+          "since": "2.36.0"
+        },
+        {
+          "name": "html_document",
+          "description": "HTML string (for HTMLDocumentField)",
+          "docs": "docs/reference/API_REFERENCE.md#data-types",
+          "xml_type": "xs:string",
+          "since": "2.41.0"
+        },
+        {
+          "name": "CatalogRef",
+          "description": "Reference to catalog item (CatalogRef.CatalogName)",
+          "docs": "docs/reference/API_REFERENCE.md#reference-types",
+          "pattern": "CatalogRef.<ObjectName>"
+        },
+        {
+          "name": "DocumentRef",
+          "description": "Reference to document (DocumentRef.DocumentName)",
+          "docs": "docs/reference/API_REFERENCE.md#reference-types",
+          "pattern": "DocumentRef.<ObjectName>"
+        },
+        {
+          "name": "EnumRef",
+          "description": "Reference to enumeration (EnumRef.EnumName)",
+          "docs": "docs/reference/API_REFERENCE.md#reference-types",
+          "pattern": "EnumRef.<ObjectName>"
+        }
+      ]
+    },
+    "cli": {
+      "description": "Command-line interface commands",
+      "count": 6,
+      "items": [
+        {
+          "name": "decompile",
+          "description": "Decompile EPF to XML for inspection",
+          "docs": "docs/reference/ADVANCED_FEATURES.md",
+          "since": "2.8.1"
+        },
+        {
+          "name": "example",
+          "description": "Generate example processor with tabular section",
+          "docs": "CLAUDE.md#commands"
+        },
+        {
+          "name": "minimal",
+          "description": "Generate minimal empty processor",
+          "docs": "CLAUDE.md#commands"
+        },
+        {
+          "name": "sync",
+          "description": "Bidirectional sync between YAML+BSL and modified EPF/XML",
+          "docs": "docs/LLM_SYNC_GUIDE.md",
+          "since": "2.25.0",
+          "options": [
+            "--modified-xml: Path to modified XML",
+            "--config: YAML config to update",
+            "--handlers: BSL file to update",
+            "--llm-mode: Auto-apply + JSON output"
+          ]
+        },
+        {
+          "name": "validate-epf",
+          "description": "Validate EPF syntax without regenerating",
+          "docs": "docs/VALIDATION_GUIDE.md",
+          "since": "2.9.0"
+        },
+        {
+          "name": "yaml",
+          "description": "Generate processor from YAML config + BSL handlers (recommended)",
+          "docs": "CLAUDE.md#commands",
+          "options": [
+            "--config: Path to YAML config (required)",
+            "--handlers-file: Monolithic BSL file with handlers",
+            "--handlers: Directory with handler files",
+            "--output: Output directory",
+            "--output-format: xml or epf (default: xml)",
+            "--validate: Validate EPF after generation",
+            "--dry-run: Validate without creating files"
+          ]
+        }
+      ]
+    },
+    "tools": {
+      "description": "Built-in tooling capabilities",
+      "count": 7,
+      "items": [
+        {
+          "name": "Sync",
+          "description": "Bidirectional YAML+BSL <-> EPF/XML synchronization",
+          "docs": "docs/LLM_SYNC_GUIDE.md",
+          "since": "2.25.0",
+          "capabilities": [
+            "Rename attributes/elements",
+            "Modify properties (title, tooltip, width)",
+            "Add/delete elements, commands, forms",
+            "Sync BSL procedure changes"
+          ]
+        },
+        {
+          "name": "EPF Compiler",
+          "description": "Compile XML to EPF via 1C Designer",
+          "docs": "CLAUDE.md#commands",
+          "since": "2.8.0"
+        },
+        {
+          "name": "Validation",
+          "description": "BSL syntax and semantic validation via Designer",
+          "docs": "docs/VALIDATION_GUIDE.md",
+          "since": "2.12.0"
+        },
+        {
+          "name": "Testing",
+          "description": "Declarative + procedural EPF testing via COM",
+          "docs": "docs/TESTING_GUIDE.md",
+          "since": "2.16.0"
+        },
+        {
+          "name": "Long Operations",
+          "description": "Background jobs with progress reporting",
+          "docs": "docs/reference/ADVANCED_FEATURES.md",
+          "since": "2.17.0"
+        },
+        {
+          "name": "Templates",
+          "description": "HTML and SpreadSheet template embedding",
+          "docs": "docs/reference/ADVANCED_FEATURES.md",
+          "since": "2.40.0"
+        },
+        {
+          "name": "Web Patterns",
+          "description": "SPA architecture patterns for web-based 1C interfaces",
+          "docs": "docs/reference/WEB_PATTERNS.md",
+          "since": "2.45.0",
+          "capabilities": [
+            "Event Queue (JS to BSL communication)",
+            "DOM Manipulation Helpers",
+            "Screen Router Pattern",
+            "Bootstrap 5 Integration",
+            "Complete SPA Skeleton"
+          ]
+        }
+      ]
+    },
+    "pictures": {
+      "description": "Valid StdPicture icon names for commands and buttons",
+      "docs": "docs/VALID_PICTURES.md",
+      "count": 129,
+      "source": "constants.VALID_STD_PICTURES",
+      "common": [
+        "StdPicture.Refresh",
+        "StdPicture.Write",
+        "StdPicture.Delete",
+        "StdPicture.Find",
+        "StdPicture.ExecuteTask",
+        "StdPicture.Print",
+        "StdPicture.Close",
+        "StdPicture.CreateListItem"
+      ]
+    },
+    "keywords": {
+      "description": "BSL reserved keywords (cannot be used as handler names)",
+      "docs": "docs/reference/API_REFERENCE.md#bsl-reserved-keywords",
+      "count": 73,
+      "source": "constants.BSL_RESERVED_KEYWORDS",
+      "critical": [
+        "Выполнить (Execute)",
+        "Вычислить (Eval)",
+        "Экспорт (Export)",
+        "Процедура (Procedure)",
+        "Функция (Function)"
+      ]
+    },
+    "common_mistakes": {
+      "description": "Frequently hallucinated constructs that don't exist - and their correct alternatives",
+      "docs": "docs/CHEATSHEET.md",
+      "items": [
+        {
+          "wrong": "type: CommandBar",
+          "correct": "type: UsualGroup with group_type: CommandBar",
+          "explanation": "CommandBar is not a separate element type, use UsualGroup"
+        },
+        {
+          "wrong": "type: FormGroup",
+          "correct": "type: UsualGroup",
+          "explanation": "FormGroup doesn't exist, use UsualGroup with group_direction"
+        },
+        {
+          "wrong": "type: TextBox",
+          "correct": "type: InputField",
+          "explanation": "TextBox is not a 1C term, use InputField"
+        },
+        {
+          "wrong": "type: Label",
+          "correct": "type: LabelField or type: LabelDecoration",
+          "explanation": "Use LabelField for data-bound, LabelDecoration for static text"
+        },
+        {
+          "wrong": "type: Image",
+          "correct": "type: PictureDecoration or type: PictureField",
+          "explanation": "Use PictureDecoration for static, PictureField for editable"
+        },
+        {
+          "wrong": "type: Grid",
+          "correct": "type: Table",
+          "explanation": "Grid/DataGrid doesn't exist, use Table"
+        },
+        {
+          "wrong": "type: Tab or type: TabControl",
+          "correct": "type: Pages",
+          "explanation": "Tabs are called Pages in 1C"
+        },
+        {
+          "wrong": "type: Dropdown or type: ComboBox",
+          "correct": "type: InputField with choice_list",
+          "explanation": "Use InputField with choice_list for dropdown behavior"
+        },
+        {
+          "wrong": "event: OnClick",
+          "correct": "event: Click",
+          "explanation": "The event is called Click, not OnClick (OnClick is for HTMLDocumentField only)"
+        },
+        {
+          "wrong": "event: OnRowActivate",
+          "correct": "event: OnActivateRow",
+          "explanation": "Correct event name is OnActivateRow"
+        }
+      ]
+    }
+  }
+}

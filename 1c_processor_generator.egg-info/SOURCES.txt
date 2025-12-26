@@ -10,7 +10,6 @@ setup.py
 1c_processor_generator/_conn.py
 1c_processor_generator/_ext_conn.py
 1c_processor_generator/_protected.py
-1c_processor_generator/_protected.pyd
 1c_processor_generator/_tester.py
 1c_processor_generator/_validator.py
 1c_processor_generator/assertion_helper.py

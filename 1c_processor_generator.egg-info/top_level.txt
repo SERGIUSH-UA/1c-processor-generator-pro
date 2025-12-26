@@ -1,4 +1,5 @@
 1c_processor_generator
+build
 docs
 examples
 templates

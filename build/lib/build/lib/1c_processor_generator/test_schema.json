@@ -1,0 +1,257 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "1C External Processor Tests Configuration",
+  "description": "YAML schema for automated testing of generated 1C processors (v2.23.2+ - new architecture with auto-detection)",
+  "type": "object",
+  "properties": {
+    "fixtures": {
+      "type": "object",
+      "description": "Reusable test fixtures - shared setup data (v2.20.0+)",
+      "additionalProperties": {
+        "type": "object",
+        "description": "Fixture definition with setup data",
+        "properties": {
+          "attributes": {
+            "type": "object",
+            "description": "Attributes to set {attribute_name: value}",
+            "additionalProperties": true
+          },
+          "table_rows": {
+            "type": "object",
+            "description": "Table rows to add {table_name: [row_dict]}",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "objectmodule_tests": {
+      "type": "object",
+      "description": "ObjectModule tests (executed via External Connection - fast, no UI)",
+      "properties": {
+        "declarative": {
+          "type": "array",
+          "description": "Declarative tests for ObjectModule",
+          "items": {
+            "$ref": "#/definitions/declarativeTest"
+          }
+        },
+        "procedural": {
+          "$ref": "#/definitions/proceduralTests",
+          "description": "Procedural tests for ObjectModule (ObjectModule style - no Объект., no &НаСервере)"
+        }
+      }
+    },
+    "forms": {
+      "type": "array",
+      "description": "Per-form tests (executed via Automation Server - slow, with UI)",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Form name (e.g., 'Форма', 'ФормаНалаштувань')"
+          },
+          "declarative": {
+            "type": "array",
+            "description": "Declarative tests for this form",
+            "items": {
+              "$ref": "#/definitions/declarativeTest"
+            }
+          },
+          "procedural": {
+            "$ref": "#/definitions/proceduralTests",
+            "description": "Procedural tests for this form (Form Module style - with Объект., &НаСервере)"
+          }
+        }
+      }
+    },
+    "persistent_ib_path": {
+      "type": "string",
+      "description": "Path to test infobase (default: persistent_ib from cache)"
+    },
+    "timeout": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 300,
+      "description": "Timeout for all tests execution (seconds)"
+    }
+  },
+  "definitions": {
+    "declarativeTest": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^test_[a-z0-9_]+$",
+          "description": "Test name (must start with 'test_' and use snake_case)"
+        },
+        "description": {
+          "type": "string",
+          "description": "Test description"
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Timeout for this specific test (seconds, v2.21.0+)"
+        },
+        "use_fixtures": {
+          "type": "array",
+          "description": "List of fixtures to apply before test setup (v2.20.0+)",
+          "items": {
+            "type": "string",
+            "description": "Fixture name (must exist in fixtures section)"
+          }
+        },
+        "setup": {
+          "type": "object",
+          "description": "Test setup (data preparation)",
+          "properties": {
+            "attributes": {
+              "type": "object",
+              "description": "Attributes to set before test execution {attribute_name: value}",
+              "additionalProperties": true
+            },
+            "table_rows": {
+              "type": "object",
+              "description": "Table rows to add {table_name: [row_dict]}",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        },
+        "execute_command": {
+          "type": "string",
+          "description": "Command to execute (button/command name)"
+        },
+        "execute_procedure": {
+          "type": "string",
+          "description": "Procedure to call (for custom logic)"
+        },
+        "assert": {
+          "type": "object",
+          "description": "Assertions (what to check after execution)",
+          "properties": {
+            "attributes": {
+              "type": "object",
+              "description": "Expected attribute values {attribute_name: expected_value or assertion_object}",
+              "additionalProperties": true
+            },
+            "messages": {
+              "type": "array",
+              "description": "Expected messages (v2.16.0+ basic, v2.19.0+ extended)",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "contains": {
+                    "type": "string",
+                    "description": "Message should contain this text"
+                  },
+                  "equals": {
+                    "type": "string",
+                    "description": "Message should exactly equal this text"
+                  },
+                  "count": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Expected number of messages"
+                  },
+                  "matches": {
+                    "type": "string",
+                    "description": "Message should match regex pattern (v2.19.0+)"
+                  },
+                  "starts_with": {
+                    "type": "string",
+                    "description": "Message should start with this text (v2.19.0+)"
+                  },
+                  "ends_with": {
+                    "type": "string",
+                    "description": "Message should end with this text (v2.19.0+)"
+                  }
+                }
+              }
+            },
+            "tables": {
+              "type": "array",
+              "description": "Table assertions",
+              "items": {
+                "type": "object",
+                "required": ["table_name"],
+                "properties": {
+                  "table_name": {
+                    "type": "string",
+                    "description": "TabularSection or ValueTable name"
+                  },
+                  "row_count": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Expected number of rows"
+                  },
+                  "columns": {
+                    "type": "array",
+                    "description": "Expected columns",
+                    "items": {"type": "string"}
+                  },
+                  "row_data": {
+                    "type": "object",
+                    "description": "Expected row values {row_index: {column: value}}",
+                    "additionalProperties": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  }
+                }
+              }
+            },
+            "exception": {
+              "type": "object",
+              "description": "Exception assertion",
+              "properties": {
+                "raised": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Should exception be raised"
+                },
+                "contains": {
+                  "type": "string",
+                  "description": "Exception message should contain this text"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "proceduralTests": {
+      "type": "object",
+      "description": "Procedural tests (complex BSL procedures)",
+      "required": ["file"],
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "Path to BSL file with test procedures (relative to tests.yaml)"
+        },
+        "procedures": {
+          "type": "array",
+          "description": "List of procedures to execute (should start with 'Тест_' or 'Test_')",
+          "items": {
+            "type": "string",
+            "pattern": "^(Тест_|Test_)[а-яА-ЯёЁa-zA-Z0-9_]+$"
+          }
+        }
+      }
+    }
+  }
+}
