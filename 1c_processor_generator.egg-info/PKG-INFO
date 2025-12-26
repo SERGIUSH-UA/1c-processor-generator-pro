@@ -92,11 +92,16 @@ Dynamic: requires-python
 ## Швидкий старт
 
 ```bash
-# Встановлення (нові користувачі)
+# Встановлення (якщо Git встановлений)
 pip install git+https://github.com/SERGIUSH-UA/1c-processor-generator-pro.git
 
-# Оновлення (існуючі користувачі) - ОБОВ'ЯЗКОВО для v2.60.0+
+# Встановлення (без Git)
+pip install https://github.com/SERGIUSH-UA/1c-processor-generator-pro/archive/refs/heads/master.zip
+
+# Оновлення - ОБОВ'ЯЗКОВО для v2.60.0+
 pip install --upgrade --force-reinstall git+https://github.com/SERGIUSH-UA/1c-processor-generator-pro.git
+# або без Git:
+pip install --upgrade --force-reinstall https://github.com/SERGIUSH-UA/1c-processor-generator-pro/archive/refs/heads/master.zip
 
 # Мінімальна обробка
 python -m 1c_processor_generator minimal МояОбробка
