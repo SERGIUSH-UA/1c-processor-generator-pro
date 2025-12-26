@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "1c-processor-generator"
-version = "2.59.0"
+version = "2.60.0"
 description = "Automatic generation of external data processors for 1C:Enterprise 8.3"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 license = {text = "MIT (Open Source) + Proprietary (PRO Module)"}
 authors = [
     {name = "ITDEO", email = "itdeo.tech@gmail.com"}
@@ -20,12 +20,12 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "License :: Other/Proprietary License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: Microsoft :: Windows",
 ]
 dependencies = [
     # Core
@@ -47,6 +47,20 @@ include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["."]
+
+[tool.setuptools.package-data]
+"1c_processor_generator" = [
+    "*.pyd",
+    "*.json",
+    "templates/*.j2",
+    "templates/**/*.j2",
+    "_protected_bins/**/*.pyd",
+]
+"1c_processor_generator.pro" = [
+    "*.pyd",
+    "LICENSE",
+    "_bins/**/*.pyd",
+]
 
 [project.urls]
 Homepage = "https://itdeo.tech/1c-processor-generator"
