@@ -1,0 +1,59 @@
+# BSP Print Form Example (v2.57.0+ PRO Feature)
+#
+# This example generates an external print form compatible with
+# 1C Standard Subsystems Library (БСП).
+#
+# The generated processing will include:
+# - СведенияОВнешнейОбработке() - BSP registration function
+# - Печать() - Print handler procedure
+# - ПечатьСчетНаОплату() - Stub function for print logic
+#
+# PRO License Required!
+
+processor:
+  name: ПечатьСчетНаОплату
+  synonym:
+    ru: Печатная форма счета на оплату
+    uk: Друкована форма рахунку на оплату
+    en: Invoice Print Form
+
+# BSP Integration Configuration
+bsp:
+  type: print_form
+  version: "1.0"
+  safe_mode: true
+  information: Внешняя печатная форма счета на оплату для документов СчетНаОплатуПокупателю
+
+  # Target documents for print form
+  targets:
+    - Документ.СчетНаОплатуПокупателю
+    - Документ.РеализацияТоваровУслуг
+
+  # Print commands
+  commands:
+    - id: СчетНаОплату
+      title:
+        ru: Счет на оплату
+        uk: Рахунок на оплату
+        en: Invoice
+      usage: server_method
+      modifier: ПечатьMXL
+      show_notification: false
+      template_name: ПФ_MXL_СчетНаОплату
+
+    - id: СчетНаОплатуWord
+      title:
+        ru: Счет на оплату (Word)
+        uk: Рахунок на оплату (Word)
+        en: Invoice (Word)
+      usage: server_method
+      show_notification: false
+      template_name: ПФ_DOC_СчетНаОплату
+
+# Note: Templates (макети) are optional - you can add them later
+# templates:
+#   - name: ПФ_MXL_СчетНаОплату
+#     type: SpreadsheetDocument
+#     file: templates/invoice.mxl
+
+# No form is needed for print_form type - BSP uses ObjectModule directly

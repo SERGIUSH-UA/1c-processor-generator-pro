@@ -1,0 +1,680 @@
+# 1C Processor Generator - Data Models Decision Guide
+
+**Target:** LLMs generating 1C processors
+**Core guide:** [LLM_CORE.md](LLM_CORE.md)
+
+---
+
+## 🧠 Mental Model: Persistent vs Temporary Data
+
+**Before choosing between TabularSection and ValueTable, understand the fundamental principle:**
+
+```
+┌────────────────────────────────────────────────────┐
+│  PERSISTENT DATA (survives form close)            │
+│  - Saved to database automatically                │
+│  - Part of processor metadata                     │
+│  → Use: TabularSection                            │
+└────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────┐
+│  TEMPORARY DATA (exists only while form is open)   │
+│  - Exists in memory only                           │
+│  - Lost when form closes (unless manually saved)   │
+│  → Use: ValueTable                                 │
+└────────────────────────────────────────────────────┘
+```
+
+**Key insight:** This is NOT about "which is better" — it's about **data lifetime requirements**.
+
+---
+
+## 🎯 Decision Framework
+
+### Step 1: Ask the Lifetime Question
+
+**Does this data need to exist after the form closes?**
+
+```
+YES → Go to Step 2
+NO  → Use ValueTable ✅ (reports, calculations, previews)
+```
+
+### Step 2: Ask the Business Data Question
+
+**Is this core business data (documents, master records)?**
+
+```
+YES → Use TabularSection ✅ (invoice lines, order items, persistent relationships)
+
+NO  → Go to Step 3
+```
+
+### Step 3: Ask the Manual Save Question
+
+**Will you save this data manually (to JSON, file, external system)?**
+
+```
+YES → Use ValueTable + manual save ✅ (saved searches, user preferences, exports)
+
+NO  → Use TabularSection ✅ (should auto-save with processor)
+```
+
+### Visual Decision Tree
+
+```
+User request: "Create table for [data description]"
+    ↓
+┌──────────────────────────────────────┐
+│ Does data survive form close?       │
+└────────┬─────────────────────────────┘
+         │
+    NO   │   YES
+         ↓        ↓
+    ┌────────┐  ┌─────────────────────────────┐
+    │Value   │  │ Is this core business data? │
+    │Table ✅ │  │ (invoices, orders, etc.)   │
+    └────────┘  └────────┬────────────────────┘
+                         │
+                   YES   │   NO
+                         ↓        ↓
+                    ┌────────┐  ┌──────────────────────┐
+                    │Tabular │  │ Manual save needed?  │
+                    │Section │  │ (JSON, files, etc.)  │
+                    │✅      │  └────────┬─────────────┘
+                    └────────┘           │
+                                   YES   │   NO
+                                         ↓        ↓
+                                    ┌────────┐  ┌────────┐
+                                    │Value   │  │Tabular │
+                                    │Table ✅ │  │Section │
+                                    └────────┘  │✅      │
+                                                └────────┘
+```
+
+---
+
+## 📊 TabularSection: Deep Dive
+
+### What It Is
+
+**TabularSection** = processor-level metadata for **persistent** data storage
+
+**Technical details:**
+- Defined in `processor.xml` (ChildObjects section)
+- Creates database table structure
+- Auto-saves when processor object is saved
+- Accessed via `Объект.TableName` in BSL code
+- Survives between sessions (persisted to DB)
+
+### When to Use TabularSection
+
+**✅ Use TabularSection for:**
+
+1. **Document lines** (invoices, orders, receipts)
+   ```yaml
+   tabular_sections:
+     - name: Lines
+       columns:
+         - name: Product
+           type: CatalogRef.Products
+         - name: Quantity
+           type: number
+           digits: 10
+           fraction_digits: 2
+         - name: Price
+           type: number
+           digits: 15
+           fraction_digits: 2
+         - name: Total
+           type: number
+           digits: 15
+           fraction_digits: 2
+           read_only: true  # Calculated field (v2.13.1+)
+   ```
+
+2. **Persistent relationships** (configuration entries, master data)
+   ```yaml
+   tabular_sections:
+     - name: UserRoles
+       columns:
+         - name: User
+           type: CatalogRef.Users
+         - name: Role
+           type: CatalogRef.Roles
+   ```
+
+3. **Historical records** (audit logs, change tracking)
+
+### TabularSection Code Example
+
+```yaml
+# YAML
+processor:
+  name: OrderProcessor
+
+tabular_sections:
+  - name: OrderLines
+    columns:
+      - {name: Product, type: CatalogRef.Products}
+      - {name: Quantity, type: number}
+```
+
+```bsl
+// BSL - auto-saved when processor is saved
+&НаСервере
+Процедура AddLineНаСервере(ProductRef, Qty)
+    НоваяСтрока = Объект.OrderLines.Add();  // ← Saved to DB
+    НоваяСтрока.Product = ProductRef;
+    НоваяСтрока.Quantity = Qty;
+    // No explicit save needed - auto-saves with Объект
+КонецПроцедуры
+```
+
+**Key characteristics:**
+- ✅ Auto-persisted (no manual save code)
+- ✅ Database-backed (can query with SQL)
+- ✅ Transactional (saves/rolls back with processor)
+- ⚠️ Slower (DB overhead)
+- ⚠️ Not for large temporary datasets
+
+---
+
+## 📋 ValueTable: Deep Dive
+
+### What It Is
+
+**ValueTable** = form-level attribute for **temporary** data display
+
+**Technical details:**
+- Defined in `form.xml` (Attributes section)
+- Exists in memory only (no database table)
+- Cleared when form closes (unless manually saved)
+- Accessed directly via `TableName` in BSL code (no `Объект.` prefix)
+- Fast (no DB overhead)
+
+### When to Use ValueTable
+
+**✅ Use ValueTable for:**
+
+1. **Report results** (temporary calculations/aggregations)
+   ```yaml
+   forms:
+     - name: Форма
+       value_tables:
+         - name: ReportResults
+           columns:
+             - {name: Period, type: string, length: 50}
+             - {name: Amount, type: number, digits: 15, fraction_digits: 2}
+   ```
+
+2. **Search results** (no need to persist every search)
+   ```yaml
+   forms:
+     - name: Форма
+       value_tables:
+         - name: SearchResults
+           columns:
+             - {name: Title, type: string, length: 300}
+             - {name: URL, type: string, length: 500}
+   ```
+
+3. **Calculation previews** (show before applying)
+   ```yaml
+   forms:
+     - name: Форма
+       value_tables:
+         - name: ImportPreview
+           columns:
+             - {name: FileName, type: string, length: 200}
+             - {name: Status, type: string, length: 50}
+   ```
+
+4. **Temporary transformations** (intermediate processing)
+
+### ValueTable Code Example
+
+```yaml
+# YAML
+forms:
+  - name: Форма
+    value_tables:
+      - name: Results
+        columns:
+          - {name: Product, type: string, length: 200}
+          - {name: Total, type: number}
+```
+
+```bsl
+// BSL - memory only, NOT saved
+&НаСервере
+Процедура LoadReportDataНаСервере()
+    Results.Clear();  // ← Always clear before loading
+
+    // Query database
+    Запрос = Новый Запрос;
+    Запрос.Текст = "SELECT ...";
+    Выборка = Запрос.Выполнить().Выбрать();
+
+    // Load into ValueTable
+    Пока Выборка.Следующий() Цикл
+        НоваяСтрока = Results.Add();  // ← NOT saved to DB, memory only
+        НоваяСтрока.Product = Выборка.Product;
+        НоваяСтрока.Total = Выборка.Total;
+    КонецЦикла;
+
+    // Data exists until form closes (or manual export)
+КонецПроцедуры
+```
+
+**Key characteristics:**
+- ✅ Fast (memory only, no DB)
+- ✅ Flexible (any structure, no schema)
+- ✅ No database overhead
+- ⚠️ Lost on form close (must save manually if needed)
+- ⚠️ Direct access (`Results` not `Объект.Results`)
+
+---
+
+## 🔄 Manual Save: When ValueTable Needs Persistence
+
+**Scenario:** User wants to save ValueTable data (e.g., saved search results)
+
+**Solution:** Manual export to JSON, file, or database
+
+### Example: Export ValueTable to JSON
+
+```bsl
+&НаСервере
+Процедура ExportToJSONНаСервере(ФайлПуть)
+    ЗаписьJSON = Новый ЗаписьJSON;
+    ЗаписьJSON.ОткрытьФайл(ФайлПуть);
+
+    МассивДанных = Новый Массив;
+    Для Каждого Строка Из SavedResults Цикл
+        Элемент = Новый Структура;
+        Элемент.Вставить("Title", Строка.Title);
+        Элемент.Вставить("URL", Строка.URL);
+        МассивДанных.Добавить(Элемент);
+    КонецЦикла;
+
+    ЗаписатьJSON(ЗаписьJSON, МассивДанных);
+    ЗаписьJSON.Закрыть();
+
+    Сообщить("Экспортировано записей: " + SavedResults.Количество());
+КонецПроцедуры
+```
+
+**When to use manual save:**
+- User-selected items from search results
+- Exported reports (Excel, CSV, JSON)
+- User preferences/settings
+- Temporary drafts
+
+---
+
+## 📐 Common Mistakes & Fixes
+
+### Mistake 1: TabularSection for Reports
+
+```yaml
+# ❌ WRONG - Report data doesn't need database persistence
+tabular_sections:
+  - name: ReportResults
+    columns:
+      - {name: Product, type: string, length: 200}
+```
+
+**Problem:** Every report generation creates database records → wasted space, slow performance
+
+**✅ FIX:**
+```yaml
+# ✅ CORRECT - Temporary in-memory results
+forms:
+  - name: Форма
+    value_tables:
+      - name: ReportResults
+        columns:
+          - {name: Product, type: string, length: 200}
+```
+
+---
+
+### Mistake 2: ValueTable for Document Lines
+
+```yaml
+# ❌ WRONG - Document lines must persist
+forms:
+  - name: Форма
+    value_tables:
+      - name: InvoiceLines
+        columns:
+          - {name: Product, type: CatalogRef.Products}
+```
+
+**Problem:** Data lost when form closes → can't save invoice properly
+
+**✅ FIX:**
+```yaml
+# ✅ CORRECT - Persistent document lines
+tabular_sections:
+  - name: InvoiceLines
+    columns:
+      - {name: Product, type: CatalogRef.Products}
+      - {name: Quantity, type: number}
+```
+
+---
+
+### Mistake 3: Accessing ValueTable with `Объект.` Prefix
+
+```bsl
+// ❌ WRONG - ValueTable is NOT on Объект
+НоваяСтрока = Объект.Results.Add();  // ERROR!
+```
+
+**✅ FIX:**
+```bsl
+// ✅ CORRECT - ValueTable is accessed directly
+НоваяСтрока = Results.Add();  // ✅ Works
+```
+
+---
+
+## 🎮 Table Events
+
+### Available Events
+
+| Event | When Triggered | Use Case | Handler Type |
+|-------|----------------|----------|--------------|
+| **OnActivateRow** | User selects row | Load detail data | Client + Server |
+| **Selection** | Double-click or Enter | Open detailed form | Client |
+| **OnStartEdit** | User starts editing cell | Validate before edit | Client |
+| **BeforeAddRow** | User adds new row | Pre-fill defaults, validate | Client (v2.35.0+) |
+| **BeforeDeleteRow** | User deletes row | Confirm deletion | Client (v2.35.0+) |
+| **BeforeRowChange** | User starts editing | Validate permissions | Client (v2.35.0+) |
+
+### OnActivateRow: Master-Detail Pattern
+
+**Most common:** Selecting master table row → auto-loads detail data
+
+```yaml
+elements:
+  - type: Table
+    name: MasterTable
+    tabular_section: MasterData
+    properties:
+      is_value_table: true
+    events:
+      OnActivateRow: MasterTableOnActivateRow  # ← Triggers on row selection
+```
+
+**Client handler** (gets current row):
+```bsl
+&НаКлиенте
+Процедура MasterTableOnActivateRow(Элемент)
+    ТекущаяСтрока = Элементы.MasterTable.ТекущиеДанные;
+
+    Если ТекущаяСтрока = Неопределено Тогда
+        DetailData.Clear();
+        Возврат;
+    КонецЕсли;
+
+    // Call server with parameters
+    MasterTableOnActivateRowНаСервере(ТекущаяСтрока.ID);
+КонецПроцедуры
+```
+
+**Server handler** (loads detail data):
+```bsl
+&НаСервере
+Процедура MasterTableOnActivateRowНаСервере(МастерID)
+    DetailData.Clear();
+
+    // Load detail data based on master ID
+    // ... query/calculations ...
+
+    Для Каждого Строка Из Результат Цикл
+        НоваяСтрока = DetailData.Add();
+        // ... populate detail row ...
+    КонецЦикла;
+КонецПроцедуры
+```
+
+**See also:** [LLM_PATTERNS_ESSENTIAL.md](LLM_PATTERNS_ESSENTIAL.md) Pattern 3 for complete example
+
+### BeforeAddRow: Pre-fill and Validation (v2.35.0+)
+
+**Use case:** Set default values in new row, validate conditions before adding
+
+```yaml
+elements:
+  - type: Table
+    name: Items
+    tabular_section: Items
+    events:
+      BeforeAddRow: ItemsBeforeAddRow
+```
+
+**Handler signature:**
+```bsl
+&НаКлиенте
+Процедура ItemsBeforeAddRow(Элемент, Отказ, Копирование, Родитель, Группа)
+    // Отказ = Истина - prevents row addition
+    // Копирование - true if user is copying existing row
+
+    // Example 1: Pre-fill with default values
+    Если НЕ Копирование Тогда
+        НоваяСтрока = Элементы.Items.ТекущиеДанные;
+        Если НоваяСтрока <> Неопределено Тогда
+            НоваяСтрока.Quantity = 1;
+            НоваяСтрока.Price = 0;
+        КонецЕсли;
+    КонецЕсли;
+
+    // Example 2: Prevent adding if condition not met
+    Если Объект.Items.Count() >= 100 Тогда
+        Сообщить("Maximum 100 items allowed!");
+        Отказ = Истина;
+    КонецЕсли;
+КонецПроцедуры
+```
+
+**Key points:**
+- Fires **before** row is added to table
+- Set `Отказ = Истина` to cancel row addition
+- Check `Копирование` to distinguish between new row and copied row
+- Pre-fill default values for better UX
+
+### BeforeDeleteRow: Confirmation and Validation (v2.35.0+)
+
+**Use case:** Confirm deletion with user, prevent deletion under certain conditions
+
+```yaml
+elements:
+  - type: Table
+    name: Items
+    tabular_section: Items
+    events:
+      BeforeDeleteRow: ItemsBeforeDeleteRow
+```
+
+**Handler signature:**
+```bsl
+&НаКлиенте
+Процедура ItemsBeforeDeleteRow(Элемент, Отказ)
+    ТекущиеДанные = Элемент.ТекущиеДанные;
+
+    Если ТекущиеДанные = Неопределено Тогда
+        Возврат;
+    КонецЕсли;
+
+    // Example 1: Confirmation dialog
+    Ответ = Вопрос(
+        "Удалить товар '" + ТекущиеДанные.Product + "'?",
+        РежимДиалогаВопрос.ДаНет
+    );
+
+    Если Ответ = КодВозвратаДиалога.Нет Тогда
+        Отказ = Истина;  // Cancel deletion
+    КонецЕсли;
+
+    // Example 2: Prevent deletion based on business rules
+    Если ТекущиеДанные.Shipped = Истина Тогда
+        Сообщить("Cannot delete shipped items!");
+        Отказ = Истина;
+    КонецЕсли;
+КонецПроцедуры
+```
+
+**Key points:**
+- Fires **before** row is deleted
+- Set `Отказ = Истина` to cancel deletion
+- Get current row data via `Элемент.ТекущиеДанные`
+- Good practice: always confirm destructive actions
+
+### BeforeRowChange: Edit Validation (v2.35.0+)
+
+**Use case:** Validate permissions before editing, check business rules
+
+```yaml
+elements:
+  - type: Table
+    name: Items
+    tabular_section: Items
+    events:
+      BeforeRowChange: ItemsBeforeRowChange
+```
+
+**Handler signature:**
+```bsl
+&НаКлиенте
+Процедура ItemsBeforeRowChange(Элемент, Отказ)
+    ТекущиеДанные = Элемент.ТекущиеДанные;
+
+    Если ТекущиеДанные = Неопределено Тогда
+        Возврат;
+    КонецЕсли;
+
+    // Example 1: Prevent editing of processed items
+    Если ТекущиеДанные.Status = "Processed" Тогда
+        Сообщить("Cannot edit processed items!");
+        Отказ = Истина;
+    КонецЕсли;
+
+    // Example 2: Check user permissions (requires server call)
+    Если НЕ ПроверитьПраваРедактированияНаСервере() Тогда
+        Сообщить("You don't have permission to edit!");
+        Отказ = Истина;
+    КонецЕсли;
+КонецПроцедуры
+```
+
+**Key points:**
+- Fires **before** user starts editing row
+- Set `Отказ = Истина` to prevent editing
+- Good for: permission checks, status validation, locking rules
+- Different from `OnStartEdit` (which fires when entering specific cell)
+
+### Event Combinations
+
+**Real-world pattern:** Combine multiple events for complete table control
+
+```yaml
+elements:
+  - type: Table
+    name: OrderItems
+    tabular_section: Items
+    events:
+      BeforeAddRow: OrderItemsBeforeAddRow          # Pre-fill defaults
+      BeforeDeleteRow: OrderItemsBeforeDeleteRow    # Confirm deletion
+      BeforeRowChange: OrderItemsBeforeRowChange    # Check if order is locked
+      OnActivateRow: OrderItemsOnActivateRow        # Load item details
+```
+
+**Pattern benefits:**
+- **BeforeAddRow**: Ensures new rows have valid defaults (Quantity=1, Price=0)
+- **BeforeDeleteRow**: Prevents accidental deletions (confirmation dialog)
+- **BeforeRowChange**: Enforces business rules (can't edit completed orders)
+- **OnActivateRow**: Shows additional info (item description, stock levels)
+
+---
+
+## 📏 String Types: Unlimited vs Limited
+
+### Default: Unlimited Strings
+
+**By default, strings are unlimited** (no length restriction):
+
+```yaml
+attributes:
+  - name: Description
+    type: string  # length not specified → unlimited (length=0)
+```
+
+**In 1C XML:**
+```xml
+<v8:Length>0</v8:Length>  <!-- 0 = unlimited -->
+```
+
+### Limited Strings
+
+**Specify `length:` parameter for limited strings:**
+
+```yaml
+attributes:
+  - name: ShortCode
+    type: string
+    length: 100  # Limited to 100 characters
+```
+
+**In 1C XML:**
+```xml
+<v8:Length>100</v8:Length>  <!-- Explicit limit -->
+```
+
+### When to Use Each
+
+**✅ Use unlimited (default):**
+- Descriptions, notes, comments
+- Text fields with unknown max length
+- User-generated content
+
+**✅ Use limited:**
+- Codes (product code: 20 chars)
+- Status values (10-50 chars)
+- Known-length fields (phone: 20 chars, email: 100 chars)
+- Performance-critical fields (indexes work better with limits)
+
+**Rule of thumb:** If you know the max length, specify it. Otherwise, use unlimited (default).
+
+---
+
+## 📖 Summary Checklist
+
+**When designing data structure, ask:**
+
+1. **Lifetime:** Does data survive form close?
+   - YES → TabularSection or ValueTable + manual save
+   - NO → ValueTable
+
+2. **Business Data:** Is this core business data (invoices, orders)?
+   - YES → TabularSection
+   - NO → Consider ValueTable
+
+3. **Manual Save:** Will you export/save manually (JSON, files)?
+   - YES → ValueTable + export logic
+   - NO → TabularSection
+
+4. **Performance:** Is this large temporary dataset (>1000 rows)?
+   - YES → ValueTable (avoid DB overhead)
+   - NO → Either works
+
+5. **String Length:** Know max length?
+   - YES → Specify `length: N`
+   - NO → Omit (unlimited by default)
+
+---
+
+**Last updated:** 2025-11-16
+**Generator version:** 2.22.0+

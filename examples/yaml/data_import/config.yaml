@@ -1,0 +1,207 @@
+processor:
+  name: ИмпортДанных
+  explanation_ru: Мастер импорта данных из CSV файла в справочник
+  explanation_uk: Майстер імпорту даних з CSV файлу в довідник
+  synonym:
+    ru: Импорт данных из файла
+    uk: Імпорт даних з файлу
+attributes:
+  - name: ПутьКФайлу
+    type: string
+    length: 500
+    title:
+      ru: Путь к файлу
+      uk: Шлях до файлу
+  - name: Кодировка
+    type: string
+    length: 50
+    title:
+      ru: Кодировка
+      uk: Кодування
+  - name: Справочник
+    type: string
+    length: 100
+    title:
+      ru: Целевой справочник
+      uk: Цільовий довідник
+  - name: ОбновлятьСуществующие
+    type: boolean
+    title:
+      ru: Обновлять существующие записи
+      uk: Оновлювати існуючі записи
+forms:
+  - name: Форма
+    default: true
+    value_tables:
+      - name: Предпросмотр
+        columns:
+          - name: НомерСтроки
+            type: number
+            digits: 10
+            fraction_digits: 0
+            title:
+              ru: №
+              uk: №
+          - name: Наименование
+            type: string
+            length: 200
+            title:
+              ru: Наименование
+              uk: Найменування
+          - name: Код
+            type: string
+            length: 50
+            title:
+              ru: Код
+              uk: Код
+          - name: Статус
+            type: string
+            length: 50
+            title:
+              ru: Статус
+              uk: Статус
+      - name: РезультатыИмпорта
+        columns:
+          - name: Строка
+            type: number
+            digits: 10
+            fraction_digits: 0
+            title:
+              ru: Строка
+              uk: Рядок
+          - name: Статус
+            type: string
+            length: 50
+            title:
+              ru: Статус
+              uk: Статус
+          - name: Сообщение
+            type: string
+            length: 500
+            title:
+              ru: Сообщение
+              uk: Повідомлення
+    events:
+      OnOpen: ПриОткрытии
+    elements:
+      - type: Pages
+        name: ШагиМастера
+        pages_representation: TabsOnTop
+        pages:
+          - name: Шаг1ВыборФайла
+            title: 'Шаг 1: Выбор файла'
+            child_items:
+              - type: LabelDecoration
+                name: Шаг1Инструкция
+                title: Выберите CSV файл для импорта
+              - type: InputField
+                name: ПутьКФайлуПоле
+                attribute: ПутьКФайлу
+                events:
+                  StartChoice: ПутьКФайлуНачалоВыбора
+              - type: InputField
+                name: КодировкаПоле
+                attribute: Кодировка
+              - type: UsualGroup
+                name: Шаг1КнопкиГруппа
+                show_title: false
+                group_direction: Horizontal
+                child_items:
+                  - type: Button
+                    name: ЗагрузитьПредпросмотрКнопка
+                    command: ЗагрузитьПредпросмотр
+          - name: Шаг2Предпросмотр
+            title: 'Шаг 2: Предпросмотр'
+            child_items:
+              - type: LabelDecoration
+                name: Шаг2Инструкция
+                title: Проверьте загруженные данные
+              - type: Table
+                name: ПредпросмотрТаблица
+                tabular_section: Предпросмотр
+                is_value_table: true
+              - type: UsualGroup
+                name: Шаг2КнопкиГруппа
+                show_title: false
+                group_direction: Horizontal
+                child_items:
+                  - type: Button
+                    name: НазадШаг1Кнопка
+                    command: НазадШаг1
+                  - type: Button
+                    name: ДалееШаг3Кнопка
+                    command: ДалееШаг3
+          - name: Шаг3Настройки
+            title: 'Шаг 3: Настройки импорта'
+            child_items:
+              - type: LabelDecoration
+                name: Шаг3Инструкция
+                title: Укажите параметры импорта
+              - type: InputField
+                name: СправочникПоле
+                attribute: Справочник
+              - type: InputField
+                name: ОбновлятьСуществующиеПоле
+                attribute: ОбновлятьСуществующие
+              - type: UsualGroup
+                name: Шаг3КнопкиГруппа
+                show_title: false
+                group_direction: Horizontal
+                child_items:
+                  - type: Button
+                    name: НазадШаг2Кнопка
+                    command: НазадШаг2
+                  - type: Button
+                    name: ВыполнитьИмпортКнопка
+                    command: ВыполнитьИмпорт
+          - name: Шаг4Результаты
+            title: 'Шаг 4: Результаты'
+            child_items:
+              - type: LabelDecoration
+                name: Шаг4Инструкция
+                title: Импорт завершен
+              - type: Table
+                name: РезультатыИмпортаТаблица
+                tabular_section: РезультатыИмпорта
+                is_value_table: true
+              - type: Button
+                name: ЗакрытьКнопка
+                command: Закрыть
+    commands:
+      - name: ЗагрузитьПредпросмотр
+        handler: ЗагрузитьПредпросмотр
+        title:
+          ru: Загрузить предпросмотр
+          uk: Завантажити попередній перегляд
+        tooltip:
+          ru: Загрузить первые строки файла для предпросмотра
+          uk: Завантажити перші рядки файлу для попереднього перегляду
+      - name: НазадШаг1
+        handler: НазадШаг1
+        title:
+          ru: Назад
+          uk: Назад
+      - name: ДалееШаг3
+        handler: ДалееШаг3
+        title:
+          ru: Далее
+          uk: Далі
+      - name: НазадШаг2
+        handler: НазадШаг2
+        title:
+          ru: Назад
+          uk: Назад
+      - name: ВыполнитьИмпорт
+        shortcut: F5
+        handler: ВыполнитьИмпорт
+        title:
+          ru: Выполнить импорт
+          uk: Виконати імпорт
+        tooltip:
+          ru: Импортировать данные в информационную базу
+          uk: Імпортувати дані в інформаційну базу
+      - name: Закрыть
+        handler: ЗакрытьФорму
+        title:
+          ru: Закрыть
+          uk: Закрити

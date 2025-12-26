@@ -1,0 +1,26 @@
+processor:
+  name: ПростыйДинамическийСписок
+  platform_version: '2.11'
+  synonym:
+    ru: Простой динамический список
+    uk: Простий динамічний список
+forms:
+  - name: Форма
+    default: true
+    dynamic_lists:
+      - name: БонусныеПрограммы
+        manual_query: false
+        main_table: Catalog.БонусныеПрограммы
+        title:
+          ru: Бонусные программы
+          uk: Бонусні програми
+    properties:
+      title:
+        ru: Просмотр бонусных программ
+        uk: Перегляд бонусних програм
+      auto_title: false
+    elements:
+      - type: Table
+        name: БонусныеПрограммы
+        tabular_section: БонусныеПрограммы
+        is_dynamic_list: true

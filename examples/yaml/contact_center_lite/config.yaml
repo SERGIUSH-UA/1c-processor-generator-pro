@@ -1,0 +1,257 @@
+# ContactCenterLite - Contact Center Example (v2.47.0+)
+# Demonstrates: PlannerField (Planner/Scheduler) with dimensions, colors, drag-drop
+# Focus: Full-featured Planner showcase with operator schedules
+
+processor:
+  name: КонтактЦентрЛайт
+  synonym:
+    ru: Контакт-центр Лайт
+    uk: Контакт-центр Лайт
+    en: Contact Center Lite
+
+attributes:
+  # Current date for planner
+  - name: ТекущаяДата
+    type: date
+    synonym_ru: Текущая дата
+
+  # Statistics
+  - name: ВсегоСмен
+    type: number
+    digits: 10
+    synonym_ru: Всего смен
+  - name: ОператоровНаЛинии
+    type: number
+    digits: 10
+    synonym_ru: Операторов на линии
+  - name: СреднееВремяСмены
+    type: number
+    digits: 10
+    precision: 1
+    synonym_ru: Среднее время (ч)
+
+  # Selected item details
+  - name: ВыбранныйОператор
+    type: string
+    length: 100
+  - name: ВыбранныйТипСмены
+    type: string
+    length: 50
+  - name: ВыбранноеВремя
+    type: string
+    length: 50
+  - name: ВыбраннаяДлительность
+    type: number
+    digits: 10
+    precision: 1
+
+forms:
+  # Main form - Operator schedule with Planner
+  - name: Форма
+    default: true
+    events:
+      OnCreateAtServer: ПриСозданииНаСервере
+
+    # Planner form attribute (v2.47.0+)
+    form_attributes:
+      - name: Планировщик
+        type: planner
+        time_scale: Hour
+        time_scale_interval: 1
+        display_current_date: true
+        show_weekends: true
+        title_ru: График смен операторов
+
+    # ValueTable for schedule data
+    value_tables:
+      - name: ЖурналСмен
+        columns:
+          - name: Оператор
+            type: string
+            length: 100
+          - name: ДатаНачала
+            type: date
+          - name: ДатаОкончания
+            type: date
+          - name: ТипСмены
+            type: string
+            length: 50
+          - name: Комментарий
+            type: string
+
+    elements:
+      # Header with title and statistics
+      - type: UsualGroup
+        name: ГруппаШапка
+        group_direction: Horizontal
+        representation: WeakSeparation
+        child_items:
+          - type: LabelDecoration
+            name: Заголовок
+            title_ru: "РАСПИСАНИЕ ОПЕРАТОРОВ"
+            title_uk: "РОЗКЛАД ОПЕРАТОРІВ"
+            font:
+              bold: true
+              height: 14
+          - type: LabelDecoration
+            name: РазделительШапка
+            title: " "
+            width: 3
+          - type: LabelField
+            name: ВсегоСмен
+            attribute: ВсегоСмен
+            title_ru: "Смен:"
+          - type: LabelField
+            name: ОператоровНаЛинии
+            attribute: ОператоровНаЛинии
+            title_ru: "На линии:"
+          - type: LabelField
+            name: СреднееВремяСмены
+            attribute: СреднееВремяСмены
+            title_ru: "Сред.время:"
+
+      # Toolbar
+      - type: UsualGroup
+        name: ГруппаТулбар
+        group_direction: Horizontal
+        representation: None
+        child_items:
+          - type: InputField
+            name: ВыборДаты
+            attribute: ТекущаяДата
+            width: 12
+            title_ru: "Дата:"
+            events:
+              OnChange: ДатаПриИзменении
+          - type: Button
+            name: КнопкаНазад
+            command: ПредыдущийДень
+          - type: Button
+            name: КнопкаВперед
+            command: СледующийДень
+          - type: Button
+            name: КнопкаОбновить
+            command: Обновить
+          - type: Button
+            name: КнопкаДобавитьСмену
+            command: ДобавитьСмену
+
+      # Main content: Calendar + Planner + Details
+      - type: UsualGroup
+        name: ГруппаКонтент
+        group_direction: Horizontal
+        child_items:
+          # Left: Calendar for date selection
+          - type: CalendarField
+            name: КалендарьВыбора
+            attribute: ТекущаяДата
+            width: 12
+            selection_mode: Single
+            events:
+              Selection: КалендарьВыбор
+
+          # Center: Planner (main feature showcase)
+          - type: PlannerField
+            name: ПланировщикОператоров
+            attribute: Планировщик
+            width: 60
+            height: 18
+            enable_drag: true
+            events:
+              Selection: ПланировщикВыбор
+              Drag: ПланировщикПеретаскивание
+              DragCheck: ПланировщикПроверкаПеретаскивания
+
+          # Right: Selected item details
+          - type: UsualGroup
+            name: ГруппаДетали
+            group_direction: Vertical
+            representation: StrongSeparation
+            child_items:
+              - type: LabelDecoration
+                name: ЗаголовокДетали
+                title_ru: "Детали смены"
+                title_uk: "Деталі зміни"
+                font:
+                  bold: true
+              - type: InputField
+                name: ВыбранныйОператор
+                attribute: ВыбранныйОператор
+                title_ru: "Оператор"
+                read_only: true
+              - type: InputField
+                name: ВыбранныйТипСмены
+                attribute: ВыбранныйТипСмены
+                title_ru: "Тип смены"
+                read_only: true
+              - type: InputField
+                name: ВыбранноеВремя
+                attribute: ВыбранноеВремя
+                title_ru: "Время"
+                read_only: true
+              - type: InputField
+                name: ВыбраннаяДлительность
+                attribute: ВыбраннаяДлительность
+                title_ru: "Длительность (ч)"
+                read_only: true
+
+      # Schedule table (secondary view)
+      - type: UsualGroup
+        name: ГруппаТаблица
+        group_direction: Vertical
+        representation: WeakSeparation
+        collapsed: true
+        child_items:
+          - type: LabelDecoration
+            name: ЗаголовокТаблицы
+            title_ru: "Табличное представление"
+            font:
+              bold: true
+          - type: Table
+            name: ТаблицаСмен
+            tabular_section: ЖурналСмен
+            height: 6
+            events:
+              OnActivateRow: ТаблицаСменПриАктивизацииСтроки
+            columns:
+              - name: Оператор
+                attribute: ЖурналСмен.Оператор
+                width: 20
+                title_ru: "Оператор"
+              - name: ДатаНачала
+                attribute: ЖурналСмен.ДатаНачала
+                width: 15
+                title_ru: "Начало"
+              - name: ДатаОкончания
+                attribute: ЖурналСмен.ДатаОкончания
+                width: 15
+                title_ru: "Окончание"
+              - name: ТипСмены
+                attribute: ЖурналСмен.ТипСмены
+                width: 12
+                title_ru: "Тип смены"
+
+    commands:
+      - name: Обновить
+        title_ru: Обновить
+        title_uk: Оновити
+        handler: ОбновитьКоманда
+        picture: StdPicture.Refresh
+
+      - name: ПредыдущийДень
+        title_ru: "< Назад"
+        title_uk: "< Назад"
+        handler: ПредыдущийДеньКоманда
+        picture: StdPicture.MoveLeft
+
+      - name: СледующийДень
+        title_ru: "Вперед >"
+        title_uk: "Вперед >"
+        handler: СледующийДеньКоманда
+        picture: StdPicture.MoveRight
+
+      - name: ДобавитьСмену
+        title_ru: Добавить смену
+        title_uk: Додати зміну
+        handler: ДобавитьСменуКоманда
+        picture: StdPicture.CreateListItem

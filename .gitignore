@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd.bak
+
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# Logs
+*.log
+
+# Generated/Temporary
+tmp/
+output/
+_snapshot/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/

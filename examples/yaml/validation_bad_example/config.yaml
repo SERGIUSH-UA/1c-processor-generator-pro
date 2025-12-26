@@ -1,0 +1,43 @@
+processor:
+  name: НеправильныйПример
+  platform_version: '2.18'
+  synonym:
+    ru: Неправильный пример (для демонстрации Семантична перевірка)
+    uk: Неправильний приклад (для демонстрації Семантична перевірка)
+validation:
+  syntax_check_enabled: true
+  semantic_check_enabled: true
+  check_incorrect_references: true
+  check_handlers_existence: true
+  check_empty_handlers: true
+  check_unreference_procedures: true
+attributes:
+  - name: ТестовыйРеквизит
+    type: string
+  - name: Контрагент
+    type: CatalogRef.Контрагенты
+    synonym:
+      ru: Контрагент
+
+forms:
+  - name: Форма
+    default: true
+    properties:
+      title:
+        ru: Неправильный пример
+      auto_title: false
+    events:
+      OnOpen: ПриОткрытии
+    commands:
+    - name: ТестоваяКоманда
+      handler: ТестоваяКоманда
+      title:
+        ru: Тестовая команда
+        uk: Тестова команда
+    elements:
+      - type: InputField
+        name: ТестовыйРеквизитПоле
+        attribute: ТестовыйРеквизит
+      - type: Button
+        name: ТестоваяКнопка
+        command: ТестоваяКоманда

@@ -1,0 +1,19 @@
+placeholders:
+  - name: "{{UserName}}"
+    bsl_value: "СокрЛП(ИмяПользователя())"
+  - name: "{{CurrentDate}}"
+    bsl_value: 'Формат(ТекущаяДата(), "ДФ=''dd MMMM yyyy''")'
+  - name: "{{CurrentTime}}"
+    bsl_value: 'Формат(ТекущаяДата(), "ДФ=''HH:mm:ss''")'
+  - name: "{{UserMessage}}"
+    bsl_value: '"Добро пожаловать в HTML Dashboard!"'
+  - name: "{{PlatformVersion}}"
+    bsl_value: '"8.3.25"'
+  - name: "{{WorkMode}}"
+    bsl_value: '"Тонкий клиент"'
+
+assets:
+  styles:
+    - file: styles.css
+  scripts:
+    - file: scripts.js

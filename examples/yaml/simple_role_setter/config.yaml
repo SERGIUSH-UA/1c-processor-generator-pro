@@ -1,0 +1,49 @@
+processor:
+  name: УстановкаРоли
+  platform_version: '2.18'
+  synonym:
+    ru: Установка роли пользователя
+    uk: Встановлення ролі користувача
+attributes:
+  - name: Пользователь
+    type: CatalogRef.Пользователи
+    synonym:
+      ru: Пользователь
+      uk: Користувач
+  - name: Роль
+    type: string
+    length: 100
+    synonym:
+      ru: Роль
+      uk: Роль
+
+forms:
+  - name: Форма
+    default: true
+    properties:
+      title:
+        ru: Установка роли пользователя
+        uk: Встановлення ролі користувача
+      auto_title: false
+    events:
+      OnOpen: ПриОткрытии
+    commands:
+    - name: УстановитьРоль
+      handler: УстановитьРоль
+      shortcut: F5
+      title:
+        ru: Установить роль
+        uk: Встановити роль
+      tooltip:
+        ru: Установить выбранную роль пользователю
+        uk: Встановити вибрану роль користувачу
+    elements:
+      - type: InputField
+        name: ПользовательПоле
+        attribute: Пользователь
+      - type: InputField
+        name: РольПоле
+        attribute: Роль
+      - type: Button
+        name: УстановитьКнопка
+        command: УстановитьРоль

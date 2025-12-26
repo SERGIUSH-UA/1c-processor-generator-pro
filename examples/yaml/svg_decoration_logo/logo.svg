@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="80" fill="#2196F3" rx="8"/>
+
+  <!-- Circle icon -->
+  <circle cx="40" cy="40" r="20" fill="#FFFFFF"/>
+  <path d="M 40 25 L 40 40 L 50 50" stroke="#2196F3" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+  <!-- Text -->
+  <text x="75" y="45" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF">
+    1C-EPF
+  </text>
+  <text x="75" y="65" font-family="Arial, sans-serif" font-size="12" fill="#E3F2FD">
+    Generator
+  </text>
+</svg>

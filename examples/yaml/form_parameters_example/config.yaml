@@ -1,0 +1,127 @@
+processor:
+  name: ФормаСПараметрами
+  platform_version: '2.11'
+  synonym:
+    ru: Пример параметров формы
+    uk: Приклад параметрів форми
+    en: Form Parameters Example
+attributes:
+  - name: ReportData
+    type: string
+    synonym:
+      ru: Данные отчета
+      uk: Дані звіту
+forms:
+  - name: ГлавнаяФорма
+    default: true
+    elements:
+      - type: LabelDecoration
+        name: InstructionLabel
+        title:
+          ru: Нажмите 'Открыть фильтр' чтобы выбрать параметры
+          uk: Натисніть 'Відкрити фільтр' щоб вибрати параметри
+          en: Click 'Open Filter' to select parameters
+      - type: InputField
+        name: ReportDataField
+        attribute: ReportData
+        read_only: true
+        multi_line: true
+        height: 10
+        title:
+          ru: Результат
+          uk: Результат
+          en: Result
+    commands:
+      - name: OpenFilter
+        handler: OpenFilter
+        picture: StdPicture.InputFieldOpen
+        title:
+          ru: Открыть фильтр
+          uk: Відкрити фільтр
+          en: Open Filter
+  - name: ФормаФильтра
+    default: false
+    parameters:
+      - name: ПараметрДата
+        type: date
+        key_parameter: true
+        synonym:
+          ru: Дата фильтра
+          uk: Дата фільтру
+          en: Filter Date
+      - name: ПараметрРежим
+        type: boolean
+        synonym:
+          ru: Режим просмотра
+          uk: Режим перегляду
+          en: View Mode
+      - name: ПараметрРегион
+        type: string
+        synonym:
+          ru: Регион по умолчанию
+          uk: Регіон за замовчуванням
+          en: Default Region
+    # Form attributes to store parameter values (copied in OnCreateAtServer)
+    form_attributes:
+      - name: FilterDate
+        type: date
+        synonym:
+          ru: Дата
+          uk: Дата
+      - name: ViewMode
+        type: boolean
+        synonym:
+          ru: Режим просмотра
+          uk: Режим перегляду
+      - name: DefaultRegion
+        type: string
+        synonym:
+          ru: Регион
+          uk: Регіон
+    properties:
+      WindowOpeningMode: LockOwnerWindow
+      CommandBarLocation: Bottom
+    events:
+      OnCreateAtServer: FilterFormOnCreateAtServer
+      OnOpen: FilterFormOnOpen
+    elements:
+      - type: InputField
+        name: DateField
+        attribute: FilterDate
+        title:
+          ru: Дата
+          uk: Дата
+          en: Date
+      - type: CheckBoxField
+        name: ViewModeCheckbox
+        attribute: ViewMode
+        title:
+          ru: Режим просмотра
+          uk: Режим перегляду
+          en: View Mode
+      - type: InputField
+        name: RegionField
+        attribute: DefaultRegion
+        title:
+          ru: Регион
+          uk: Регіон
+          en: Region
+      - type: LabelDecoration
+        name: HelpText
+        title:
+          ru: Параметры были переданы при открытии формы
+          uk: Параметри були передані при відкритті форми
+          en: Parameters were passed when opening the form
+    commands:
+      - name: ApplyFilter
+        handler: ApplyFilter
+        title:
+          ru: Применить
+          uk: Застосувати
+          en: Apply
+      - name: CancelFilter
+        handler: CancelFilter
+        title:
+          ru: Отмена
+          uk: Скасувати
+          en: Cancel

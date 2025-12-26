@@ -1,0 +1,53 @@
+processor:
+  name: ТестированиеТаблицы
+  comment: Приклад обробки для демонстрації тестування форм з таблицею
+  platform_version: '2.11'
+  synonym:
+    ru: Тестирование Таблицы
+    uk: Тестування Таблиці
+forms:
+  - name: Форма
+    default: true
+    value_tables:
+      - name: Данные
+        columns:
+          - name: Номер
+            type: number
+          - name: Описание
+            type: string
+    commands:
+      - name: ДобавитьЗаписи
+        handler: ДобавитьЗаписи
+        title:
+          ru: Добавить 10 записей
+          uk: Додати 10 записів
+      - name: УдалитьПоследнюю
+        handler: УдалитьПоследнюю
+        title:
+          ru: Удалить последнюю
+          uk: Видалити останній
+    elements:
+      - type: UsualGroup
+        name: ГрупаКнопок
+        group: HorizontalIfPossible
+        elements:
+          - type: Button
+            name: КнопкаДобавить
+            command: ДобавитьЗаписи
+          - type: Button
+            name: КнопкаУдалить
+            command: УдалитьПоследнюю
+        title:
+          ru: Команды
+          uk: Команди
+      - type: Table
+        name: ТаблицаДанных
+        tabular_section: Данные
+        columns:
+          - name: Номер
+            width: 10
+          - name: Описание
+            width: 30
+    title:
+      ru: Главная форма
+      uk: Головна форма

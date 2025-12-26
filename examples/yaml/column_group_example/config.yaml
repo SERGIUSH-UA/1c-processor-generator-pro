@@ -1,0 +1,196 @@
+processor:
+  name: ПримерГрупповКолонок
+  object_type: ExternalDataProcessor
+  synonym:
+    ru: Пример групп колонок
+    uk: Приклад груп колонок
+    en: Column Groups Example
+tabular_sections:
+  - name: Operations
+    columns:
+      - name: Operation
+        type: string
+        length: 150
+        synonym:
+          ru: Операция
+          uk: Операція
+          en: Operation
+      - name: Date
+        type: date
+        synonym:
+          ru: Дата
+          uk: Дата
+          en: Date
+      - name: Time
+        type: string
+        length: 8
+        synonym:
+          ru: Время
+          uk: Час
+          en: Time
+      - name: Debit
+        type: number
+        synonym:
+          ru: Дебет
+          uk: Дебет
+          en: Debit
+      - name: Credit
+        type: number
+        synonym:
+          ru: Кредит
+          uk: Кредит
+          en: Credit
+      - name: Total
+        type: number
+        synonym:
+          ru: Итого
+          uk: Підсумок
+          en: Total
+      - name: Status
+        type: string
+        length: 50
+        synonym:
+          ru: Статус
+          uk: Статус
+          en: Status
+    synonym:
+      ru: Операции
+      uk: Операції
+      en: Operations
+forms:
+  - name: Форма
+    default: true
+    commands:
+      - name: LoadData
+        handler: LoadData
+        picture: StdPicture.Refresh
+        title:
+          ru: Загрузить данные
+          uk: Завантажити дані
+          en: Load Data
+      - name: Calculate
+        handler: Calculate
+        picture: StdPicture.GenerateReport
+        title:
+          ru: Рассчитать итоги
+          uk: Розрахувати підсумки
+          en: Calculate Totals
+    elements:
+      - type: LabelDecoration
+        name: Instructions
+        title: "Пример групування колонок таблиці:\n1. \"Дата і час\" - горизонтальна
+          група з 2 колонок\n2. \"Суми\" - горизонтальна група з 3 колонок, вирівнювання
+          Right\n3. \"Статус\" - окрема колонка поза групами\n"
+        width: 80
+      - type: Table
+        name: OperationsTable
+        tabular_section: Operations
+        height: 15
+        events:
+          OnActivateRow: OperationsTableOnActivateRow
+        elements:
+          - type: LabelField
+            name: Operation
+            attribute: Operation
+            width: 25
+          - type: ColumnGroup
+            name: DateTimeGroup
+            group_layout: Horizontal
+            show_in_header: true
+            horizontal_align: Center
+            elements:
+              - type: LabelField
+                name: Date
+                attribute: Date
+                width: 12
+                title_location: None
+              - type: LabelField
+                name: Time
+                attribute: Time
+                width: 10
+                title_location: None
+            title:
+              ru: Дата и время
+              uk: Дата і час
+              en: Date and Time
+            tooltip:
+              ru: Дата и время операции
+              uk: Дата і час операції
+              en: Operation date and time
+          - type: ColumnGroup
+            name: AmountsGroup
+            group_layout: Horizontal
+            show_in_header: true
+            horizontal_align: Right
+            elements:
+              - type: LabelField
+                name: Debit
+                attribute: Debit
+                width: 12
+                title_location: None
+              - type: LabelField
+                name: Credit
+                attribute: Credit
+                width: 12
+                title_location: None
+              - type: LabelField
+                name: Total
+                attribute: Total
+                width: 12
+                title_location: None
+            title:
+              ru: Суммы
+              uk: Суми
+              en: Amounts
+            tooltip:
+              ru: Дебет, Кредит и Итого
+              uk: Дебет, Кредит та Підсумок
+              en: Debit, Credit and Total
+          - type: LabelField
+            name: Status
+            attribute: Status
+            width: 15
+      - type: UsualGroup
+        name: SummaryGroup
+        show_title: true
+        group_direction: Horizontal
+        elements:
+          - type: LabelDecoration
+            name: TotalDebitLabel
+            title: 'Всього дебет:'
+            width: 15
+          - type: InputField
+            name: TotalDebit
+            attribute: TotalDebit
+            read_only: true
+            width: 12
+          - type: LabelDecoration
+            name: TotalCreditLabel
+            title: 'Всього кредит:'
+            width: 15
+          - type: InputField
+            name: TotalCredit
+            attribute: TotalCredit
+            read_only: true
+            width: 12
+        title:
+          ru: Итоги
+          uk: Підсумки
+          en: Totals
+    title:
+      ru: Групування колонок таблиці
+      uk: Групування колонок таблиці
+      en: Table Column Grouping
+attributes:
+  - name: TotalDebit
+    type: number
+    synonym:
+      ru: Всего дебет
+      uk: Всього дебет
+      en: Total Debit
+  - name: TotalCredit
+    type: number
+    synonym:
+      ru: Всего кредит
+      uk: Всього кредит
+      en: Total Credit

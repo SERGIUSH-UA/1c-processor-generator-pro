@@ -1,0 +1,53 @@
+processor:
+  name: ДокументацияПример
+  synonym:
+    ru: Пример документации
+    uk: Приклад документації
+    en: Documentation Example
+attributes:
+  - name: Number1
+    type: number
+    synonym:
+      ru: Число 1
+      uk: Число 1
+      en: Number 1
+  - name: Number2
+    type: number
+    synonym:
+      ru: Число 2
+      uk: Число 2
+      en: Number 2
+  - name: Result
+    type: number
+    synonym:
+      ru: Результат
+      uk: Результат
+      en: Result
+forms:
+  - name: Форма
+    default: true
+    properties:
+      auto_title: true
+    events:
+      OnOpen: ПриОткрытии
+    elements:
+      - type: InputField
+        name: Number1Field
+        attribute: Number1
+      - type: InputField
+        name: Number2Field
+        attribute: Number2
+      - type: InputField
+        name: ResultField
+        attribute: Result
+        read_only: true
+      - type: Button
+        name: CalculateButton
+        command: Calculate
+    commands:
+      - name: Calculate
+        handler: Calculate
+        title:
+          ru: Вычислить
+          uk: Обчислити
+          en: Calculate

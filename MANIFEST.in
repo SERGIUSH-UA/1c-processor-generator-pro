@@ -1,0 +1,11 @@
+include LICENSE
+include README.md
+include CHANGELOG.md
+
+recursive-include 1c_processor_generator *.pyd
+recursive-include 1c_processor_generator *.j2
+recursive-include 1c_processor_generator *.json
+recursive-include 1c_processor_generator *.svg
+recursive-include 1c_processor_generator *.png
+
+include 1c_processor_generator/pro/LICENSE

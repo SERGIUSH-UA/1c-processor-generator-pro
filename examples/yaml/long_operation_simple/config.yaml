@@ -1,0 +1,72 @@
+processor:
+  name: ПростойИмпорт
+  platform_version: '2.11'
+  synonym:
+    ru: Простой импорт данных
+    uk: Простій імпорт даних
+    en: Simple Data Import
+validation:
+  syntax_check_enabled: false
+attributes:
+  - name: FilePath
+    type: string
+    length: 500
+    synonym:
+      ru: Путь к файлу
+      uk: Шлях до файлу
+      en: File path
+  - name: RowsProcessed
+    type: number
+    digits: 10
+    fraction_digits: 0
+    synonym:
+      ru: Обработано строк
+      uk: Оброблено рядків
+      en: Rows processed
+forms:
+  - name: Форма
+    default: true
+    commands:
+      - name: Import
+        handler: ImportКнопка
+        picture: StdPicture.OpenFile
+        long_operation: true
+        long_operation_settings:
+          show_progress: true
+          allow_cancel: true
+          timeout_seconds: 300
+          output_progress: true
+          progress_message:
+            uk: Імпорт даних...
+            en: Importing data...
+        title:
+          ru: Импортировать
+          uk: Імпортувати
+          en: Import
+    elements:
+      - type: InputField
+        name: FilePathField
+        attribute: FilePath
+        title:
+          ru: Файл
+          uk: Файл
+          en: File
+      - type: InputField
+        name: RowsProcessedField
+        attribute: RowsProcessed
+        read_only: true
+        title:
+          ru: Обработано
+          uk: Оброблено
+          en: Processed
+      - type: Button
+        name: ImportButton
+        command: Import
+        title:
+          ru: Импортировать
+          uk: Імпортувати
+          en: Import
+    title:
+      ru: Импорт данных
+      uk: Імпорт даних
+      en: Data Import

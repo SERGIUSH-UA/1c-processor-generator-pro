@@ -1,0 +1,48 @@
+# Example: SVG Logo with PictureDecoration
+# Demonstrates v2.23.0+ feature: Local Pictures from SVG files
+
+processor:
+  name: ПримерSVGЛоготип
+  synonym:
+    ru: Пример SVG логотипа
+    uk: Приклад SVG логотипу
+    en: SVG Logo Example
+
+attributes:
+  - name: Message
+    type: string
+    synonym:
+      ru: Сообщение
+      uk: Повідомлення
+      en: Message
+
+forms:
+  - name: Форма
+    default: true
+    elements:
+      # Company Logo - SVG will be converted to local Picture.png
+      # v2.23.1+: Separate sizing for PNG generation and form display
+      # svg_width/svg_height: PNG output size in PIXELS
+      # form_width/form_height: Form display size in CHARACTER/ROW units (optional)
+      - type: PictureDecoration
+        name: CompanyLogo
+        svg_source: logo.svg
+        svg_width: 200       # PNG output: 200x80 pixels (high quality)
+        svg_height: 80
+        form_width: 25       # Form display: 25 characters wide
+        form_height: 10      # Form display: 10 rows tall
+        picture_size: Proportionally   # How to scale (Proportionally/RealSize/Stretch)
+        hyperlink: false
+
+      # Message field
+      - type: InputField
+        name: MessageField
+        attribute: Message
+
+    commands:
+      - name: ShowMessage
+        title:
+          ru: Показать сообщение
+          uk: Показати повідомлення
+          en: Show Message
+        handler: ShowMessageHandler

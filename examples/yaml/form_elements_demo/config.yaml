@@ -1,0 +1,256 @@
+processor:
+  name: ДемоЭлементовФормы
+  platform_version: '2.11'
+  synonym:
+    ru: Демо элементов формы
+    uk: Демо елементів форми
+attributes:
+  - name: ТипОперации
+    type: string
+    length: 20
+    synonym:
+      ru: Тип операции
+      uk: Тип операції
+  - name: ВыполнитьПроверку
+    type: boolean
+    synonym:
+      ru: Выполнить проверку
+      uk: Виконати перевірку
+  - name: ВыполнитьОбработку
+    type: boolean
+    synonym:
+      ru: Выполнить обработку
+      uk: Виконати обробку
+  - name: РежимРаботы
+    type: string
+    length: 50
+    synonym:
+      ru: Режим работы
+      uk: Режим роботи
+  - name: Статус
+    type: string
+    length: 100
+    synonym:
+      ru: Статус
+      uk: Статус
+  - name: ПоискСтроки
+    type: string
+    length: 150
+    synonym:
+      ru: Поиск
+      uk: Пошук
+forms:
+  - name: Форма
+    default: true
+    properties:
+      title:
+        ru: Демонстрация новых элементов формы
+        uk: Демонстрація нових елементів форми
+      auto_title: false
+    events:
+      OnOpen: ПриОткрытии
+    elements:
+      - type: UsualGroup
+        name: ГруппаТипОперации
+        title: Выбор типа операции
+        show_title: true
+        group_direction: Vertical
+        representation: None
+        child_items:
+          - type: RadioButtonField
+            name: ТипОперацииПоле
+            attribute: ТипОперации
+            title_location: None
+            radio_button_type: Tumbler
+            choice_list:
+              - value: Импорт
+                value_type: xs:string
+                presentation:
+                  ru: Импорт данных
+                  uk: Імпорт даних
+              - value: Экспорт
+                value_type: xs:string
+                presentation:
+                  ru: Экспорт данных
+                  uk: Експорт даних
+              - value: Обмен
+                value_type: xs:string
+                presentation:
+                  ru: Обмен данными
+                  uk: Обмін даними
+            events:
+              OnChange: ТипОперацииПриИзменении
+      - type: UsualGroup
+        name: ГруппаНастройки
+        title: Настройки обработки
+        show_title: true
+        group_direction: Vertical
+        representation: None
+        child_items:
+          - type: CheckBoxField
+            name: ВыполнитьПроверкуПоле
+            attribute: ВыполнитьПроверку
+            title_location: Right
+            width: 30
+            events:
+              OnChange: ВыполнитьПроверкуПриИзменении
+          - type: CheckBoxField
+            name: ВыполнитьОбработкуПоле
+            attribute: ВыполнитьОбработку
+            title_location: Right
+            width: 30
+      - type: UsualGroup
+        name: ГруппаРежим
+        title: Режим работы
+        show_title: true
+        group_direction: Vertical
+        representation: None
+        child_items:
+          - type: InputField
+            name: РежимРаботыПоле
+            attribute: РежимРаботы
+            title_location: Top
+            width: 40
+            horizontal_stretch: false
+            choice_list:
+              - value: Автоматический
+                value_type: xs:string
+                presentation:
+                  ru: Автоматический
+                  uk: Автоматичний
+              - value: Ручной
+                value_type: xs:string
+                presentation:
+                  ru: Ручной
+                  uk: Ручний
+              - value: Пошаговый
+                value_type: xs:string
+                presentation:
+                  ru: Пошаговый
+                  uk: Покроковий
+            events:
+              OnChange: РежимРаботыПриИзменении
+      - type: UsualGroup
+        name: ГруппаПоиск
+        title: Поиск данных
+        show_title: true
+        group_direction: Vertical
+        representation: None
+        child_items:
+          - type: InputField
+            name: ПоискСтрокиПоле
+            attribute: ПоискСтроки
+            title_location: Top
+            width: 50
+            events:
+              OnChange: ПоискСтрокиПриИзменении
+            input_hint:
+              ru: Введите текст для поиска...
+              uk: Введіть текст для пошуку...
+      - type: UsualGroup
+        name: ГруппаСтатус
+        title: Результаты
+        show_title: true
+        group_direction: Vertical
+        representation: None
+        child_items:
+          - type: LabelField
+            name: СтатусПоле
+            attribute: Статус
+      - type: UsualGroup
+        name: ГруппаКнопки
+        title: ''
+        show_title: false
+        group_direction: Horizontal
+        representation: None
+        child_items:
+          - type: Button
+            name: ВыполнитьКнопка
+            command: Выполнить
+            width: 20
+          - type: Button
+            name: ОчиститьКнопка
+            command: Очистить
+            width: 20
+    auto_command_bar:
+      - type: Popup
+        name: ДополнительноМеню
+        picture: StdPicture.Information
+        representation: PictureAndText
+        child_items:
+          - type: Button
+            name: ЭкспортКнопка
+            command: Экспорт
+          - type: Button
+            name: ИмпортКнопка
+            command: Импорт
+          - type: Popup
+            name: НастройкиПодменю
+            child_items:
+              - type: Button
+                name: НастройкиОбщиеКнопка
+                command: НастройкиОбщие
+              - type: Button
+                name: НастройкиПользователяКнопка
+                command: НастройкиПользователя
+            title:
+              ru: Настройки
+              uk: Налаштування
+        title:
+          ru: Дополнительно
+          uk: Додатково
+    commands:
+      - name: Выполнить
+        handler: ВыполнитьОбработку
+        picture: StdPicture.ExecuteTask
+        title:
+          ru: Выполнить
+          uk: Виконати
+        tooltip:
+          ru: Выполнить обработку с выбранными параметрами
+          uk: Виконати обробку з обраними параметрами
+      - name: Очистить
+        handler: ОчиститьФорму
+        picture: StdPicture.InputFieldClear
+        title:
+          ru: Очистить
+          uk: Очистити
+        tooltip:
+          ru: Очистить все поля формы
+          uk: Очистити всі поля форми
+      - name: Экспорт
+        handler: ЭкспортДанных
+        picture: StdPicture.SaveFile
+        title:
+          ru: Экспорт
+          uk: Експорт
+        tooltip:
+          ru: Экспорт данных
+          uk: Експорт даних
+      - name: Импорт
+        handler: ИмпортДанных
+        picture: StdPicture.OpenFile
+        title:
+          ru: Импорт
+          uk: Імпорт
+        tooltip:
+          ru: Импорт данных
+          uk: Імпорт даних
+      - name: НастройкиОбщие
+        handler: НастройкиОбщие
+        picture: StdPicture.CustomizeForm
+        title:
+          ru: Общие настройки
+          uk: Загальні налаштування
+        tooltip:
+          ru: Общие настройки системы
+          uk: Загальні налаштування системи
+      - name: НастройкиПользователя
+        handler: НастройкиПользователя
+        picture: StdPicture.User
+        title:
+          ru: Настройки пользователя
+          uk: Налаштування користувача
+        tooltip:
+          ru: Настройки текущего пользователя
+          uk: Налаштування поточного користувача

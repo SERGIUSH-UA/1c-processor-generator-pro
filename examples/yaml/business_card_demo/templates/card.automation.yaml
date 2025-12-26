@@ -1,0 +1,19 @@
+placeholders:
+  - name: "{{ФИО}}"
+    attribute: ФИО
+
+  - name: "{{Должность}}"
+    attribute: Должность
+
+  - name: "{{Телефон}}"
+    attribute: Телефон
+
+  - name: "{{Email}}"
+    attribute: Email
+
+  - name: "{{Компания}}"
+    attribute: Компания
+
+assets:
+  styles:
+    - file: styles.css

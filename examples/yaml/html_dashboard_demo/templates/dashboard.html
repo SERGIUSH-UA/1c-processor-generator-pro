@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>Привет, {{UserName}}!</h1>
+            <span class="date">{{CurrentDate}}</span>
+        </div>
+
+        <div class="cards">
+            <div class="card blue">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                        <path d="M3 13h2v8H3v-8zm4-5h2v13H7V8zm4-5h2v18h-2V3zm4 9h2v9h-2v-9zm4-4h2v13h-2V8z"/>
+                    </svg>
+                </div>
+                <div class="card-content">
+                    <h3>Статус системы</h3>
+                    <p class="value">Активна</p>
+                </div>
+            </div>
+
+            <div class="card green">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+                    </svg>
+                </div>
+                <div class="card-content">
+                    <h3>Время сервера</h3>
+                    <p class="value" id="serverTime">{{CurrentTime}}</p>
+                </div>
+            </div>
+
+            <div class="card orange">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/>
+                    </svg>
+                </div>
+                <div class="card-content">
+                    <h3>Ваше сообщение</h3>
+                    <p class="value message">{{UserMessage}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="counter-section">
+            <h2>Интерактивный счётчик</h2>
+            <div class="counter">
+                <button class="btn minus" onclick="changeCounter(-1)">-</button>
+                <span class="counter-value" id="counterValue">0</span>
+                <button class="btn plus" onclick="changeCounter(1)">+</button>
+            </div>
+            <button class="btn reset" onclick="resetCounter()">Сбросить</button>
+        </div>
+
+        <div class="info-section">
+            <h2>Информация о сеансе</h2>
+            <table class="info-table">
+                <tr>
+                    <td>Пользователь:</td>
+                    <td><strong>{{UserName}}</strong></td>
+                </tr>
+                <tr>
+                    <td>Версия платформы:</td>
+                    <td>{{PlatformVersion}}</td>
+                </tr>
+                <tr>
+                    <td>Режим работы:</td>
+                    <td>{{WorkMode}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

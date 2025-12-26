@@ -1,0 +1,24 @@
+processor:
+  name: ТестДинамическогоСписка
+  synonym:
+    ru: Тест динамического списка
+    uk: Тест динамічного списку
+  platform_version: '2.11'
+forms:
+  - name: Форма
+    default: true
+    dynamic_lists:
+      - name: ПростойСписок
+        manual_query: true
+        query_text: "ВЫБРАТЬ\n  \"Тест\" КАК Поле1\n"
+        use_always_fields:
+          - Поле1
+        columns:
+          - field: Поле1
+            title:
+              ru: Поле 1
+              uk: Поле 1
+        title:
+          ru: Простой список
+          uk: Простий список
+    elements: []
