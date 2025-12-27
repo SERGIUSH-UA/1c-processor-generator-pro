@@ -68,7 +68,21 @@ def _load_module_from_path(pyd_path: Path, module_name: str) -> Any:
         raise ImportError(f"Failed to create module spec for {pyd_path}")
 
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    try:
+        spec.loader.exec_module(module)
+    except OSError as e:
+                                                                      
+        error_msg = str(e).lower()
+        if "dll load failed" in error_msg or "не найден" in error_msg or "not found" in error_msg:
+            raise ImportError(
+                f"Failed to load {pyd_path.name}: {e}\n\n"
+                f"This usually means Visual C++ Redistributable is not installed.\n\n"
+                f"SOLUTION: Download and install from:\n"
+                f"  64-bit: https://aka.ms/vs/17/release/vc_redist.x64.exe\n"
+                f"  32-bit: https://aka.ms/vs/17/release/vc_redist.x86.exe\n\n"
+                f"After installation, restart your terminal and try again."
+            ) from e
+        raise
     return module
 
 def _get_module(logical_name: str) -> Any:
