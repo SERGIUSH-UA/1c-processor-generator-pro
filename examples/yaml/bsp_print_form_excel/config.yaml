@@ -1,0 +1,49 @@
+# BSP Print Form Example with Excel Template (v2.63.0+)
+#
+# This example demonstrates automatic Excel → MXL conversion
+# for 1C print forms. The Excel file is auto-converted during generation.
+#
+# Requirements: pip install openpyxl>=3.1.0
+#
+# Generate the Excel template first:
+#   python create_template.py
+#
+# Then generate EPF:
+#   python -m 1c_processor_generator yaml \
+#     --config config.yaml \
+#     --handlers-file handlers.bsl \
+#     --output output \
+#     --output-format epf
+
+processor:
+  name: ПечатьКарточкиНоменклатуры
+  synonym:
+    ru: Карточка номенклатуры
+    uk: Картка номенклатури
+    en: Product Card
+
+# BSP Integration Configuration
+bsp:
+  type: print_form
+  version: "1.0"
+  safe_mode: true
+  information: Зовнішня друкована форма картки номенклатури з Excel шаблоном
+
+  targets:
+    - Справочник.Номенклатура
+
+  commands:
+    - id: КарточкаНоменклатуры
+      title:
+        ru: Карточка номенклатуры
+        uk: Картка номенклатури
+        en: Product Card
+      usage: server_method
+      modifier: ПечатьMXL
+      template_name: ПФ_MXL_КарточкаНоменклатуры
+
+# Excel template - auto-converted to MXL!
+templates:
+  - name: ПФ_MXL_КарточкаНоменклатуры
+    type: SpreadsheetDocument
+    file: templates/product_card.xlsx

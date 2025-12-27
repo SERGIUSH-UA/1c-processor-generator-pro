@@ -274,3 +274,4 @@ setup.py
 1c_processor_generator/sync/handlers/template.py
 1c_processor_generator/sync/handlers/value_table.py
 docs/feature_registry.json
+examples/yaml/bsp_print_form_excel/create_template.py

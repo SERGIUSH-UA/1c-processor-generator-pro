@@ -17,7 +17,7 @@ processor:
     uk: Друк рахунку
 
 bsp:
-  type: PrintForm
+  type: print_form
   version: "1.0"
   targets:
     - Документ.СчетНаОплатуПокупателю
@@ -26,7 +26,7 @@ bsp:
       title:
         ru: Счет на оплату
         uk: Рахунок на оплату
-      usage: CallOfServerMethod
+      usage: server_method
       modifier: ПечатьMXL
 ```
 
@@ -53,7 +53,7 @@ bsp:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `type` | string | `PrintForm` for print forms |
+| `type` | string | `print_form` for print forms |
 | `version` | string | Version in "X.Y" format (e.g., "1.0") |
 | `targets` | list | Full metadata names (e.g., `Документ.СчетНаОплату`) |
 | `commands` | list | At least one command definition |
@@ -69,12 +69,12 @@ bsp:
 
 | Type | Description |
 |------|-------------|
-| `PrintForm` | External print form (most common) |
-| `ObjectFilling` | Fill object with data |
-| `CreationOfRelatedObjects` | Create related documents |
-| `Report` | Context report |
-| `AdditionalProcessing` | Global processing |
-| `AdditionalReport` | Global report |
+| `print_form` | External print form (most common) |
+| `object_filling` | Fill object with data |
+| `creation_of_related` | Create related documents |
+| `report` | Context report |
+| `additional_processor` | Global processing |
+| `additional_report` | Global report |
 
 ---
 
@@ -100,9 +100,9 @@ bsp:
 
 | Value | Description |
 |-------|-------------|
-| `CallOfServerMethod` | Call `Печать()` on server (most common) |
-| `CallOfClientMethod` | Call `Печать()` on client |
-| `OpenForm` | Open processor form |
+| `server_method` | Call `Печать()` on server (most common) |
+| `client_method` | Call `Печать()` on client |
+| `open_form` | Open processor form |
 
 ---
 
@@ -115,15 +115,15 @@ For tabular document (spreadsheet) output:
 **config.yaml:**
 ```yaml
 bsp:
-  type: PrintForm
+  type: print_form
   version: "1.0"
   targets:
-    - Документ.РеsalesalizacияТоваровУслуг
+    - Документ.РеализацияТоваровУслуг
   commands:
-    - id: НакsalaдНая
+    - id: Накладная
       title:
         ru: Накладная
-      usage: CallOfServerMethod
+      usage: server_method
       modifier: ПечатьMXL
 ```
 
@@ -174,7 +174,7 @@ One processor with several print forms:
 **config.yaml:**
 ```yaml
 bsp:
-  type: PrintForm
+  type: print_form
   version: "1.0"
   targets:
     - Документ.ЗаказКлиента
@@ -182,19 +182,19 @@ bsp:
     - id: Счет
       title:
         ru: Счет на оплату
-      usage: CallOfServerMethod
+      usage: server_method
       modifier: ПечатьMXL
 
     - id: СчетФактура
       title:
         ru: Счет-фактура
-      usage: CallOfServerMethod
+      usage: server_method
       modifier: ПечатьMXL
 
     - id: Накладная
       title:
         ru: Товарная накладная
-      usage: CallOfServerMethod
+      usage: server_method
       modifier: ПечатьMXL
 ```
 
@@ -223,7 +223,7 @@ Print form for several document types:
 **config.yaml:**
 ```yaml
 bsp:
-  type: PrintForm
+  type: print_form
   version: "1.0"
   targets:
     - Документ.СчетНаОплатуПокупателю
@@ -233,7 +233,7 @@ bsp:
     - id: УниверсальныйСчет
       title:
         ru: Универсальный счет
-      usage: CallOfServerMethod
+      usage: server_method
       modifier: ПечатьMXL
 ```
 
@@ -269,7 +269,7 @@ For Word document output (contracts, agreements):
 **config.yaml:**
 ```yaml
 bsp:
-  type: PrintForm
+  type: print_form
   version: "1.0"
   targets:
     - Документ.ДоговорКонтрагента
@@ -277,7 +277,7 @@ bsp:
     - id: ДоговорWord
       title:
         ru: Договор (Word)
-      usage: CallOfServerMethod
+      usage: server_method
       # No modifier for Word output
 ```
 
@@ -302,6 +302,141 @@ bsp:
 
 КонецЦикла;
 ```
+
+### Pattern 5: Excel Template (v2.63.0+)
+
+For print forms with Excel-based templates - simplest for LLMs:
+
+**config.yaml:**
+```yaml
+processor:
+  name: ПечатьКарточкиНоменклатуры
+
+bsp:
+  type: print_form
+  version: "1.0"
+  targets:
+    - Справочник.Номенклатура
+  commands:
+    - id: КарточкаНоменклатуры
+      title:
+        ru: Карточка номенклатуры
+        uk: Картка номенклатури
+      usage: server_method
+      modifier: ПечатьMXL
+
+templates:
+  - name: ПФ_MXL_КарточкаНоменклатуры
+    type: SpreadsheetDocument
+    file: templates/card.xlsx  # ← Excel auto-converted to MXL!
+```
+
+**Excel file structure (`templates/card.xlsx`):**
+- Named Range `Header` or `Заголовок` → document header area
+- Named Range `Row` or `Строка` → repeating data row
+- Parameters in cells: `{Код}`, `{Наименование}`, `{Артикул}`
+
+**handlers.bsl:**
+```bsl
+// ПечатьКарточкаНоменклатуры
+// Параметри: МассивОбъектов, ТабличныйДокумент
+
+Макет = ПолучитьМакет("ПФ_MXL_КарточкаНоменклатуры");
+ОбластьЗаголовок = Макет.ПолучитьОбласть("Заголовок");
+ОбластьДанные = Макет.ПолучитьОбласть("Строка");
+
+Для Каждого Ссылка Из МассивОбъектов Цикл
+    ОбластьЗаголовок.Параметры.Наименование = Ссылка.Наименование;
+    ТабличныйДокумент.Вывести(ОбластьЗаголовок);
+
+    ОбластьДанные.Параметры.Код = Ссылка.Код;
+    ОбластьДанные.Параметры.Артикул = Ссылка.Артикул;
+    ТабличныйДокумент.Вывести(ОбластьДанные);
+КонецЦикла;
+```
+
+> **Note:** Excel auto-conversion requires `openpyxl`: `pip install openpyxl>=3.1.0`
+
+### Pattern 6: Programmatic Print (No Template)
+
+For simple cards without external template - pure BSL:
+
+**config.yaml:**
+```yaml
+processor:
+  name: ПечатьКарточкиПрограммно
+
+bsp:
+  type: print_form
+  version: "1.0"
+  targets:
+    - Справочник.Номенклатура
+  commands:
+    - id: КарточкаПрограммно
+      title:
+        ru: Карточка (программно)
+      usage: server_method
+      modifier: ПечатьMXL
+# NO templates: section - everything in BSL!
+```
+
+**handlers.bsl:**
+```bsl
+// ПечатьКарточкаПрограммно
+// Параметри: МассивОбъектов, ТабличныйДокумент
+
+Для Каждого Ссылка Из МассивОбъектов Цикл
+
+    // Розділювач сторінок
+    Если ТабличныйДокумент.ВысотаТаблицы > 0 Тогда
+        ТабличныйДокумент.ВывестиГоризонтальныйРазделительСтраниц();
+    КонецЕсли;
+
+    // Заголовок
+    Область = ТабличныйДокумент.Область(ТабличныйДокумент.ВысотаТаблицы + 1, 1, , 2);
+    Область.Объединить();
+    Область.Текст = "КАРТКА НОМЕНКЛАТУРИ";
+    Область.Шрифт = Новый Шрифт(, 14, Истина);
+    Область.ГоризонтальноеПоложение = ГоризонтальноеПоложение.Центр;
+
+    // Назва
+    Область = ТабличныйДокумент.Область(ТабличныйДокумент.ВысотаТаблицы + 1, 1, , 2);
+    Область.Объединить();
+    Область.Текст = Ссылка.Наименование;
+    Область.Шрифт = Новый Шрифт(, 12, Истина);
+    Область.ГоризонтальноеПоложение = ГоризонтальноеПоложение.Центр;
+
+    // Пустий рядок
+    ТабличныйДокумент.Область(ТабличныйДокумент.ВысотаТаблицы + 1, 1).Текст = "";
+
+    // Дані
+    ВивестиРядок(ТабличныйДокумент, "Код:", Ссылка.Код);
+    ВивестиРядок(ТабличныйДокумент, "Артикул:", Ссылка.Артикул);
+    ВивестиРядок(ТабличныйДокумент, "Повна назва:", Ссылка.НаименованиеПолное);
+    ВивестиРядок(ТабличныйДокумент, "Вид номенклатури:", Строка(Ссылка.ВидНоменклатуры));
+    ВивестиРядок(ТабличныйДокумент, "Одиниця виміру:", Строка(Ссылка.ЕдиницаИзмерения));
+
+КонецЦикла;
+
+ТабличныйДокумент.АвтоМасштаб = Истина;
+
+// ВивестиРядок
+// Допоміжна процедура для виведення рядка даних
+Процедура ВивестиРядок(ТабДок, Заголовок, Значение)
+    НомерРядка = ТабДок.ВысотаТаблицы + 1;
+
+    ОбластьЗаголовок = ТабДок.Область(НомерРядка, 1);
+    ОбластьЗаголовок.Текст = Заголовок;
+    ОбластьЗаголовок.Шрифт = Новый Шрифт(, 10, Истина);
+    ОбластьЗаголовок.ШиринаКолонки = 25;
+
+    ОбластьЗначение = ТабДок.Область(НомерРядка, 2);
+    ОбластьЗначение.Текст = Значение;
+    ОбластьЗначение.ШиринаКолонки = 50;
+КонецПроцедуры
+```
+
+> **Tip:** Programmatic approach is best for simple forms (5-10 fields). For complex layouts with borders, logos, merged cells - use Excel template (Pattern 5).
 
 ---
 
@@ -377,7 +512,7 @@ processor:
     uk: Друк рахунку (зовнішня)
 
 bsp:
-  type: PrintForm
+  type: print_form
   version: "1.0"
   safe_mode: true
   information: "Внешняя печатная форма счета на оплату для документов продажи"
@@ -391,7 +526,7 @@ bsp:
       title:
         ru: Счет на оплату
         uk: Рахунок на оплату
-      usage: CallOfServerMethod
+      usage: server_method
       modifier: ПечатьMXL
       show_notification: false
 
@@ -482,12 +617,12 @@ python -m 1c_processor_generator yaml \
 # WRONG - no modifier
 commands:
   - id: Счет
-    usage: CallOfServerMethod
+    usage: server_method
 
 # CORRECT
 commands:
   - id: Счет
-    usage: CallOfServerMethod
+    usage: server_method
     modifier: ПечатьMXL
 ```
 

@@ -500,6 +500,65 @@ def cmd_setup_1c(args):
     return run_setup_command(check=args.check, dry_run=args.dry_run)
 
 
+def cmd_excel2mxl(args):
+                                                              
+    try:
+        from .pro import ExcelToMXLConverter, EXCEL_TO_MXL_AVAILABLE
+    except ImportError:
+        EXCEL_TO_MXL_AVAILABLE = False
+
+    if not EXCEL_TO_MXL_AVAILABLE:
+        print("❌ Для конвертації Excel → MXL потрібна бібліотека openpyxl")
+        print()
+        print("   Встановіть:")
+        print("   pip install openpyxl>=3.1.0")
+        return 1
+
+                           
+    input_path = args.input
+    if args.output:
+        output_path = args.output
+    else:
+                                 
+        if input_path.lower().endswith('.xlsx'):
+            output_path = input_path[:-5] + '.mxl'
+        else:
+            output_path = input_path + '.mxl'
+
+                     
+    languages = args.languages if args.languages else ["ru", "uk"]
+
+    print(f"🔄 Конвертація Excel → MXL...")
+    print(f"   Вхід: {input_path}")
+    print(f"   Вихід: {output_path}")
+    print(f"   Мови: {', '.join(languages)}")
+    if args.sheet:
+        print(f"   Лист: {args.sheet}")
+    print()
+
+    try:
+        converter = ExcelToMXLConverter(languages=languages)
+        converter.convert(input_path, output_path, args.sheet)
+
+        print("✅ MXL успішно створено!")
+        print()
+        print("   Використання в YAML:")
+        print("   ```yaml")
+        print("   templates:")
+        print(f"     - name: ПФ_MXL_Шаблон")
+        print("       type: SpreadsheetDocument")
+        print(f"       file: {output_path}")
+        print("   ```")
+        return 0
+
+    except FileNotFoundError:
+        print(f"❌ Файл не знайдено: {input_path}")
+        return 1
+    except Exception as e:
+        print(f"❌ Помилка конвертації: {e}")
+        return 1
+
+
 def cmd_trial(args):
                                                     
     print(f"🎁 Запит trial ліцензії для: {args.email}")
@@ -976,6 +1035,19 @@ def create_parser():
     parser_setup.add_argument("--check", action="store_true",
                              help="Перевірити конфігурацію (exit code 0/1)")
     parser_setup.set_defaults(func=cmd_setup_1c)
+
+                                  
+    parser_excel2mxl = subparsers.add_parser("excel2mxl",
+                                              help="Конвертувати Excel (.xlsx) в MXL формат для друкованих форм")
+    parser_excel2mxl.add_argument("input",
+                                  help="Шлях до Excel файлу (.xlsx)")
+    parser_excel2mxl.add_argument("-o", "--output",
+                                  help="Шлях до MXL файлу (за замовчуванням: input.mxl)")
+    parser_excel2mxl.add_argument("-s", "--sheet",
+                                  help="Назва листа (за замовчуванням: активний)")
+    parser_excel2mxl.add_argument("-l", "--languages", nargs="+", default=["ru", "uk"],
+                                  help="Мови для локалізації (за замовчуванням: ru uk)")
+    parser_excel2mxl.set_defaults(func=cmd_excel2mxl)
 
     return parser
 

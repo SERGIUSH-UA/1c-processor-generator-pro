@@ -872,8 +872,27 @@ class YAMLParser:
                     template.content = content_path.read_text(encoding="utf-8")
                     print(f"      Loaded HTML template: {template_name} ({len(template.content)} chars)")
                 elif template_type == "SpreadsheetDocument":
-                    template.content_binary = content_path.read_bytes()
-                    print(f"      Loaded SpreadsheetDocument: {template_name} ({len(template.content_binary)} bytes)")
+                                                                
+                    if str(content_path).lower().endswith('.xlsx'):
+                        try:
+                            from .pro import convert_excel_to_mxl, EXCEL_TO_MXL_AVAILABLE
+                            if not EXCEL_TO_MXL_AVAILABLE:
+                                raise ValueError(
+                                    f"Template '{template_name}': Excel conversion requires openpyxl. "
+                                    "Install: pip install openpyxl>=3.1.0"
+                                )
+                            print(f"      Converting Excel → MXL: {content_path.name}")
+                            mxl_content = convert_excel_to_mxl(str(content_path))
+                            template.content_binary = mxl_content.encode('utf-8')
+                            print(f"      Converted SpreadsheetDocument: {template_name} ({len(template.content_binary)} bytes)")
+                        except ImportError:
+                            raise ValueError(
+                                f"Template '{template_name}': Excel conversion requires PRO module. "
+                                "Use .mxl file directly or convert with: python -m 1c_processor_generator excel2mxl"
+                            )
+                    else:
+                        template.content_binary = content_path.read_bytes()
+                        print(f"      Loaded SpreadsheetDocument: {template_name} ({len(template.content_binary)} bytes)")
             except Exception as e:
                 raise ValueError(f"Template '{template_name}': Error loading file: {e}")
 
