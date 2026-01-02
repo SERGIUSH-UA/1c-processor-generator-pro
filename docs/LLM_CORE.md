@@ -1385,6 +1385,14 @@ IF question about: "Visual styling / professional UI / width / height / multilin
     → READ: Visual Design Essentials section above (lines ~167-462)
     → KEY: 13+ visual properties for professional forms
 
+IF question about: "Table row height / font size / column styling?"
+    → READ: reference/TABLE_STYLING.md (Table heights, font sizing, column colors)
+    → KEY: height_in_table_rows, header_height, font: {size: 20}, back_color
+
+IF question about: "Conditional formatting / row coloring / ConditionalAppearance?"
+    → READ: reference/CONDITIONAL_APPEARANCE.md (Dynamic styling based on data)
+    → KEY: conditional_appearances at form level, selection, filter, appearance
+
 IF question about: "HTMLDocumentField / display HTML in form?"
     → Use `type: HTMLDocumentField` + `form_attributes: type: string` (v2.39.0+)
     → BSL: `HTMLАтрибут = "<html>...</html>"` - присвоюємо значення form_attribute
@@ -1748,6 +1756,8 @@ For comprehensive UI excellence guide with:
 |-----------|-----------|
 | **Data model questions** | [LLM_DATA_GUIDE.md](LLM_DATA_GUIDE.md) |
 | **UI pattern selection** | [LLM_PATTERNS_ESSENTIAL.md](LLM_PATTERNS_ESSENTIAL.md) |
+| **Table styling (heights, fonts)** | [reference/TABLE_STYLING.md](reference/TABLE_STYLING.md) |
+| **Conditional row coloring** | [reference/CONDITIONAL_APPEARANCE.md](reference/CONDITIONAL_APPEARANCE.md) |
 | **BSP print forms** | [LLM_BSP_PRINT_FORMS.md](LLM_BSP_PRINT_FORMS.md) |
 | **HTML/CSS/JS interfaces** | [LLM_HTML_GUIDE.md](LLM_HTML_GUIDE.md) |
 | **Code quality & style** | [LLM_PRACTICES.md](LLM_PRACTICES.md) |
@@ -1758,6 +1768,6 @@ For comprehensive UI excellence guide with:
 
 ---
 
-**Last updated:** 2025-12-30
+**Last updated:** 2026-01-02
 **Optimized for:** Claude Sonnet 4.5, GPT-4 Turbo, and other frontier LLMs
-**Generator version:** 2.66.0+ (ObjectModule Region)
+**Generator version:** 2.68.0+ (ConditionalAppearance, Table Styling)

@@ -1,0 +1,4 @@
+1c_processor_generator
+docs
+examples
+templates

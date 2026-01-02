@@ -1,0 +1,323 @@
+# Chess Board - Table variant with 8 columns
+# Each column represents a cell, ConditionalAppearance colors them
+
+processor:
+  name: ChessBoardTable
+  synonym:
+    ru: Шахматная доска (таблица)
+    uk: Шахова дошка (таблиця)
+
+tabular_sections:
+  - name: Board
+    columns:
+      - name: RowNum
+        type: number
+        digits: 1
+      - name: Col1
+        type: string
+        length: 5
+      - name: Col1White
+        type: boolean
+      - name: Col2
+        type: string
+        length: 5
+      - name: Col2White
+        type: boolean
+      - name: Col3
+        type: string
+        length: 5
+      - name: Col3White
+        type: boolean
+      - name: Col4
+        type: string
+        length: 5
+      - name: Col4White
+        type: boolean
+      - name: Col5
+        type: string
+        length: 5
+      - name: Col5White
+        type: boolean
+      - name: Col6
+        type: string
+        length: 5
+      - name: Col6White
+        type: boolean
+      - name: Col7
+        type: string
+        length: 5
+      - name: Col7White
+        type: boolean
+      - name: Col8
+        type: string
+        length: 5
+      - name: Col8White
+        type: boolean
+
+forms:
+  - name: Форма
+    default: true
+
+    # ConditionalAppearance for each column (white/black cells)
+    conditional_appearances:
+      # Column 1
+      - name: Col1White
+        selection: [BoardCol1]
+        filter:
+          field: Объект.Board.Col1White
+          comparison: Equal
+          value: true
+          value_type: boolean
+        appearance:
+          back_color: "#F5F5DC"
+      - name: Col1Black
+        selection: [BoardCol1]
+        filter:
+          field: Объект.Board.Col1White
+          comparison: Equal
+          value: false
+          value_type: boolean
+        appearance:
+          back_color: "#8B4513"
+          text_color: "#FFFFFF"
+      # Column 2
+      - name: Col2White
+        selection: [BoardCol2]
+        filter:
+          field: Объект.Board.Col2White
+          comparison: Equal
+          value: true
+          value_type: boolean
+        appearance:
+          back_color: "#F5F5DC"
+      - name: Col2Black
+        selection: [BoardCol2]
+        filter:
+          field: Объект.Board.Col2White
+          comparison: Equal
+          value: false
+          value_type: boolean
+        appearance:
+          back_color: "#8B4513"
+          text_color: "#FFFFFF"
+      # Column 3
+      - name: Col3White
+        selection: [BoardCol3]
+        filter:
+          field: Объект.Board.Col3White
+          comparison: Equal
+          value: true
+          value_type: boolean
+        appearance:
+          back_color: "#F5F5DC"
+      - name: Col3Black
+        selection: [BoardCol3]
+        filter:
+          field: Объект.Board.Col3White
+          comparison: Equal
+          value: false
+          value_type: boolean
+        appearance:
+          back_color: "#8B4513"
+          text_color: "#FFFFFF"
+      # Column 4
+      - name: Col4White
+        selection: [BoardCol4]
+        filter:
+          field: Объект.Board.Col4White
+          comparison: Equal
+          value: true
+          value_type: boolean
+        appearance:
+          back_color: "#F5F5DC"
+      - name: Col4Black
+        selection: [BoardCol4]
+        filter:
+          field: Объект.Board.Col4White
+          comparison: Equal
+          value: false
+          value_type: boolean
+        appearance:
+          back_color: "#8B4513"
+          text_color: "#FFFFFF"
+      # Column 5
+      - name: Col5White
+        selection: [BoardCol5]
+        filter:
+          field: Объект.Board.Col5White
+          comparison: Equal
+          value: true
+          value_type: boolean
+        appearance:
+          back_color: "#F5F5DC"
+      - name: Col5Black
+        selection: [BoardCol5]
+        filter:
+          field: Объект.Board.Col5White
+          comparison: Equal
+          value: false
+          value_type: boolean
+        appearance:
+          back_color: "#8B4513"
+          text_color: "#FFFFFF"
+      # Column 6
+      - name: Col6White
+        selection: [BoardCol6]
+        filter:
+          field: Объект.Board.Col6White
+          comparison: Equal
+          value: true
+          value_type: boolean
+        appearance:
+          back_color: "#F5F5DC"
+      - name: Col6Black
+        selection: [BoardCol6]
+        filter:
+          field: Объект.Board.Col6White
+          comparison: Equal
+          value: false
+          value_type: boolean
+        appearance:
+          back_color: "#8B4513"
+          text_color: "#FFFFFF"
+      # Column 7
+      - name: Col7White
+        selection: [BoardCol7]
+        filter:
+          field: Объект.Board.Col7White
+          comparison: Equal
+          value: true
+          value_type: boolean
+        appearance:
+          back_color: "#F5F5DC"
+      - name: Col7Black
+        selection: [BoardCol7]
+        filter:
+          field: Объект.Board.Col7White
+          comparison: Equal
+          value: false
+          value_type: boolean
+        appearance:
+          back_color: "#8B4513"
+          text_color: "#FFFFFF"
+      # Column 8
+      - name: Col8White
+        selection: [BoardCol8]
+        filter:
+          field: Объект.Board.Col8White
+          comparison: Equal
+          value: true
+          value_type: boolean
+        appearance:
+          back_color: "#F5F5DC"
+      - name: Col8Black
+        selection: [BoardCol8]
+        filter:
+          field: Объект.Board.Col8White
+          comparison: Equal
+          value: false
+          value_type: boolean
+        appearance:
+          back_color: "#8B4513"
+          text_color: "#FFFFFF"
+
+    elements:
+      - type: Table
+        name: Board
+        tabular_section: Board
+        height: 20
+        height_in_table_rows: 8
+        header_height: 3
+        horizontal_stretch: false
+        elements:
+          - type: InputField
+            name: BoardRowNum
+            attribute: RowNum
+            width: 4
+            height: 3
+            read_only: true
+            title: {ru: "#", uk: "#"}
+            font:
+              size: 18
+              bold: true
+          - type: InputField
+            name: BoardCol1
+            attribute: Col1
+            width: 6
+            height: 3
+            title: {ru: "A", uk: "A"}
+            font:
+              size: 20
+              bold: true
+          - type: InputField
+            name: BoardCol2
+            attribute: Col2
+            width: 6
+            height: 3
+            title: {ru: "B", uk: "B"}
+            font:
+              size: 20
+              bold: true
+          - type: InputField
+            name: BoardCol3
+            attribute: Col3
+            width: 6
+            height: 3
+            title: {ru: "C", uk: "C"}
+            font:
+              size: 20
+              bold: true
+          - type: InputField
+            name: BoardCol4
+            attribute: Col4
+            width: 6
+            height: 3
+            title: {ru: "D", uk: "D"}
+            font:
+              size: 20
+              bold: true
+          - type: InputField
+            name: BoardCol5
+            attribute: Col5
+            width: 6
+            height: 3
+            title: {ru: "E", uk: "E"}
+            font:
+              size: 20
+              bold: true
+          - type: InputField
+            name: BoardCol6
+            attribute: Col6
+            width: 6
+            height: 3
+            title: {ru: "F", uk: "F"}
+            font:
+              size: 20
+              bold: true
+          - type: InputField
+            name: BoardCol7
+            attribute: Col7
+            width: 6
+            height: 3
+            title: {ru: "G", uk: "G"}
+            font:
+              size: 20
+              bold: true
+          - type: InputField
+            name: BoardCol8
+            attribute: Col8
+            width: 6
+            height: 3
+            title: {ru: "H", uk: "H"}
+            font:
+              size: 20
+              bold: true
+
+    events:
+      OnCreateAtServer: ПриСозданииНаСервере
+
+    commands:
+      - name: NewGame
+        title: {ru: Новая игра, uk: Нова гра}
+        handler: NewGame
+        picture: StdPicture.Refresh

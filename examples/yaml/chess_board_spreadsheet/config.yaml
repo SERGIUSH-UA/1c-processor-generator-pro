@@ -1,0 +1,34 @@
+# Chess Board - SpreadsheetDocument variant
+# Programmatic cell coloring with SpreadsheetDocument
+
+processor:
+  name: ChessBoardSpreadsheet
+  synonym:
+    ru: Шахматная доска (документ)
+    uk: Шахова дошка (документ)
+
+forms:
+  - name: Форма
+    default: true
+
+    form_attributes:
+      - name: BoardDoc
+        type: spreadsheet_document
+
+    elements:
+      - type: SpreadSheetDocumentField
+        name: BoardField
+        attribute: BoardDoc
+        width: 60
+        height: 30
+        horizontal_stretch: true
+        vertical_stretch: true
+
+    events:
+      OnCreateAtServer: ПриСозданииНаСервере
+
+    commands:
+      - name: NewGame
+        title: {ru: Новая игра, uk: Нова гра}
+        handler: NewGame
+        picture: StdPicture.Refresh
