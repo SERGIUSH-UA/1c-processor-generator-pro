@@ -502,7 +502,7 @@ def cmd_setup_1c(args):
 
 def cmd_clear_cache(args):
            
-    from .pro.persistent_ib_impl import PersistentIBManager
+    from .pro._pim import PersistentIBManager
     from .pro.constants import EPF_COMPILER_PERSISTENT_IB
 
                                                  
@@ -645,38 +645,12 @@ def cmd_trial(args):
 
 
 def _adjust_platform_version_for_epf(args, processor):
-           
+                                                                    
     try:
-        from .pro._df import DesignerFinder
-        from .pro._cg import ConfigurationGenerator
+        from .pro._evh import adjust_platform_version
+        return adjust_platform_version(args, processor)
     except ImportError:
         return None
-
-                        
-    explicit_path = getattr(args, 'compiler_path', None)
-    finder = DesignerFinder(explicit_path=explicit_path)
-    platform_version = finder.platform_version
-
-                                                                                       
-    if not platform_version and finder.designer_path:
-        platform_version = finder._get_file_version(finder.designer_path)
-        if not platform_version:
-                                                    
-            platform_version = finder._extract_version_from_path(finder.designer_path)
-
-    if not platform_version:
-        return None
-
-                                                     
-    cg = ConfigurationGenerator.__new__(ConfigurationGenerator)
-    xml_version = cg._get_xml_format_version(platform_version)
-
-    if xml_version != processor.platform_version:
-        print(f"📝 XML format version adjusted: {processor.platform_version} → {xml_version} "
-              f"(for platform {platform_version})")
-        return xml_version
-
-    return None
 
 
 def generate_processor(args, processor):
