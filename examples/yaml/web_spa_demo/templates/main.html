@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Web SPA Demo</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary: #764ba2;
+            --success: #48bb78;
+            --danger: #f56565;
+            --warning: #ed8936;
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-300: #e2e8f0;
+            --gray-500: #a0aec0;
+            --gray-600: #718096;
+            --gray-800: #2d3748;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            background: var(--gray-100);
+            color: var(--gray-800);
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav { display: flex; list-style: none; margin: 0 0 0 auto; padding: 0; gap: 8px; }
+        .nav-link {
+            padding: 8px 16px;
+            color: var(--gray-600);
+            text-decoration: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .nav-link:hover { background: var(--gray-100); color: var(--gray-800); }
+        .nav-link.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+
+        /* Screens */
+        .screen { display: none; padding: 24px 0; animation: fadeIn 0.3s ease; }
+        .screen.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+        }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+        .card-body { padding: 20px; }
+        .card-title { margin: 0 0 8px; font-size: 1.1rem; font-weight: 600; color: var(--gray-800); }
+        .card-text { margin: 0; color: var(--gray-600); font-size: 0.9rem; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }
+        .btn-outline { background: white; border: 2px solid var(--gray-300); color: var(--gray-600); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-sm { padding: 6px 12px; font-size: 0.875rem; }
+        .btn-lg { padding: 14px 28px; font-size: 1.1rem; }
+
+        /* Form elements */
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; margin-bottom: 6px; font-weight: 500; color: var(--gray-600); font-size: 0.9rem; }
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+        .input-group { display: flex; gap: 8px; }
+        .input-group .form-input { flex: 1; }
+
+        /* Grid */
+        .grid { display: grid; gap: 16px; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 48px 32px;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .hero h1 { margin: 0 0 12px; font-size: 2rem; }
+        .hero p { margin: 0 0 24px; opacity: 0.9; font-size: 1.1rem; }
+
+        /* Stats */
+        .stats { display: flex; justify-content: center; gap: 48px; margin: 24px 0; }
+        .stat { text-align: center; }
+        .stat-value { font-size: 2.5rem; font-weight: 700; }
+        .stat-label { font-size: 0.9rem; opacity: 0.8; }
+
+        /* Counter */
+        .counter-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 32px;
+            border-radius: 16px;
+            color: white;
+            text-align: center;
+        }
+        .counter-display { display: flex; align-items: center; justify-content: center; gap: 24px; margin: 16px 0; }
+        .counter-value { font-size: 4rem; font-weight: 700; min-width: 120px; }
+        .counter-btn {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .counter-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+
+        /* Client card */
+        .client-card { cursor: pointer; }
+        .client-card .card-body { display: flex; align-items: center; gap: 16px; }
+        .client-avatar {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 600; font-size: 1.2rem;
+        }
+        .client-info { flex: 1; }
+        .client-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-vip { background: #fef3c7; color: #d97706; }
+        .badge-new { background: #d1fae5; color: #059669; }
+        .badge-regular { background: #e0e7ff; color: #4f46e5; }
+
+        /* Section */
+        .section { margin-bottom: 32px; }
+        .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 16px; color: var(--gray-800); }
+
+        /* About page */
+        .feature-list { list-style: none; padding: 0; margin: 0; }
+        .feature-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--gray-800);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* Utilities */
+        .mb-2 { margin-bottom: 8px; }
+        .mb-3 { margin-bottom: 16px; }
+        .mb-4 { margin-bottom: 24px; }
+        .mt-3 { margin-top: 16px; }
+        .mt-4 { margin-top: 24px; }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--gray-500); }
+        .text-success { color: var(--success); }
+        .flex { display: flex; }
+        .flex-between { justify-content: space-between; }
+        .items-center { align-items: center; }
+        .gap-2 { gap: 8px; }
+        .gap-3 { gap: 16px; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <span class="navbar-brand">CRM Demo</span>
+        <ul class="nav">
+            <li><a id="nav-home" class="nav-link active" onclick="navigate('home')">Головна</a></li>
+            <li><a id="nav-clients" class="nav-link" onclick="navigate('clients')">Клієнти</a></li>
+            <li><a id="nav-about" class="nav-link" onclick="navigate('about')">Про систему</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Screen: Home -->
+        <div id="screen-home" class="screen active">
+            <div class="hero">
+                <h1>CRM система на Web SPA</h1>
+                <p>Демонстрація патернів для створення сучасних інтерфейсів в 1С</p>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="stat-clients">3</div>
+                        <div class="stat-label">Клієнтів</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="stat-orders">12</div>
+                        <div class="stat-label">Замовлень</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="stat-revenue">₴85K</div>
+                        <div class="stat-label">Виручка</div>
+                    </div>
+                </div>
+                <button class="btn btn-lg" style="background: white; color: var(--primary);" onclick="navigate('clients')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    Переглянути клієнтів
+                </button>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title">Інтерактивний лічильник</h3>
+                <div class="counter-box">
+                    <p style="margin: 0 0 8px; opacity: 0.9;">Демонстрація Event Queue (JS → BSL)</p>
+                    <div class="counter-display">
+                        <button class="counter-btn" onclick="sendCounter(-1)">−</button>
+                        <span id="counter-value" class="counter-value" data-value="0">0</span>
+                        <button class="counter-btn" onclick="sendCounter(1)">+</button>
+                    </div>
+                    <button class="btn btn-sm" style="background: rgba(255,255,255,0.2);" onclick="resetCounter()">Скинути</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 class="section-title">Швидкі дії</h3>
+                <div class="grid grid-3">
+                    <div class="card" onclick="showToast('Функція в розробці')">
+                        <div class="card-body text-center">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--primary)" style="margin-bottom: 8px;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                            <div class="card-title">Звіти</div>
+                            <p class="card-text">Аналітика продажів</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="showToast('Функція в розробці')">
+                        <div class="card-body text-center">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--secondary)" style="margin-bottom: 8px;"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                            <div class="card-title">Фінанси</div>
+                            <p class="card-text">Рух коштів</p>
+                        </div>
+                    </div>
+                    <div class="card" onclick="showToast('Функція в розробці')">
+                        <div class="card-body text-center">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--success)" style="margin-bottom: 8px;"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+                            <div class="card-title">Налаштування</div>
+                            <p class="card-text">Параметри системи</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen: Clients -->
+        <div id="screen-clients" class="screen">
+            <div class="flex flex-between items-center mb-4">
+                <h2 style="margin: 0;">Клієнти</h2>
+                <button class="btn btn-primary btn-sm" onclick="showToast('Додавання клієнта')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    Додати
+                </button>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" id="search-input" class="form-input" placeholder="Пошук клієнта..." onkeyup="handleSearch(event)">
+                        <button class="btn btn-primary" onclick="doSearch()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="clients-list" class="grid grid-2">
+                <!-- Динамічно завантажується -->
+            </div>
+
+            <div id="clients-empty" class="text-center mt-4" style="display: none;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="var(--gray-300)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                <p class="text-muted mt-3">Клієнтів не знайдено</p>
+            </div>
+        </div>
+
+        <!-- Screen: About -->
+        <div id="screen-about" class="screen">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 style="margin: 0 0 16px;">Про CRM Demo</h2>
+                    <p class="text-muted">Ця обробка демонструє патерни з <strong>WEB_PATTERNS.md</strong> для створення web-based SPA інтерфейсів в 1С:Підприємство.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Архітектура</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <span class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+                                <span>Event Queue (JS → BSL)</span>
+                            </li>
+                            <li>
+                                <span class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+                                <span>DOM Manipulation Helpers</span>
+                            </li>
+                            <li>
+                                <span class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+                                <span>Screen Router Pattern</span>
+                            </li>
+                            <li>
+                                <span class="feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+                                <span>CSS Variables & Grid</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Файли проекту</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <span class="feature-icon" style="background: var(--success);"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z"/></svg></span>
+                                <span><code>config.yaml</code> - конфігурація</span>
+                            </li>
+                            <li>
+                                <span class="feature-icon" style="background: var(--warning);"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg></span>
+                                <span><code>handlers.bsl</code> - 22 процедури</span>
+                            </li>
+                            <li>
+                                <span class="feature-icon" style="background: var(--danger);"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></span>
+                                <span><code>main.html</code> - SPA шаблон</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3 class="card-title">Версія та інформація</h3>
+                    <div class="grid grid-3 mt-3">
+                        <div>
+                            <div class="text-muted" style="font-size: 0.8rem;">Версія генератора</div>
+                            <div style="font-weight: 600;">2.45.0</div>
+                        </div>
+                        <div>
+                            <div class="text-muted" style="font-size: 0.8rem;">Платформа 1С</div>
+                            <div style="font-weight: 600;">8.3.25+</div>
+                        </div>
+                        <div>
+                            <div class="text-muted" style="font-size: 0.8rem;">Дата створення</div>
+                            <div style="font-weight: 600;" id="current-date">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-primary" onclick="navigate('home')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    На головну
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Event Queue
+        var eventQueue = [];
+
+        function pushEvent(data) {
+            eventQueue.push(JSON.stringify(data));
+        }
+        function getEvent(i) { return eventQueue[i] || null; }
+        function getQueueLength() { return eventQueue.length; }
+
+        // Navigation
+        function navigate(screen) {
+            pushEvent({ action: 'navigate', screen: screen });
+        }
+
+        // Counter
+        function sendCounter(delta) {
+            pushEvent({ action: 'counter', delta: delta });
+        }
+        function resetCounter() {
+            pushEvent({ action: 'reset_counter' });
+        }
+
+        // Search
+        function doSearch() {
+            var q = document.getElementById('search-input').value;
+            pushEvent({ action: 'search', query: q });
+        }
+        function handleSearch(e) {
+            if (e.key === 'Enter') doSearch();
+        }
+
+        // Toast
+        function showToast(msg) {
+            var t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(function() { t.classList.remove('show'); }, 2500);
+        }
+
+        // Init
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('uk-UA');
+    </script>
+</body>
+</html>

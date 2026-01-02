@@ -1,0 +1,2632 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "1C External Data Processor Configuration",
+  "description": "YAML schema for generating 1C:Enterprise 8.3 external data processors",
+  "type": "object",
+  "required": [
+    "processor"
+  ],
+  "properties": {
+    "processor": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$",
+          "description": "Processor name (PascalCase, Cyrillic/Latin)"
+        },
+        "synonym": {
+          "type": "object",
+          "description": "Processor synonym (nested format)",
+          "properties": {
+            "ru": {
+              "type": "string"
+            },
+            "uk": {
+              "type": "string"
+            },
+            "en": {
+              "type": "string"
+            }
+          }
+        },
+        "synonym_ru": {
+          "type": "string",
+          "description": "Russian synonym (flat format)"
+        },
+        "synonym_uk": {
+          "type": "string",
+          "description": "Ukrainian synonym (flat format)"
+        },
+        "synonym_en": {
+          "type": "string",
+          "description": "English synonym (flat format)"
+        },
+        "platform_version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+$",
+          "default": "2.11",
+          "description": "1C platform format version (e.g., 2.10, 2.11, 2.18, 2.19). Use 2.10 for older platforms, 2.11 for standard, 2.18+ for newer versions"
+        },
+        "tests_file": {
+          "type": "string",
+          "description": "Path to tests configuration file (tests.yaml), relative to config.yaml. Optional. See test_schema.json for tests.yaml format (v2.16.0+)"
+        }
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "description": "Processor attributes",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$"
+          },
+          "type": {
+            "type": "string",
+            "description": "Attribute type: string, boolean, number, date, spreadsheet_document, CatalogRef.*, DocumentRef.*, EnumRef.*"
+          },
+          "synonym_ru": {
+            "type": "string"
+          },
+          "synonym_uk": {
+            "type": "string"
+          },
+          "synonym_en": {
+            "type": "string"
+          },
+          "length": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "String length (0 = unlimited)"
+          },
+          "digits": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number total digits"
+          },
+          "fraction_digits": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number decimal places"
+          }
+        }
+      }
+    },
+    "tabular_sections": {
+      "type": "array",
+      "description": "Tabular sections (object attributes)",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "columns"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$"
+          },
+          "synonym_ru": {
+            "type": "string"
+          },
+          "synonym_uk": {
+            "type": "string"
+          },
+          "synonym_en": {
+            "type": "string"
+          },
+          "columns": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "type"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "synonym_ru": {
+                  "type": "string"
+                },
+                "synonym_uk": {
+                  "type": "string"
+                },
+                "synonym_en": {
+                  "type": "string"
+                },
+                "length": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "String length (0 = unlimited)"
+                },
+                "digits": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "fraction_digits": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "read_only": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Column is read-only"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "object_module": {
+      "type": "object",
+      "description": "ObjectModule.bsl configuration - custom object module code instead of default template",
+      "required": [
+        "file"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "Path to ObjectModule.bsl file (relative to YAML or absolute)"
+        }
+      }
+    },
+    "templates": {
+      "type": "array",
+      "description": "Templates (Макеты) - DataProcessor-level metadata objects for HTML/Spreadsheet content (v2.40.0+, automation v2.41.0+)",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "type",
+          "file"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$",
+            "description": "Template name (PascalCase, Russian Cyrillic or Latin)"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "HTMLDocument",
+              "SpreadsheetDocument"
+            ],
+            "description": "Template type: HTMLDocument for HTML content, SpreadsheetDocument for MXL layouts"
+          },
+          "file": {
+            "type": "string",
+            "description": "Path to template content file (relative to config.yaml). Use .html for HTMLDocument, .mxl for SpreadsheetDocument"
+          },
+          "auto_field": {
+            "type": "boolean",
+            "description": "v2.41.0+: Auto-create form_attribute (HTMLDocument type) + HTMLDocumentField element on the form"
+          },
+          "field_name": {
+            "type": "string",
+            "description": "v2.41.0+: Custom HTMLDocumentField name (default: {TemplateName}Field)"
+          },
+          "target_form": {
+            "type": "string",
+            "description": "v2.41.0+: Target form name for auto_field (default: first form with default=true)"
+          },
+          "automation": {
+            "type": "string",
+            "description": "v2.41.0+: Path to .automation.yaml file with placeholders and assets configuration"
+          }
+        }
+      }
+    },
+    "value_tables": {
+      "type": "array",
+      "description": "ValueTable attributes (form attributes)",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "columns"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$"
+          },
+          "title_ru": {
+            "type": "string"
+          },
+          "title_uk": {
+            "type": "string"
+          },
+          "title_en": {
+            "type": "string"
+          },
+          "columns": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "type"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "synonym_ru": {
+                  "type": "string"
+                },
+                "synonym_uk": {
+                  "type": "string"
+                },
+                "synonym_en": {
+                  "type": "string"
+                },
+                "length": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "String length (0 = unlimited)"
+                },
+                "digits": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "fraction_digits": {
+                  "type": "integer"
+                },
+                "read_only": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Column is read-only"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "dynamic_lists": {
+      "type": "array",
+      "description": "DynamicList attributes (form attributes for displaying data from database queries) - DEPRECATED: use forms[].dynamic_lists instead",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$"
+          },
+          "title_ru": {
+            "type": "string"
+          },
+          "title_uk": {
+            "type": "string"
+          },
+          "title_en": {
+            "type": "string"
+          },
+          "manual_query": {
+            "type": "boolean",
+            "default": false,
+            "description": "false = simple list based on MainTable, true = custom QueryText"
+          },
+          "main_table": {
+            "type": "string",
+            "pattern": "^(Document|Catalog|DocumentJournal|InformationRegister|AccumulationRegister)\\.[а-яА-ЯёЁa-zA-Z0-9_]+$",
+            "description": "Main table reference (Document.*, Catalog.*, DocumentJournal.*). OPTIONAL for manual_query=true, REQUIRED for manual_query=false"
+          },
+          "query_text": {
+            "type": "string",
+            "description": "SQL-like query text (required if manual_query=true). Use &ParameterName for parameters"
+          },
+          "key_fields": {
+            "type": "array",
+            "description": "Key fields to uniquely identify rows (required when manual_query=true and main_table is not specified). Example: ['Ссылка'] for document references",
+            "items": {
+              "type": "string"
+            }
+          },
+          "parameters": {
+            "type": "array",
+            "description": "Query parameters",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "type"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Parameter name (without & prefix)"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "Parameter type: String, Number, Date, Boolean, etc."
+                },
+                "default_value": {
+                  "description": "Default parameter value"
+                }
+              }
+            }
+          },
+          "use_always_fields": {
+            "type": "array",
+            "description": "Fields that should always be retrieved",
+            "items": {
+              "type": "string"
+            }
+          },
+          "functional_options": {
+            "type": "array",
+            "description": "Functional options to control visibility",
+            "items": {
+              "type": "string"
+            }
+          },
+          "auto_save_user_settings": {
+            "type": "boolean",
+            "description": "Auto-save user settings for list"
+          },
+          "main_attribute": {
+            "type": "boolean",
+            "default": false,
+            "description": "Mark as main form attribute"
+          },
+          "columns": {
+            "type": "array",
+            "description": "Columns to display in DynamicList table (for manual_query=true, required; for manual_query=false, optional with default Description column)",
+            "items": {
+              "type": "object",
+              "required": [
+                "field"
+              ],
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "description": "Field name from query (Description, Code, Ref, custom field names)"
+                },
+                "title_ru": {
+                  "type": "string",
+                  "description": "Russian column title (defaults to field name)"
+                },
+                "title_uk": {
+                  "type": "string",
+                  "description": "Ukrainian column title (defaults to field name)"
+                },
+                "title_en": {
+                  "type": "string",
+                  "description": "English column title (defaults to field name)"
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Column width in character units (approximate number of visible characters, NOT pixels)"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "forms": {
+      "type": "array",
+      "description": "Multiple forms for the processor. Each form can have its own elements, commands, and attributes. Replaces single 'form' structure.",
+      "items": {
+        "$ref": "#/definitions/Form"
+      }
+    },
+    "form": {
+      "type": "object",
+      "description": "Form configuration",
+      "properties": {
+        "properties": {
+          "type": "object",
+          "description": "Form properties",
+          "properties": {
+            "title": {
+              "type": "boolean",
+              "description": "Enable custom title"
+            },
+            "title_ru": {
+              "type": "string"
+            },
+            "title_uk": {
+              "type": "string"
+            },
+            "title_en": {
+              "type": "string"
+            },
+            "auto_title": {
+              "type": "boolean",
+              "default": true
+            },
+            "WindowOpeningMode": {
+              "type": "string",
+              "enum": [
+                "LockOwnerWindow",
+                "LockWholeInterface"
+              ],
+              "description": "Modal dialog behavior (v2.35.0+)"
+            },
+            "CommandBarLocation": {
+              "type": "string",
+              "enum": [
+                "None",
+                "Top",
+                "Bottom"
+              ],
+              "description": "Command bar position (v2.35.0+)"
+            }
+          }
+        },
+        "events": {
+          "type": "object",
+          "description": "Form events (handler name references BSL file in handlers/)",
+          "properties": {
+            "OnOpen": {
+              "type": "string",
+              "description": "OnOpen event handler name"
+            },
+            "OnCreateAtServer": {
+              "type": "string"
+            },
+            "OnClose": {
+              "type": "string"
+            },
+            "BeforeClose": {
+              "type": "string"
+            }
+          }
+        },
+        "elements": {
+          "type": "array",
+          "description": "Form elements",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/InputField"
+              },
+              {
+                "$ref": "#/definitions/LabelField"
+              },
+              {
+                "$ref": "#/definitions/LabelDecoration"
+              },
+              {
+                "$ref": "#/definitions/PictureDecoration"
+              },
+              {
+                "$ref": "#/definitions/Table"
+              },
+              {
+                "$ref": "#/definitions/Button"
+              },
+              {
+                "$ref": "#/definitions/UsualGroup"
+              },
+              {
+                "$ref": "#/definitions/ColumnGroup"
+              },
+              {
+                "$ref": "#/definitions/Pages"
+              },
+              {
+                "$ref": "#/definitions/RadioButtonField"
+              },
+              {
+                "$ref": "#/definitions/CheckBoxField"
+              },
+              {
+                "$ref": "#/definitions/Popup"
+              },
+              {
+                "$ref": "#/definitions/SpreadSheetDocumentField"
+              },
+              {
+                "$ref": "#/definitions/HTMLDocumentField"
+              },
+              {
+                "$ref": "#/definitions/CalendarField"
+              },
+              {
+                "$ref": "#/definitions/ChartField"
+              },
+              {
+                "$ref": "#/definitions/PlannerField"
+              },
+              {
+                "$ref": "#/definitions/ButtonGroup"
+              }
+            ]
+          }
+        },
+        "auto_command_bar": {
+          "type": "array",
+          "description": "AutoCommandBar elements (Popup, Button, ButtonGroup with Picture support). Popup can ONLY be used here, not in form.elements.",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/Popup"
+              },
+              {
+                "$ref": "#/definitions/Button"
+              },
+              {
+                "$ref": "#/definitions/ButtonGroup"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "commands": {
+      "type": "array",
+      "description": "Form commands",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "handler"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$"
+          },
+          "title": {
+            "type": "object",
+            "description": "Command title (nested format v2.13.1)",
+            "properties": {
+              "ru": {
+                "type": "string"
+              },
+              "uk": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              }
+            }
+          },
+          "title_ru": {
+            "type": "string",
+            "description": "Russian title (flat format)"
+          },
+          "title_uk": {
+            "type": "string",
+            "description": "Ukrainian title (flat format)"
+          },
+          "title_en": {
+            "type": "string",
+            "description": "English title (flat format)"
+          },
+          "handler": {
+            "type": "string",
+            "description": "Handler name (references BSL file in handlers/)"
+          },
+          "tooltip": {
+            "type": "object",
+            "description": "Command tooltip (nested format v2.13.1)",
+            "properties": {
+              "ru": {
+                "type": "string"
+              },
+              "uk": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              }
+            }
+          },
+          "tooltip_ru": {
+            "type": "string",
+            "description": "Russian tooltip (flat format)"
+          },
+          "tooltip_uk": {
+            "type": "string",
+            "description": "Ukrainian tooltip (flat format)"
+          },
+          "tooltip_en": {
+            "type": "string",
+            "description": "English tooltip (flat format)"
+          },
+          "picture": {
+            "type": "string",
+            "description": "StdPicture.* or CommonPicture.*"
+          },
+          "shortcut": {
+            "type": "string",
+            "description": "Keyboard shortcut (F5, Ctrl+S, etc.)"
+          },
+          "long_operation": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether this command executes as a background job (v3.0.0+). For operations >3-5 seconds (imports, reports, batch processing). LLM writes ONLY CommandНаСервере handler, generator creates 3 wrappers (Кнопка, ВФоне, Завершение)"
+          },
+          "long_operation_settings": {
+            "type": "object",
+            "description": "Long operation configuration (v3.0.0+). Optional - defaults applied if omitted",
+            "properties": {
+              "show_progress": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show progress window during execution"
+              },
+              "allow_cancel": {
+                "type": "boolean",
+                "default": true,
+                "description": "Allow user to cancel operation"
+              },
+              "progress_message": {
+                "type": "string",
+                "default": "Выполнение операции...",
+                "description": "Progress message in Russian"
+              },
+              "progress_message_uk": {
+                "type": "string",
+                "default": "Виконання операції...",
+                "description": "Progress message in Ukrainian"
+              },
+              "progress_message_en": {
+                "type": "string",
+                "default": "Operation in progress...",
+                "description": "Progress message in English"
+              },
+              "timeout_seconds": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3600,
+                "default": 300,
+                "description": "Operation timeout in seconds (1-3600, default 300 = 5 minutes)"
+              },
+              "wait_completion_initial": {
+                "type": "number",
+                "minimum": 0,
+                "default": 0,
+                "description": "Initial wait before showing progress window (seconds). Use 0.4 for quick operations"
+              },
+              "use_additional_parameters": {
+                "type": "boolean",
+                "default": false,
+                "description": "Automatically pass all form attributes as parameters to background job"
+              },
+              "output_messages": {
+                "type": "boolean",
+                "default": true,
+                "description": "Output messages to user during execution"
+              },
+              "output_progress": {
+                "type": "boolean",
+                "default": false,
+                "description": "Output custom progress bar (advanced)"
+              }
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "description": "BSL validation settings (v2.12.0+)",
+      "properties": {
+        "check_thin_client": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check for ThinClient mode"
+        },
+        "check_server": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check for Server mode"
+        },
+        "check_web_client": {
+          "type": "boolean",
+          "default": false,
+          "description": "Check for WebClient mode"
+        },
+        "check_external_connection": {
+          "type": "boolean",
+          "default": false,
+          "description": "Check for ExternalConnection mode"
+        },
+        "check_thick_client": {
+          "type": "boolean",
+          "default": false,
+          "description": "Check for ThickClientOrdinaryApplication mode"
+        },
+        "check_incorrect_references": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check for incorrect references"
+        },
+        "check_handlers_existence": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check existence of assigned handlers"
+        },
+        "check_empty_handlers": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check for empty handlers"
+        },
+        "check_unreference_procedures": {
+          "type": "boolean",
+          "default": false,
+          "description": "Check for unreferenced procedures/functions - may be slow"
+        },
+        "check_extended_modules": {
+          "type": "boolean",
+          "default": true,
+          "description": "Extended check for methods/properties through dot notation"
+        },
+        "syntax_check_enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable syntax validation for BSL code"
+        },
+        "semantic_check_enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable semantic validation - may be slower"
+        }
+      }
+    },
+    "bsp": {
+      "type": "object",
+      "description": "BSP Integration (v2.57.0+ PRO Feature) - Generate external processors compatible with 1C Standard Subsystems Library (БСП). Includes СведенияОВнешнейОбработке() and Печать() generation.",
+      "required": [
+        "type",
+        "targets",
+        "commands"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "print_form",
+            "object_filling",
+            "creation_of_related",
+            "report",
+            "additional_processor",
+            "additional_report",
+            "message_template"
+          ],
+          "description": "BSP processing type: print_form (печатная форма), object_filling (заполнение объекта), creation_of_related (создание связанных объектов), report (отчет), additional_processor (дополнительная обработка), additional_report (дополнительный отчет), message_template (шаблон сообщения)"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+$",
+          "default": "1.0",
+          "description": "Processing version in X.Y format"
+        },
+        "safe_mode": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run in safe mode (БезопасныйРежим)"
+        },
+        "information": {
+          "type": "string",
+          "description": "Processing description for administrator (Информация)"
+        },
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^(Документ|Справочник|Document|Catalog)\\.[а-яА-ЯёЁa-zA-Z0-9_]+$"
+          },
+          "description": "Target objects for this processing (Назначение). Use format: Документ.ИмяДокумента or Document.DocumentName"
+        },
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/BSPCommand"
+          },
+          "description": "Processing commands (Команды)"
+        },
+        "print_handler": {
+          "type": "string",
+          "default": "Печать",
+          "description": "Custom print handler name (default: Печать)"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "BSPCommand": {
+      "type": "object",
+      "description": "BSP command definition for СведенияОВнешнейОбработке()",
+      "required": [
+        "id",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$",
+          "description": "Command identifier (Идентификатор)"
+        },
+        "title": {
+          "$ref": "#/definitions/LocalizedString",
+          "description": "Command presentation (Представление)"
+        },
+        "usage": {
+          "type": "string",
+          "enum": [
+            "server_method",
+            "client_method",
+            "open_form",
+            "filling_form",
+            "data_import",
+            "safe_mode_scenario"
+          ],
+          "default": "server_method",
+          "description": "Command usage type (Использование): server_method (ВызовСерверногоМетода), client_method (ВызовКлиентскогоМетода), open_form (ОткрытиеФормы), filling_form (ЗаполнениеФормы), data_import (ЗагрузкаДанныхИзФайла), safe_mode_scenario (СценарийВБезопасномРежиме)"
+        },
+        "modifier": {
+          "type": "string",
+          "description": "Command modifier (Модификатор). Use 'ПечатьMXL' for spreadsheet print forms, 'ПечатьOFD' for Office documents"
+        },
+        "handler": {
+          "type": "string",
+          "description": "Custom handler procedure name"
+        },
+        "template_name": {
+          "type": "string",
+          "description": "Associated template name (e.g., ПФ_MXL_СчетНаОплату)"
+        },
+        "show_notification": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show notification during execution (ПоказыватьОповещение)"
+        },
+        "check_posting": {
+          "type": "boolean",
+          "default": true,
+          "description": "Check document posting before print"
+        },
+        "hide": {
+          "type": "boolean",
+          "default": false,
+          "description": "Hide command from user (Скрыть)"
+        },
+        "replaced_commands": {
+          "type": "string",
+          "description": "Commands to replace (ЗаменяемыеКоманды)"
+        }
+      }
+    },
+    "LocalizedString": {
+      "description": "Multilingual string - nested object {ru, uk, en} or simple string",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "ru": {
+              "type": "string"
+            },
+            "uk": {
+              "type": "string"
+            },
+            "en": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "Identifier": {
+      "type": "string",
+      "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$",
+      "description": "Valid 1C identifier (PascalCase, Russian Cyrillic/Latin only). DO NOT ADD Ukrainian letters (і,ї,є,ґ) - if tests fail, fix the TEST, not this pattern!"
+    },
+    "HorizontalAlignment": {
+      "type": "string",
+      "enum": [
+        "Left",
+        "Center",
+        "Right"
+      ],
+      "description": "Horizontal alignment"
+    },
+    "VerticalAlignment": {
+      "type": "string",
+      "enum": [
+        "Top",
+        "Center",
+        "Bottom"
+      ],
+      "description": "Vertical alignment"
+    },
+    "InputFieldEvents": {
+      "type": "object",
+      "properties": {
+        "OnChange": {
+          "type": "string"
+        },
+        "StartChoice": {
+          "type": "string"
+        },
+        "ChoiceProcessing": {
+          "type": "string"
+        },
+        "Clearing": {
+          "type": "string"
+        }
+      }
+    },
+    "TableEvents": {
+      "type": "object",
+      "description": "Table events (v2.35.0+)",
+      "properties": {
+        "OnActivateRow": {
+          "type": "string"
+        },
+        "Selection": {
+          "type": "string"
+        },
+        "OnStartEdit": {
+          "type": "string"
+        },
+        "BeforeAddRow": {
+          "type": "string"
+        },
+        "BeforeDeleteRow": {
+          "type": "string"
+        },
+        "BeforeRowChange": {
+          "type": "string"
+        }
+      }
+    },
+    "ClickEvents": {
+      "type": "object",
+      "properties": {
+        "Click": {
+          "type": "string"
+        }
+      }
+    },
+    "FormEvents": {
+      "type": "object",
+      "properties": {
+        "OnOpen": {
+          "type": "string"
+        },
+        "OnCreateAtServer": {
+          "type": "string"
+        },
+        "OnClose": {
+          "type": "string"
+        },
+        "BeforeClose": {
+          "type": "string"
+        }
+      }
+    },
+    "FontProperties": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "description": "Font reference (default: style:NormalTextFont)",
+          "enum": [
+            "style:NormalTextFont",
+            "style:LargeTextFont",
+            "style:SmallTextFont",
+            "style:ExtraLargeTextFont",
+            "sys:DefaultGUIFont"
+          ]
+        },
+        "kind": {
+          "type": "string",
+          "description": "Font type (default: StyleItem)",
+          "enum": [
+            "StyleItem",
+            "WindowsFont"
+          ]
+        },
+        "faceName": {
+          "type": "string",
+          "description": "Font family name (e.g. 'Arial', 'Bahnschrift SemiLight Condensed')"
+        },
+        "bold": {
+          "type": "boolean"
+        },
+        "italic": {
+          "type": "boolean"
+        },
+        "underline": {
+          "type": "boolean"
+        },
+        "strikethrough": {
+          "type": "boolean"
+        },
+        "height": {
+          "type": "integer",
+          "description": "Font height in points"
+        },
+        "scale": {
+          "type": "integer",
+          "description": "Font scale percentage (e.g. 102)"
+        },
+        "size": {
+          "type": "integer",
+          "description": "Deprecated, use height instead"
+        }
+      },
+      "additionalProperties": false
+    },
+    "InputField": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "attribute"
+      ],
+      "properties": {
+        "type": {
+          "const": "InputField"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Reference to processor attribute"
+        },
+        "title": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "tooltip": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "input_hint": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "read_only": {
+          "type": "boolean",
+          "default": false,
+          "description": "Field is read-only"
+        },
+        "multi_line": {
+          "type": "boolean",
+          "default": false,
+          "description": "Multi-line text input"
+        },
+        "password_mode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Mask input for passwords"
+        },
+        "text_edit": {
+          "type": "boolean",
+          "default": false,
+          "description": "Text editing mode"
+        },
+        "auto_max_width": {
+          "type": "boolean",
+          "default": false,
+          "description": "Auto-size width"
+        },
+        "auto_max_height": {
+          "type": "boolean",
+          "default": false,
+          "description": "Auto-size height"
+        },
+        "choice_mode": {
+          "type": "string",
+          "enum": [
+            "QuickChoice",
+            "Parameters",
+            "BothWays"
+          ]
+        },
+        "choice_folders_and_items": {
+          "type": "string",
+          "enum": [
+            "Folders",
+            "Items",
+            "FoldersAndItems"
+          ]
+        },
+        "quick_choice": {
+          "type": "boolean",
+          "default": false
+        },
+        "choice_history_on_input": {
+          "type": "string",
+          "enum": [
+            "Auto",
+            "DontUse",
+            "UseAlways"
+          ]
+        },
+        "horizontal_align": {
+          "$ref": "#/definitions/HorizontalAlignment"
+        },
+        "vertical_align": {
+          "$ref": "#/definitions/VerticalAlignment"
+        },
+        "title_text_color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Title text color in HEX format (#RRGGBB)"
+        },
+        "title_font": {
+          "$ref": "#/definitions/FontProperties",
+          "description": "Font for the field title/label"
+        },
+        "text_color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Text color in HEX format (#RRGGBB)"
+        },
+        "back_color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Background color in HEX format (#RRGGBB)"
+        },
+        "border_color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Border color in HEX format (#RRGGBB)"
+        },
+        "font": {
+          "$ref": "#/definitions/FontProperties",
+          "description": "Font for the field text"
+        },
+        "choice_button_picture": {
+          "type": "string",
+          "description": "Picture for choice button (e.g. CommonPicture.Gmail)"
+        },
+        "events": {
+          "$ref": "#/definitions/InputFieldEvents"
+        }
+      }
+    },
+    "LabelField": {
+      "type": "object",
+      "required": [
+        "type",
+        "name"
+      ],
+      "properties": {
+        "type": {
+          "const": "LabelField"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "attribute": {
+          "type": "string"
+        },
+        "data_path": {
+          "type": "string",
+          "description": "Custom DataPath (e.g., Items.Table.CurrentData.Field)"
+        },
+        "title": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "tooltip": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "hyperlink": {
+          "type": "boolean"
+        },
+        "horizontal_align": {
+          "$ref": "#/definitions/HorizontalAlignment"
+        },
+        "vertical_align": {
+          "$ref": "#/definitions/VerticalAlignment"
+        },
+        "events": {
+          "$ref": "#/definitions/ClickEvents"
+        }
+      }
+    },
+    "LabelDecoration": {
+      "type": "object",
+      "required": [
+        "type",
+        "name"
+      ],
+      "properties": {
+        "type": {
+          "const": "LabelDecoration"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "title": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "hyperlink": {
+          "type": "boolean",
+          "default": false,
+          "description": "Make label clickable"
+        },
+        "horizontal_align": {
+          "$ref": "#/definitions/HorizontalAlignment"
+        },
+        "vertical_align": {
+          "$ref": "#/definitions/VerticalAlignment"
+        },
+        "font": {
+          "$ref": "#/definitions/FontProperties"
+        },
+        "events": {
+          "$ref": "#/definitions/ClickEvents"
+        }
+      }
+    },
+    "PictureDecoration": {
+      "type": "object",
+      "required": [
+        "type",
+        "name"
+      ],
+      "properties": {
+        "type": {
+          "const": "PictureDecoration"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "svg_source": {
+          "type": "string",
+          "pattern": "^.*\\.svg$",
+          "description": "Path to SVG file (relative to config.yaml). Will be converted to PNG."
+        },
+        "picture": {
+          "type": "string",
+          "pattern": "^(StdPicture|CommonPicture)\\.",
+          "description": "Standard 1C picture reference (StdPicture.* or CommonPicture.*)"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "DEPRECATED (v2.23.1+): Use svg_width instead. Backward compatibility: maps to svg_width (PNG output in pixels)."
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "DEPRECATED (v2.23.1+): Use svg_height instead. Backward compatibility: maps to svg_height (PNG output in pixels)."
+        },
+        "svg_width": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "PNG output width in pixels (for SVG→PNG conversion). Replaces 'width' field (v2.23.1+)."
+        },
+        "svg_height": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "PNG output height in pixels (for SVG→PNG conversion). Replaces 'height' field (v2.23.1+)."
+        },
+        "form_width": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Form display width in character units (NOT pixels!). New in v2.23.1. Optional - if not set, uses picture_size for auto-scaling."
+        },
+        "form_height": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Form display height in row units (NOT pixels!). New in v2.23.1. Optional - if not set, uses picture_size for auto-scaling."
+        },
+        "alignment": {
+          "type": "string",
+          "enum": [
+            "Left",
+            "Center",
+            "Right"
+          ],
+          "description": "Horizontal alignment"
+        },
+        "hyperlink": {
+          "type": "boolean",
+          "description": "Make picture clickable"
+        },
+        "picture_size": {
+          "type": "string",
+          "enum": [
+            "Proportionally",
+            "RealSize",
+            "Stretch",
+            "Auto"
+          ],
+          "default": "Proportionally",
+          "description": "How picture is displayed"
+        },
+        "zoomable": {
+          "type": "boolean",
+          "description": "Allow zoom on click"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "svg_source"
+          ]
+        },
+        {
+          "required": [
+            "picture"
+          ]
+        }
+      ]
+    },
+    "PictureField": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "attribute"
+      ],
+      "properties": {
+        "type": {
+          "const": "PictureField"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Reference to binary_data attribute"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Field width in character units"
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Field height in row units"
+        },
+        "title_location": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Auto",
+            "Left",
+            "Top",
+            "Right",
+            "Bottom"
+          ],
+          "description": "Title position"
+        },
+        "picture_size": {
+          "type": "string",
+          "enum": [
+            "Proportionally",
+            "RealSize",
+            "Stretch",
+            "Auto"
+          ],
+          "default": "Proportionally",
+          "description": "How picture is displayed"
+        },
+        "zoomable": {
+          "type": "boolean",
+          "description": "Allow zoom on click"
+        },
+        "events": {
+          "type": "object",
+          "properties": {
+            "Click": {
+              "type": "string"
+            },
+            "OnChange": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "description": "Picture field element for displaying binary data (v2.36.0+ Phase 2)"
+    },
+    "Table": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "tabular_section"
+      ],
+      "properties": {
+        "type": {
+          "const": "Table"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "tabular_section": {
+          "type": "string",
+          "description": "Reference to tabular_section, value_table, or value_tree"
+        },
+        "is_value_table": {
+          "type": "boolean",
+          "default": false
+        },
+        "is_dynamic_list": {
+          "type": "boolean",
+          "default": false,
+          "description": "Reference to dynamic_list attribute"
+        },
+        "read_only": {
+          "type": "boolean",
+          "default": false,
+          "description": "Table is read-only"
+        },
+        "representation": {
+          "type": "string",
+          "enum": ["list", "tree"],
+          "default": "list",
+          "description": "Table display mode: list (flat) or tree (hierarchical) (v2.64.0+)"
+        },
+        "initial_tree_view": {
+          "type": "string",
+          "enum": ["no_expand", "expand_top_level", "expand_all_levels"],
+          "description": "Initial tree expansion state (v2.64.0+)"
+        },
+        "show_root": {
+          "type": "boolean",
+          "description": "Show root element in tree (v2.64.0+)"
+        },
+        "allow_root_choice": {
+          "type": "boolean",
+          "description": "Allow selecting root element (v2.64.0+)"
+        },
+        "choice_folders_and_items": {
+          "type": "string",
+          "enum": ["folders", "items", "folders_and_items"],
+          "description": "What can be selected in tree (v2.64.0+)"
+        },
+        "events": {
+          "$ref": "#/definitions/TableEvents"
+        }
+      }
+    },
+    "Button": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "command"
+      ],
+      "properties": {
+        "type": {
+          "const": "Button"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "command": {
+          "type": "string",
+          "description": "Reference to command name"
+        },
+        "width": {
+          "type": "integer",
+          "description": "Button width in character units"
+        },
+        "representation": {
+          "type": "string",
+          "enum": [
+            "Text",
+            "Picture",
+            "PictureAndText",
+            "TextPicture"
+          ]
+        },
+        "horizontal_align": {
+          "$ref": "#/definitions/HorizontalAlignment"
+        },
+        "vertical_align": {
+          "$ref": "#/definitions/VerticalAlignment"
+        }
+      }
+    },
+    "UsualGroup": {
+      "type": "object",
+      "required": [
+        "type",
+        "name"
+      ],
+      "properties": {
+        "type": {
+          "const": "UsualGroup"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "title": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "show_title": {
+          "type": "boolean",
+          "default": false
+        },
+        "group_direction": {
+          "type": "string",
+          "enum": [
+            "Vertical",
+            "Horizontal"
+          ],
+          "default": "Vertical"
+        },
+        "representation": {
+          "type": "string",
+          "enum": [
+            "None",
+            "NormalSeparation",
+            "WeakSeparation",
+            "StrongSeparation"
+          ],
+          "default": "None"
+        },
+        "behavior": {
+          "type": "string",
+          "enum": [
+            "Usual",
+            "Collapsible"
+          ]
+        },
+        "read_only": {
+          "type": "boolean",
+          "default": false,
+          "description": "Group is read-only"
+        },
+        "child_items": {
+          "type": "array",
+          "description": "Nested form elements",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "ColumnGroup": {
+      "type": "object",
+      "required": [
+        "type",
+        "name"
+      ],
+      "description": "ColumnGroup - groups table columns under one header",
+      "properties": {
+        "type": {
+          "const": "ColumnGroup"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "title": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "tooltip": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "group_layout": {
+          "type": "string",
+          "enum": [
+            "Horizontal",
+            "Vertical"
+          ],
+          "default": "Horizontal"
+        },
+        "show_in_header": {
+          "type": "boolean",
+          "default": true
+        },
+        "horizontal_align": {
+          "$ref": "#/definitions/HorizontalAlignment"
+        },
+        "vertical_align": {
+          "$ref": "#/definitions/VerticalAlignment"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "child_items": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "Pages": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "pages"
+      ],
+      "properties": {
+        "type": {
+          "const": "Pages"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "pages_representation": {
+          "type": "string",
+          "enum": [
+            "TabsOnTop",
+            "TabsOnBottom",
+            "None"
+          ],
+          "default": "TabsOnTop"
+        },
+        "pages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/definitions/Identifier"
+              },
+              "title": {
+                "$ref": "#/definitions/LocalizedString"
+              },
+              "child_items": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "RadioButtonField": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "attribute"
+      ],
+      "properties": {
+        "type": {
+          "const": "RadioButtonField"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Reference to processor attribute"
+        },
+        "radio_button_type": {
+          "type": "string",
+          "enum": [
+            "Tumbler",
+            "RadioButton"
+          ],
+          "default": "RadioButton"
+        },
+        "title_location": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Left",
+            "Right",
+            "Top",
+            "Bottom",
+            "Auto"
+          ]
+        },
+        "choice_list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "value_type": {
+                "type": "string",
+                "default": "xs:string"
+              },
+              "presentation": {
+                "$ref": "#/definitions/LocalizedString"
+              }
+            }
+          }
+        },
+        "events": {
+          "type": "object",
+          "properties": {
+            "OnChange": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "CheckBoxField": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "attribute"
+      ],
+      "properties": {
+        "type": {
+          "const": "CheckBoxField"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Reference to processor attribute"
+        },
+        "width": {
+          "type": "integer",
+          "description": "Field width in character units"
+        },
+        "title_location": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Left",
+            "Right",
+            "Top",
+            "Bottom",
+            "Auto"
+          ]
+        },
+        "events": {
+          "type": "object",
+          "properties": {
+            "OnChange": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Popup": {
+      "type": "object",
+      "description": "Popup dropdown menu for command bars",
+      "required": [
+        "type",
+        "name"
+      ],
+      "properties": {
+        "type": {
+          "const": "Popup"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "title": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "picture": {
+          "type": "string",
+          "description": "StdPicture.* or CommonPicture.*"
+        },
+        "representation": {
+          "type": "string",
+          "enum": [
+            "Picture",
+            "Text",
+            "PictureAndText",
+            "TextPicture",
+            "Auto"
+          ]
+        },
+        "child_items": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "SpreadSheetDocumentField": {
+      "type": "object",
+      "description": "Spreadsheet document field for formatted reports with drill-down support",
+      "required": [
+        "type",
+        "name",
+        "attribute"
+      ],
+      "properties": {
+        "type": {
+          "const": "SpreadSheetDocumentField"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Reference to spreadsheet_document attribute"
+        },
+        "title_location": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Auto",
+            "Left",
+            "Top",
+            "Right",
+            "Bottom"
+          ]
+        },
+        "vertical_scrollbar": {
+          "type": "boolean"
+        },
+        "horizontal_scrollbar": {
+          "type": "boolean"
+        },
+        "show_grid": {
+          "type": "boolean"
+        },
+        "show_headers": {
+          "type": "boolean"
+        },
+        "edit": {
+          "type": "boolean"
+        },
+        "protection": {
+          "type": "boolean"
+        },
+        "events": {
+          "type": "object",
+          "properties": {
+            "DetailProcessing": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "HTMLDocumentField": {
+      "type": "object",
+      "description": "HTML document field for displaying HTML content",
+      "required": [
+        "type",
+        "name"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "attribute"
+          ]
+        },
+        {
+          "required": [
+            "template"
+          ]
+        }
+      ],
+      "properties": {
+        "type": {
+          "const": "HTMLDocumentField"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Reference to string form_attribute for HTML content"
+        },
+        "template": {
+          "type": "string",
+          "description": "Link to template name - auto-creates form_attribute"
+        },
+        "title_location": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Auto",
+            "Left",
+            "Top",
+            "Right",
+            "Bottom"
+          ]
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "stretch": {
+          "type": "string",
+          "enum": [
+            "No",
+            "Horizontally",
+            "Vertically",
+            "HorizontalAndVertically"
+          ]
+        },
+        "events": {
+          "type": "object",
+          "properties": {
+            "OnClick": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "CalendarField": {
+      "type": "object",
+      "description": "Calendar field for date selection (v2.46.0+)",
+      "required": [
+        "type",
+        "name",
+        "attribute"
+      ],
+      "properties": {
+        "type": {
+          "const": "CalendarField"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Reference to date attribute"
+        },
+        "title_location": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Auto",
+            "Left",
+            "Top",
+            "Right",
+            "Bottom"
+          ]
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "show_current_date": {
+          "type": "boolean",
+          "description": "Highlight current date"
+        },
+        "first_day_of_week": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7,
+          "description": "First day of week (1=Monday, 7=Sunday)"
+        },
+        "begin_of_representation_period": {
+          "type": "string",
+          "description": "Start of visible period"
+        },
+        "end_of_representation_period": {
+          "type": "string",
+          "description": "End of visible period"
+        },
+        "events": {
+          "type": "object",
+          "properties": {
+            "OnActivateDate": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ChartField": {
+      "type": "object",
+      "description": "Chart/diagram field for business analytics visualization (v2.46.0+)",
+      "required": [
+        "type",
+        "name",
+        "attribute"
+      ],
+      "properties": {
+        "type": {
+          "const": "ChartField"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Reference to chart attribute"
+        },
+        "title_location": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Auto",
+            "Left",
+            "Top",
+            "Right",
+            "Bottom"
+          ]
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "chart_type": {
+          "type": "string",
+          "enum": [
+            "Pie",
+            "Pie3D",
+            "Line",
+            "Area",
+            "StackedArea",
+            "Column",
+            "StackedColumn",
+            "Bar",
+            "StackedBar",
+            "Doughnut"
+          ],
+          "description": "Chart type"
+        },
+        "show_legend": {
+          "type": "boolean",
+          "description": "Show chart legend"
+        },
+        "transparent_background": {
+          "type": "boolean",
+          "description": "Transparent chart background"
+        },
+        "events": {
+          "type": "object",
+          "properties": {
+            "ChartSelection": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "PlannerField": {
+      "type": "object",
+      "description": "Planner/scheduler field for calendar/kanban views (v2.46.0+)",
+      "required": [
+        "type",
+        "name",
+        "attribute"
+      ],
+      "properties": {
+        "type": {
+          "const": "PlannerField"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "attribute": {
+          "type": "string",
+          "description": "Reference to planner attribute"
+        },
+        "title_location": {
+          "type": "string",
+          "enum": [
+            "None",
+            "Auto",
+            "Left",
+            "Top",
+            "Right",
+            "Bottom"
+          ]
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "show_weekends": {
+          "type": "boolean",
+          "description": "Show weekend days"
+        },
+        "period": {
+          "type": "string",
+          "enum": [
+            "Day",
+            "Week",
+            "Month",
+            "Year"
+          ],
+          "description": "Display period"
+        },
+        "representation": {
+          "type": "string",
+          "description": "Planner representation style"
+        },
+        "events": {
+          "type": "object",
+          "properties": {
+            "Drag": {
+              "type": "string"
+            },
+            "DragCheck": {
+              "type": "string"
+            },
+            "BeforeCreate": {
+              "type": "string"
+            },
+            "OnEditEnd": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ButtonGroup": {
+      "type": "object",
+      "description": "Button group for visual grouping of related buttons",
+      "required": [
+        "type",
+        "name"
+      ],
+      "properties": {
+        "type": {
+          "const": "ButtonGroup"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "title": {
+          "$ref": "#/definitions/LocalizedString"
+        },
+        "child_items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Button"
+          }
+        }
+      }
+    },
+    "Form": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "description": "Form configuration with its own elements, commands, and attributes",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/Identifier"
+        },
+        "default": {
+          "type": "boolean",
+          "default": false,
+          "description": "Mark as default form"
+        },
+        "include": {
+          "type": "string",
+          "description": "Path to include YAML file with form structure (for modularity)"
+        },
+        "handlers_dir": {
+          "type": "string",
+          "description": "Directory with BSL handlers specific to this form"
+        },
+        "documentation_file": {
+          "type": "string",
+          "description": "Path to documentation file (.bsl format with // comments) relative to config.yaml. Content will be placed in #Область Документация region in Module.bsl"
+        },
+        "properties": {
+          "type": "object",
+          "description": "Form properties",
+          "properties": {
+            "title": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "$ref": "#/definitions/LocalizedString"
+                }
+              ]
+            },
+            "auto_title": {
+              "type": "boolean",
+              "default": true
+            },
+            "WindowOpeningMode": {
+              "type": "string",
+              "enum": [
+                "LockOwnerWindow",
+                "LockWholeInterface"
+              ]
+            },
+            "CommandBarLocation": {
+              "type": "string",
+              "enum": [
+                "None",
+                "Top",
+                "Bottom"
+              ]
+            }
+          }
+        },
+        "events": {
+          "$ref": "#/definitions/FormEvents"
+        },
+        "parameters": {
+          "type": "array",
+          "description": "Form parameters (passed when opening form)",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "type"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/definitions/Identifier"
+              },
+              "type": {
+                "type": "string",
+                "description": "Parameter type"
+              },
+              "synonym": {
+                "$ref": "#/definitions/LocalizedString"
+              },
+              "key_parameter": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        },
+        "elements": {
+          "type": "array",
+          "description": "Form elements",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/InputField"
+              },
+              {
+                "$ref": "#/definitions/LabelField"
+              },
+              {
+                "$ref": "#/definitions/LabelDecoration"
+              },
+              {
+                "$ref": "#/definitions/PictureDecoration"
+              },
+              {
+                "$ref": "#/definitions/PictureField"
+              },
+              {
+                "$ref": "#/definitions/Table"
+              },
+              {
+                "$ref": "#/definitions/Button"
+              },
+              {
+                "$ref": "#/definitions/UsualGroup"
+              },
+              {
+                "$ref": "#/definitions/ColumnGroup"
+              },
+              {
+                "$ref": "#/definitions/Pages"
+              },
+              {
+                "$ref": "#/definitions/RadioButtonField"
+              },
+              {
+                "$ref": "#/definitions/CheckBoxField"
+              },
+              {
+                "$ref": "#/definitions/Popup"
+              },
+              {
+                "$ref": "#/definitions/SpreadSheetDocumentField"
+              },
+              {
+                "$ref": "#/definitions/HTMLDocumentField"
+              },
+              {
+                "$ref": "#/definitions/CalendarField"
+              },
+              {
+                "$ref": "#/definitions/ChartField"
+              },
+              {
+                "$ref": "#/definitions/PlannerField"
+              },
+              {
+                "$ref": "#/definitions/ButtonGroup"
+              }
+            ]
+          }
+        },
+        "auto_command_bar": {
+          "type": "array",
+          "description": "AutoCommandBar elements",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/Popup"
+              },
+              {
+                "$ref": "#/definitions/Button"
+              }
+            ]
+          }
+        },
+        "commands": {
+          "type": "array",
+          "description": "Form commands",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "handler"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/definitions/Identifier"
+              },
+              "title": {
+                "$ref": "#/definitions/LocalizedString"
+              },
+              "title_ru": {
+                "type": "string",
+                "description": "Russian title (flat format)"
+              },
+              "title_uk": {
+                "type": "string",
+                "description": "Ukrainian title (flat format)"
+              },
+              "title_en": {
+                "type": "string",
+                "description": "English title (flat format)"
+              },
+              "handler": {
+                "type": "string"
+              },
+              "tooltip": {
+                "$ref": "#/definitions/LocalizedString"
+              },
+              "picture": {
+                "type": "string"
+              },
+              "shortcut": {
+                "type": "string"
+              },
+              "long_operation": {
+                "type": "boolean",
+                "default": false
+              },
+              "long_operation_settings": {
+                "type": "object",
+                "properties": {
+                  "show_progress": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "allow_cancel": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "progress_message": {
+                    "$ref": "#/definitions/LocalizedString"
+                  },
+                  "timeout_seconds": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 3600,
+                    "default": 300
+                  },
+                  "wait_completion_initial": {
+                    "type": "number",
+                    "minimum": 0,
+                    "default": 0
+                  },
+                  "use_additional_parameters": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "output_messages": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "output_progress": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "form_attributes": {
+          "type": "array",
+          "description": "Form-level attributes",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "type"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/definitions/Identifier"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "spreadsheet_document",
+                  "binary_data",
+                  "string",
+                  "number",
+                  "date",
+                  "boolean",
+                  "planner"
+                ]
+              },
+              "synonym": {
+                "$ref": "#/definitions/LocalizedString"
+              },
+              "title": {
+                "$ref": "#/definitions/LocalizedString"
+              },
+              "time_scale": {
+                "type": "string",
+                "enum": [
+                  "Hour",
+                  "Day",
+                  "Week",
+                  "Month"
+                ],
+                "description": "Planner time scale measure (v2.47.0+)"
+              },
+              "time_scale_interval": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Planner time scale interval"
+              },
+              "time_scale_format": {
+                "type": "string",
+                "description": "Planner time scale format"
+              },
+              "display_current_date": {
+                "type": "boolean",
+                "description": "Display current date in planner"
+              },
+              "show_weekends": {
+                "type": "boolean",
+                "description": "Show weekends in planner"
+              }
+            }
+          }
+        },
+        "value_tables": {
+          "type": "array",
+          "description": "ValueTable attributes for this form",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "columns"
+            ]
+          }
+        },
+        "value_trees": {
+          "type": "array",
+          "description": "ValueTree attributes for hierarchical data (v2.64.0+). Use with Table element with representation: tree",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "columns"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/definitions/Identifier"
+              },
+              "title": {
+                "$ref": "#/definitions/LocalizedString"
+              },
+              "columns": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": ["name", "type"],
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/Identifier"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Column type: string, number, boolean, date, etc."
+                    },
+                    "synonym": {
+                      "$ref": "#/definitions/LocalizedString"
+                    },
+                    "length": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "description": "String length (0 = unlimited)"
+                    },
+                    "digits": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "fraction_digits": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "read_only": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "dynamic_lists": {
+          "type": "array",
+          "description": "DynamicList attributes for this form",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

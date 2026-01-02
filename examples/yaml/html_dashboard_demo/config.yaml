@@ -1,0 +1,29 @@
+processor:
+  name: HTMLDashboard
+  synonym:
+    ru: HTML Дашборд
+    uk: HTML Дашборд
+templates:
+  - name: Dashboard
+    type: HTMLDocument
+    file: templates/dashboard.html
+    auto_field: true
+    field_name: DashboardField
+    automation: templates/dashboard.automation.yaml
+forms:
+  - name: Форма
+    default: true
+    elements:
+      - type: Button
+        name: RefreshDashboardКнопка
+        command: RefreshDashboard
+        parent: ФормаКоманднаяПанель
+    commands:
+      - name: RefreshDashboard
+        handler: RefreshDashboard
+        picture: StdPicture.Refresh
+        title:
+          ru: Обновить дашборд
+          uk: Оновити дашборд
+    events:
+      OnCreateAtServer: ПриСозданииНаСервере

@@ -1,0 +1,90 @@
+processor:
+  name: СложныйДинамическийСписок
+  platform_version: '2.11'
+  synonym:
+    ru: Сложный динамический список с параметрами
+    uk: Складний динамічний список з параметрами
+attributes:
+  - name: ДатаНачала
+    type: date
+    synonym:
+      ru: Дата начала
+      uk: Дата початку
+  - name: ДатаОкончания
+    type: date
+    synonym:
+      ru: Дата окончания
+      uk: Дата закінчення
+  - name: Организация
+    type: CatalogRef.Организации
+    synonym:
+      ru: Организация
+      uk: Організація
+forms:
+  - name: Форма
+    default: true
+    dynamic_lists:
+      - name: СписокДокументов
+        manual_query: true
+        main_table: Document.РеализацияТоваровУслуг
+        key_fields:
+          - Ссылка
+        query_text: "ВЫБРАТЬ\n  РеализацияТоваровУслуг.Ссылка КАК Ссылка,\n  РеализацияТоваровУслуг.Дата
+          КАК Дата,\n  РеализацияТоваровУслуг.Номер КАК Номер,\n  РеализацияТоваровУслуг.Организация
+          КАК Организация,\n  РеализацияТоваровУслуг.Контрагент КАК Контрагент,\n\
+          \  РеализацияТоваровУслуг.СуммаДокумента КАК Сумма\nИЗ\n  Документ.РеализацияТоваровУслуг
+          КАК РеализацияТоваровУслуг\nГДЕ\n  РеализацияТоваровУслуг.Дата МЕЖДУ &ДатаНачала
+          И &ДатаОкончания\n  И РеализацияТоваровУслуг.Организация = &Организация\n\
+          \  И РеализацияТоваровУслуг.Проведен\n"
+        parameters:
+          - name: ДатаНачала
+            type: Date
+          - name: ДатаОкончания
+            type: Date
+          - name: Организация
+            type: CatalogRef.Организации
+        auto_save_user_settings: true
+        # NOTE: Columns and use_always_fields work only with real 1C configuration
+        # For EPF compilation with stub config, they are omitted
+        # In real config, columns would be: Дата, Номер, Организация, Контрагент, Сумма
+        title:
+          ru: Документы продаж
+          uk: Документи продажу
+    properties:
+      title:
+        ru: Документы продаж за период
+        uk: Документи продажу за період
+      auto_title: false
+    events:
+      OnCreateAtServer: ПриСозданииНаСервере
+    elements:
+      - type: InputField
+        name: ДатаНачала
+        attribute: ДатаНачала
+        events:
+          OnChange: ДатаНачалаПриИзменении
+      - type: InputField
+        name: ДатаОкончания
+        attribute: ДатаОкончания
+        events:
+          OnChange: ДатаОкончанияПриИзменении
+      - type: InputField
+        name: Организация
+        attribute: Организация
+        events:
+          OnChange: ОрганизацияПриИзменении
+      - type: Table
+        name: СписокДокументов
+        tabular_section: СписокДокументов
+        is_dynamic_list: true
+    commands:
+      - name: Обновить
+        handler: Обновить
+        picture: StdPicture.Refresh
+        shortcut: F5
+        title:
+          ru: Обновить
+          uk: Оновити
+        tooltip:
+          ru: Обновить список документов
+          uk: Оновити список документів

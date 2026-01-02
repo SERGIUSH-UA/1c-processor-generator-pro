@@ -1,0 +1,735 @@
+{% from "macros/_common.j2" import render_title, render_tooltip, render_submenu, render_tooltip_only, render_tooltip_en, render_events, render_choice_list, render_input_hint, render_font, render_color, render_choice_button_picture, render_picture, render_data_path, render_table_data_path, render_column_data_path, render_line_number_data_path, render_alignment, render_dimensions, render_title_location, render_horizontal_stretch %}
+
+{% macro render_input_field(elem, indent='') -%}
+{{ indent }}<InputField name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_data_path(elem, indent + '\t') }}
+{%- if elem.properties.get('multiline') %}
+{{ indent }}	<MultiLine>true</MultiLine>
+{%- endif %}
+{%- if elem.properties.get('read_only') %}
+{{ indent }}	<ReadOnly>true</ReadOnly>
+{%- endif %}
+{%- if elem.properties.get('password_mode') %}
+{{ indent }}	<PasswordMode>true</PasswordMode>
+{%- endif %}
+{%- if elem.properties.get('text_edit') %}
+{{ indent }}	<TextEdit>true</TextEdit>
+{%- endif %}
+{%- if elem.properties.get('auto_max_width') %}
+{{ indent }}	<AutoMaxWidth>true</AutoMaxWidth>
+{%- endif %}
+{%- if elem.properties.get('auto_max_height') %}
+{{ indent }}	<AutoMaxHeight>true</AutoMaxHeight>
+{%- endif %}
+{{ render_alignment(elem.properties, indent + '\t') }}
+{{ render_dimensions(elem.properties, indent + '\t') }}
+{{ render_horizontal_stretch(elem.properties, indent + '\t') }}
+{{ render_title_location(elem.properties, indent + '\t') }}
+{{ render_title(elem.properties, indent + '\t') }}
+{{ render_color(elem.properties.get('title_text_color'), indent + '\t', 'TitleTextColor') }}
+{{ render_font(elem.properties.get('title_font'), indent + '\t', 'TitleFont') }}
+{{ render_tooltip(elem.properties, indent + '\t') }}
+{{ indent }}	<EditMode>EnterOnInput</EditMode>
+{%- if elem.properties.get('choice_mode') %}
+{{ indent }}	<ChoiceMode>{{ elem.properties['choice_mode'] }}</ChoiceMode>
+{%- endif %}
+{%- if elem.properties.get('choice_folders_and_items') %}
+{{ indent }}	<ChoiceFoldersAndItems>{{ elem.properties['choice_folders_and_items'] }}</ChoiceFoldersAndItems>
+{%- endif %}
+{%- if elem.properties.get('quick_choice') is not none %}
+{{ indent }}	<QuickChoice>{{ elem.properties['quick_choice']|lower }}</QuickChoice>
+{%- endif %}
+{%- if elem.properties.get('choice_history_on_input') %}
+{{ indent }}	<ChoiceHistoryOnInput>{{ elem.properties['choice_history_on_input'] }}</ChoiceHistoryOnInput>
+{%- endif %}
+{{ render_choice_button_picture(elem.properties.get('choice_button_picture'), indent + '\t') }}
+{{ render_color(elem.properties.get('text_color'), indent + '\t', 'TextColor') }}
+{{ render_color(elem.properties.get('back_color'), indent + '\t', 'BackColor') }}
+{{ render_color(elem.properties.get('border_color'), indent + '\t', 'BorderColor') }}
+{{ render_font(elem.properties.get('font'), indent + '\t') }}
+{{ render_input_hint(elem.properties, indent + '\t') }}
+{{ render_choice_list(elem.properties.get('choice_list'), indent + '\t') }}
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</InputField>
+{%- endmacro %}
+
+{% macro render_label_field(elem, indent='') -%}
+{{ indent }}<LabelField name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_data_path(elem, indent + '\t') }}
+{{ render_title(elem.properties, indent + '\t') }}
+{%- if elem.properties.get('hyperlink') %}
+{{ indent }}	<Hiperlink>true</Hiperlink>
+{%- endif %}
+{{ render_alignment(elem.properties, indent + '\t') }}
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</LabelField>
+{%- endmacro %}
+
+{% macro render_label_decoration(elem, indent='') -%}
+{{ indent }}<LabelDecoration name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_title(elem.properties, indent + '\t', 'Title', 'true' if elem.properties.get('formatted') else 'false') }}
+{{ render_font(elem.properties.get('font'), indent + '\t') }}
+{%- if elem.properties.get('hyperlink') %}
+{{ indent }}	<Hyperlink>true</Hyperlink>
+{%- endif %}
+{{ render_alignment(elem.properties, indent + '\t') }}
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</LabelDecoration>
+{%- endmacro %}
+
+{% macro render_picture_decoration(elem, indent='') -%}
+{%- set pd_width = elem.properties.get('form_width') or elem.properties.get('width') %}
+{%- set pd_height = elem.properties.get('form_height') or elem.properties.get('height') %}
+{{ indent }}<PictureDecoration name="{{ elem.name }}" id="{{ elem.id }}">
+{%- if pd_width %}
+{{ indent }}	<Width>{{ pd_width }}</Width>
+{%- endif %}
+{%- if pd_height %}
+{{ indent }}	<Height>{{ pd_height }}</Height>
+{%- endif %}
+
+{%- set has_custom_title = elem.properties.get('title') or elem.properties.get('title_ru') or elem.properties.get('title_uk') %}
+{%- if has_custom_title %}
+{{ render_title(elem.properties, indent + '\t', formatted=false) }}
+{%- else %}
+{{ indent }}	<Title formatted="false">
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ elem.name }}</v8:content>
+{{ indent }}		</v8:item>
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ elem.name }}</v8:content>
+{{ indent }}		</v8:item>
+{{ indent }}	</Title>
+{%- endif %}
+{%- if elem.properties.get('hyperlink') %}
+{{ indent }}	<Hyperlink>{{ 'true' if elem.properties['hyperlink'] else 'false' }}</Hyperlink>
+{%- endif %}
+{%- if elem.properties.get('picture_size') and elem.properties.get('picture_size') != 'Proportionally' %}
+{{ indent }}	<PictureSize>{{ elem.properties['picture_size'] }}</PictureSize>
+{%- endif %}
+{%- if elem.properties.get('zoomable') %}
+{{ indent }}	<Zoomable>{{ 'true' if elem.properties['zoomable'] else 'false' }}</Zoomable>
+{%- endif %}
+{{ render_picture(elem.properties, indent + '\t') }}
+{{ indent }}	<FileDragMode>AsFile</FileDragMode>
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</PictureDecoration>
+{%- endmacro %}
+
+{% macro render_picture_field(elem, indent='') -%}
+{{ indent }}<PictureField name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_data_path(elem, indent + '\t') }}
+{{ render_dimensions(elem.properties, indent + '\t') }}
+{{ render_title_location(elem.properties, indent + '\t') }}
+{%- if elem.properties.get('picture_size') %}
+{{ indent }}	<PictureSize>{{ elem.properties['picture_size'] }}</PictureSize>
+{%- endif %}
+{%- if elem.properties.get('zoomable') %}
+{{ indent }}	<Zoomable>{{ 'true' if elem.properties['zoomable'] else 'false' }}</Zoomable>
+{%- endif %}
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</PictureField>
+{%- endmacro %}
+
+{% macro render_radio_button_field(elem, indent='') -%}
+{{ indent }}<RadioButtonField name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_data_path(elem, indent + '\t') }}
+{{ render_title_location(elem.properties, indent + '\t') }}
+{%- if elem.properties.get('radio_button_type') %}
+{{ indent }}	<RadioButtonType>{{ elem.properties['radio_button_type'] }}</RadioButtonType>
+{%- endif %}
+{{ render_choice_list(elem.properties.get('choice_list'), indent + '\t') }}
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</RadioButtonField>
+{%- endmacro %}
+
+{% macro render_checkbox_field(elem, indent='') -%}
+{{ indent }}<CheckBoxField name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_data_path(elem, indent + '\t') }}
+{{ render_dimensions(elem.properties, indent + '\t') }}
+{{ render_title_location(elem.properties, indent + '\t') }}
+{{ indent }}	<CheckBoxType>Auto</CheckBoxType>
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</CheckBoxField>
+{%- endmacro %}
+
+{% macro render_spreadsheet_document_field(elem, indent='') -%}
+{{ indent }}<SpreadSheetDocumentField name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_data_path(elem, indent + '\t') }}
+{{ render_title_location(elem.properties, indent + '\t') }}
+{%- if elem.properties.get('vertical_scrollbar') is not none %}
+{{ indent }}	<VerticalScrollBar>{{ elem.properties['vertical_scrollbar']|lower }}</VerticalScrollBar>
+{%- endif %}
+{%- if elem.properties.get('horizontal_scrollbar') is not none %}
+{{ indent }}	<HorizontalScrollBar>{{ elem.properties['horizontal_scrollbar']|lower }}</HorizontalScrollBar>
+{%- endif %}
+{%- if elem.properties.get('show_grid') is not none %}
+{{ indent }}	<ShowGrid>{{ elem.properties['show_grid']|lower }}</ShowGrid>
+{%- endif %}
+{%- if elem.properties.get('show_headers') is not none %}
+{{ indent }}	<ShowHeaders>{{ elem.properties['show_headers']|lower }}</ShowHeaders>
+{%- endif %}
+{%- if elem.properties.get('edit') is not none %}
+{{ indent }}	<Edit>{{ elem.properties['edit']|lower }}</Edit>
+{%- endif %}
+{%- if elem.properties.get('protection') is not none %}
+{{ indent }}	<Protection>{{ elem.properties['protection']|lower }}</Protection>
+{%- endif %}
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</SpreadSheetDocumentField>
+{%- endmacro %}
+
+{% macro render_html_document_field(elem, indent='') -%}
+{{ indent }}<HTMLDocumentField name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_data_path(elem, indent + '\t') }}
+{%- if elem.properties.get('title_location') %}
+{{ indent }}	<TitleLocation>{{ elem.properties['title_location'] }}</TitleLocation>
+{%- else %}
+{{ indent }}	<TitleLocation>None</TitleLocation>
+{%- endif %}
+{{ render_dimensions(elem.properties, indent + '\t') }}
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</HTMLDocumentField>
+{%- endmacro %}
+
+{% macro render_calendar_field(elem, indent='') -%}
+{{ indent }}<CalendarField name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_data_path(elem, indent + '\t') }}
+{{ render_title_location(elem.properties, indent + '\t') }}
+{{ render_dimensions(elem.properties, indent + '\t') }}
+{%- if elem.properties.get('show_current_date') is not none %}
+{{ indent }}	<ShowCurrentDate>{{ elem.properties['show_current_date']|lower }}</ShowCurrentDate>
+{%- endif %}
+{%- if elem.properties.get('first_day_of_week') %}
+{{ indent }}	<FirstDayOfWeek>{{ elem.properties['first_day_of_week'] }}</FirstDayOfWeek>
+{%- endif %}
+{%- if elem.properties.get('begin_of_representation_period') %}
+{{ indent }}	<BeginOfRepresentationPeriod>{{ elem.properties['begin_of_representation_period'] }}</BeginOfRepresentationPeriod>
+{%- endif %}
+{%- if elem.properties.get('end_of_representation_period') %}
+{{ indent }}	<EndOfRepresentationPeriod>{{ elem.properties['end_of_representation_period'] }}</EndOfRepresentationPeriod>
+{%- endif %}
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</CalendarField>
+{%- endmacro %}
+
+{% macro render_chart_field(elem, indent='') -%}
+{{ indent }}<ChartField name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_data_path(elem, indent + '\t') }}
+{{ render_title_location(elem.properties, indent + '\t') }}
+{{ render_dimensions(elem.properties, indent + '\t') }}
+{%- if elem.properties.get('chart_type') %}
+{{ indent }}	<ChartType>{{ elem.properties['chart_type'] }}</ChartType>
+{%- endif %}
+{%- if elem.properties.get('show_legend') is not none %}
+{{ indent }}	<ShowLegend>{{ elem.properties['show_legend']|lower }}</ShowLegend>
+{%- endif %}
+{%- if elem.properties.get('transparent_background') is not none %}
+{{ indent }}	<TransparentBackground>{{ elem.properties['transparent_background']|lower }}</TransparentBackground>
+{%- endif %}
+{{ render_submenu(elem.name, elem.id, indent + '\t') }}
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</ChartField>
+{%- endmacro %}
+
+{% macro render_planner_field(elem, indent='') -%}
+{{ indent }}<PlannerField name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_data_path(elem, indent + '\t') }}
+{{ render_title_location(elem.properties, indent + '\t') }}
+{{ render_dimensions(elem.properties, indent + '\t') }}
+{%- if elem.properties.get('enable_drag') is not none %}
+{{ indent }}	<EnableDrag>{{ elem.properties['enable_drag']|lower }}</EnableDrag>
+{%- endif %}
+{%- if elem.properties.get('show_weekends') is not none %}
+{{ indent }}	<ShowWeekends>{{ elem.properties['show_weekends']|lower }}</ShowWeekends>
+{%- endif %}
+{%- if elem.properties.get('period') %}
+{{ indent }}	<Period>{{ elem.properties['period'] }}</Period>
+{%- endif %}
+{%- if elem.properties.get('representation') %}
+{{ indent }}	<Representation>{{ elem.properties['representation'] }}</Representation>
+{%- endif %}
+{{ indent }}	<ContextMenu name="{{ elem.name }}КонтекстноеМеню" id="{{ elem.id + 1 }}"/>
+{{ indent }}	<ExtendedTooltip name="{{ elem.name }}РасширеннаяПодсказка" id="{{ elem.id + 2 }}"/>
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}</PlannerField>
+{%- endmacro %}
+
+{% macro render_button(elem, indent='', ctx=none) -%}
+
+{%- set command_pictures = ctx.command_pictures if ctx else none %}
+
+{%- set button_picture = elem.properties.get('picture') or (command_pictures.get(elem.command) if command_pictures and elem.command else none) %}
+{{ indent }}<Button name="{{ elem.name }}" id="{{ elem.id }}">
+{{ indent }}	<Type>{{ elem.properties.get('button_type', 'CommandBarButton') }}</Type>
+{%- if elem.command %}
+{{ indent }}	<CommandName>Form.Command.{{ elem.command }}</CommandName>
+{%- endif %}
+{%- if elem.properties.get('width') %}
+{{ indent }}	<Width>{{ elem.properties['width'] }}</Width>
+{%- endif %}
+
+{%- if button_picture %}
+{{ indent }}	<Picture>
+{{ indent }}		<xr:Ref>{{ button_picture }}</xr:Ref>
+{{ indent }}		<xr:LoadTransparent>true</xr:LoadTransparent>
+{{ indent }}	</Picture>
+{%- endif %}
+{%- if elem.properties.get('representation') %}
+{{ indent }}	<Representation>{{ elem.properties['representation'] }}</Representation>
+{%- elif button_picture %}
+{{ indent }}	<Representation>PictureAndText</Representation>
+{%- endif %}
+{{ render_alignment(elem.properties, indent + '\t') }}
+{{ render_tooltip_en(elem.name, elem.id, indent + '\t') }}
+{{ indent }}</Button>
+{%- endmacro %}
+
+{% macro render_popup(elem, indent='', render_element_func=none, ctx=none) -%}
+{{ indent }}<Popup name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_title(elem.properties, indent + '\t') }}
+{{ render_picture(elem.properties, indent + '\t', 'true') }}
+{%- if elem.properties.get('representation') %}
+{{ indent }}	<Representation>{{ elem.properties['representation'] }}</Representation>
+{%- endif %}
+{{ render_tooltip_only(elem.name, elem.id, indent + '\t') }}
+{%- if elem.child_items and render_element_func %}
+{{ indent }}	<ChildItems>
+{%- for child in elem.child_items %}
+{{ render_element_func(child, indent + '\t\t', ctx) }}
+{%- endfor %}
+{{ indent }}	</ChildItems>
+{%- endif %}
+{{ indent }}</Popup>
+{%- endmacro %}
+
+{% macro render_button_group(elem, indent='', render_element_func=none, ctx=none) -%}
+{{ indent }}<ButtonGroup name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_title(elem.properties, indent + '\t') }}
+{%- if elem.properties.get('group_direction') %}
+{{ indent }}	<Group>{{ elem.properties['group_direction'] }}</Group>
+{%- endif %}
+{{ render_tooltip_only(elem.name, elem.id, indent + '\t') }}
+{%- if elem.child_items and render_element_func %}
+{{ indent }}	<ChildItems>
+{%- for child in elem.child_items %}
+{{ render_element_func(child, indent + '\t\t', ctx) }}
+{%- endfor %}
+{{ indent }}	</ChildItems>
+{%- endif %}
+{{ indent }}</ButtonGroup>
+{%- endmacro %}
+
+{% macro render_usual_group(elem, indent='', render_element_func=none, ctx=none) -%}
+{{ indent }}<UsualGroup name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_title(elem.properties, indent + '\t') }}
+{%- if elem.properties.get('behavior') %}
+{{ indent }}	<Behavior>{{ elem.properties['behavior'] }}</Behavior>
+{%- endif %}
+{%- if elem.properties.get('read_only') %}
+{{ indent }}	<ReadOnly>true</ReadOnly>
+{%- endif %}
+{%- if elem.properties.get('group_direction') %}
+{{ indent }}	<Group>{{ elem.properties['group_direction'] }}</Group>
+{%- endif %}
+{%- if elem.properties.get('representation') %}
+{{ indent }}	<Representation>{{ elem.properties['representation'] }}</Representation>
+{%- endif %}
+{%- if elem.properties.get('show_title') is not none %}
+{{ indent }}	<ShowTitle>{{ elem.properties['show_title']|lower }}</ShowTitle>
+{%- endif %}
+{{ render_tooltip_only(elem.name, elem.id, indent + '\t') }}
+{%- if elem.child_items and render_element_func %}
+{{ indent }}	<ChildItems>
+{%- for child in elem.child_items %}
+{{ render_element_func(child, indent + '\t\t', ctx) }}
+{%- endfor %}
+{{ indent }}	</ChildItems>
+{%- endif %}
+{{ indent }}</UsualGroup>
+{%- endmacro %}
+
+{% macro render_column_group(elem, indent='', render_element_func=none, ctx=none) -%}
+{{ indent }}<ColumnGroup name="{{ elem.name }}" id="{{ elem.id }}">
+{{ render_title(elem.properties, indent + '\t') }}
+{{ render_tooltip(elem.properties, indent + '\t') }}
+{%- if elem.properties.get('group_layout') %}
+{{ indent }}	<Group>{{ elem.properties['group_layout'] }}</Group>
+{%- endif %}
+{%- if elem.properties.get('show_in_header') is not none %}
+{{ indent }}	<ShowInHeader>{{ elem.properties['show_in_header']|lower }}</ShowInHeader>
+{%- endif %}
+{{ render_alignment(elem.properties, indent + '\t') }}
+{{ render_tooltip_only(elem.name, elem.id, indent + '\t') }}
+{%- if elem.child_items and render_element_func %}
+{{ indent }}	<ChildItems>
+{%- for child in elem.child_items %}
+{{ render_element_func(child, indent + '\t\t', ctx) }}
+{%- endfor %}
+{{ indent }}	</ChildItems>
+{%- endif %}
+{{ indent }}</ColumnGroup>
+{%- endmacro %}
+
+{% macro render_table(elem, indent='', render_element_func=none, ctx=none) -%}
+{{ indent }}<Table name="{{ elem.name }}" id="{{ elem.id }}">
+
+{%- if elem.get('is_value_tree') or elem.get('representation') == 'tree' or elem.properties.get('representation') == 'tree' %}
+{{ indent }}	<Representation>Tree</Representation>
+{%- set tree_view = elem.get('initial_tree_view', elem.properties.get('initial_tree_view', 'no_expand')) %}
+{%- if tree_view == 'expand_all_levels' %}
+{{ indent }}	<InitialTreeView>ExpandAllLevels</InitialTreeView>
+{%- elif tree_view == 'expand_top_level' %}
+{{ indent }}	<InitialTreeView>ExpandTopLevel</InitialTreeView>
+{%- else %}
+{{ indent }}	<InitialTreeView>NoExpand</InitialTreeView>
+{%- endif %}
+{%- set show_root = elem.get('show_root', elem.properties.get('show_root')) %}
+{%- if show_root is not none %}
+{{ indent }}	<ShowRoot>{{ show_root|lower }}</ShowRoot>
+{%- endif %}
+{%- set allow_root_choice = elem.get('allow_root_choice', elem.properties.get('allow_root_choice')) %}
+{%- if allow_root_choice is not none %}
+{{ indent }}	<AllowRootChoice>{{ allow_root_choice|lower }}</AllowRootChoice>
+{%- endif %}
+{%- set choice_folders = elem.get('choice_folders_and_items', elem.properties.get('choice_folders_and_items')) %}
+{%- if choice_folders %}
+{%- if choice_folders == 'folders' %}
+{{ indent }}	<ChoiceFoldersAndItems>Folders</ChoiceFoldersAndItems>
+{%- elif choice_folders == 'items' %}
+{{ indent }}	<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+{%- elif choice_folders == 'folders_and_items' %}
+{{ indent }}	<ChoiceFoldersAndItems>FoldersAndItems</ChoiceFoldersAndItems>
+{%- endif %}
+{%- endif %}
+{%- else %}
+{{ indent }}	<Representation>List</Representation>
+{%- endif %}
+{{ indent }}	<AutoInsertNewRow>true</AutoInsertNewRow>
+{{ indent }}	<EnableStartDrag>true</EnableStartDrag>
+{{ indent }}	<EnableDrag>true</EnableDrag>
+{%- if elem.properties.get('read_only') %}
+{{ indent }}	<ReadOnly>true</ReadOnly>
+{%- endif %}
+{%- if elem.properties.get('height') %}
+{{ indent }}	<Height>{{ elem.properties['height'] }}</Height>
+{%- endif %}
+{%- if elem.properties.get('horizontal_stretch') is not none %}
+{{ indent }}	<HorizontalStretch>{{ elem.properties['horizontal_stretch']|lower }}</HorizontalStretch>
+{%- endif %}
+{{ render_table_data_path(elem, indent + '\t') }}
+{{ indent }}	<RowFilter xsi:nil="true"/>
+{{ indent }}	<ContextMenu name="{{ elem.name }}КонтекстноеМеню" id="{{ elem.id + 1 }}"/>
+{{ indent }}	<AutoCommandBar name="{{ elem.name }}КоманднаяПанель" id="{{ elem.id + 2 }}"/>
+{{ indent }}	<ExtendedTooltip name="{{ elem.name }}РасширеннаяПодсказка" id="{{ elem.id + 3 }}"/>
+{{ render_events(elem.events, indent + '\t') }}
+{{ indent }}	<ChildItems>
+{%- if elem.child_items and render_element_func %}
+
+{%- for child in elem.child_items %}
+{{ render_element_func(child, indent + '\t\t', ctx) }}
+{%- endfor %}
+{%- else %}
+
+{%- for col in elem.columns %}
+{{ render_table_column(col, elem, indent + '\t\t') }}
+{%- endfor %}
+{%- endif %}
+{{ indent }}	</ChildItems>
+{{ indent }}</Table>
+{%- endmacro %}
+
+{% macro render_pages(elem, indent='', render_element_func=none, ctx=none) -%}
+{%- set version = ctx.version if ctx else '2.11' %}
+{{ indent }}<Pages name="{{ elem.name }}" id="{{ elem.id }}">
+{%- if version|float < 2.11 %}
+
+{{ indent }}	<Title>
+{%- if elem.properties.get('title_ru') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title_ru'] |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- elif elem.properties.get('title') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title'] |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- else %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ elem.name |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- endif %}
+{%- if elem.properties.get('title_uk') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title_uk'] |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- elif elem.properties.get('title') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title'] |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- else %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ elem.name |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- endif %}
+{{ indent }}	</Title>
+{{ indent }}	<ToolTip>
+{%- if elem.properties.get('title_ru') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title_ru'] |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- elif elem.properties.get('title') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title'] or elem.name |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- else %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ elem.name |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- endif %}
+{%- if elem.properties.get('title_uk') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title_uk'] |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- elif elem.properties.get('title') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title'] or elem.name |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- else %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ elem.name |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- endif %}
+{{ indent }}	</ToolTip>
+{%- else %}
+
+{{ indent }}	<Title>
+{%- if elem.properties.get('title_ru') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title_ru'] |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- elif elem.properties.get('title') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title'] |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- else %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ elem.name |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- endif %}
+{%- if elem.properties.get('title_uk') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title_uk'] |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- elif elem.properties.get('title') %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ elem.properties['title'] |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- else %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ elem.name |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- endif %}
+{{ indent }}	</Title>
+{%- if elem.properties.get('pages_representation') %}
+{{ indent }}	<PagesRepresentation>{{ elem.properties['pages_representation'] }}</PagesRepresentation>
+{%- endif %}
+{%- endif %}
+{{ indent }}	<ExtendedTooltip name="{{ elem.name }}РасширеннаяПодсказка" id="{{ elem.id + 1 }}"/>
+{%- if elem.page_items %}
+{{ indent }}	<ChildItems>
+{%- for page in elem.page_items %}
+{{ indent }}		<Page name="{{ page.name }}" id="{{ page.id }}">
+{%- if page.properties.get('title_ru') or page.properties.get('title_uk') %}
+{{ indent }}			<Title>
+{%- if page.properties.get('title_ru') %}
+{{ indent }}				<v8:item>
+{{ indent }}					<v8:lang>ru</v8:lang>
+{{ indent }}					<v8:content>{{ page.properties['title_ru'] |x }}</v8:content>
+{{ indent }}				</v8:item>
+{%- endif %}
+{%- if page.properties.get('title_uk') %}
+{{ indent }}				<v8:item>
+{{ indent }}					<v8:lang>uk</v8:lang>
+{{ indent }}					<v8:content>{{ page.properties['title_uk'] |x }}</v8:content>
+{{ indent }}				</v8:item>
+{%- endif %}
+{{ indent }}			</Title>
+{%- endif %}
+{%- if version|float < 2.11 %}
+
+{{ indent }}			<ToolTip>
+{%- if page.properties.get('title_ru') %}
+{{ indent }}				<v8:item>
+{{ indent }}					<v8:lang>ru</v8:lang>
+{{ indent }}					<v8:content>{{ page.properties['title_ru'] |x }}</v8:content>
+{{ indent }}				</v8:item>
+{%- elif page.properties.get('title') %}
+{{ indent }}				<v8:item>
+{{ indent }}					<v8:lang>ru</v8:lang>
+{{ indent }}					<v8:content>{{ page.properties['title'] |x }}</v8:content>
+{{ indent }}				</v8:item>
+{%- else %}
+{{ indent }}				<v8:item>
+{{ indent }}					<v8:lang>ru</v8:lang>
+{{ indent }}					<v8:content>{{ page.name |x }}</v8:content>
+{{ indent }}				</v8:item>
+{%- endif %}
+{%- if page.properties.get('title_uk') %}
+{{ indent }}				<v8:item>
+{{ indent }}					<v8:lang>uk</v8:lang>
+{{ indent }}					<v8:content>{{ page.properties['title_uk'] |x }}</v8:content>
+{{ indent }}				</v8:item>
+{%- elif page.properties.get('title') %}
+{{ indent }}				<v8:item>
+{{ indent }}					<v8:lang>uk</v8:lang>
+{{ indent }}					<v8:content>{{ page.properties['title'] |x }}</v8:content>
+{{ indent }}				</v8:item>
+{%- else %}
+{{ indent }}				<v8:item>
+{{ indent }}					<v8:lang>uk</v8:lang>
+{{ indent }}					<v8:content>{{ page.name |x }}</v8:content>
+{{ indent }}				</v8:item>
+{%- endif %}
+{{ indent }}			</ToolTip>
+{%- endif %}
+{{ indent }}			<ExtendedTooltip name="{{ page.name }}РасширеннаяПодсказка" id="{{ page.id + 1 }}"/>
+{%- if page.child_items and render_element_func %}
+{{ indent }}			<ChildItems>
+{%- for child in page.child_items %}
+{{ render_element_func(child, indent + '\t\t\t', ctx) }}
+{%- endfor %}
+{{ indent }}			</ChildItems>
+{%- endif %}
+{{ indent }}		</Page>
+{%- endfor %}
+{{ indent }}	</ChildItems>
+{%- endif %}
+{{ indent }}</Pages>
+{%- endmacro %}
+
+{% macro render_table_column(col, elem, indent='') -%}
+{%- if col.type == 'LineNumber' %}
+{{ indent }}<LabelField name="{{ elem.name }}НомерСтроки" id="{{ col.id }}">
+{{ render_line_number_data_path(elem, indent + '\t') }}
+{{ indent }}	<EditMode>EnterOnInput</EditMode>
+{{ indent }}	<ContextMenu name="{{ elem.name }}НомерСтрокиКонтекстноеМеню" id="{{ col.id + 1 }}"/>
+{{ indent }}	<ExtendedTooltip name="{{ elem.name }}НомерСтрокиРасширеннаяПодсказка" id="{{ col.id + 2 }}"/>
+{{ indent }}</LabelField>
+{%- elif col.type == 'LabelField' %}
+{{ indent }}<LabelField name="{{ col.name }}" id="{{ col.id }}">
+{{ indent }}	<DataPath>{{ col.data_path }}</DataPath>
+{%- if col.title_ru or col.title_uk %}
+{{ indent }}	<Title>
+{%- if col.title_ru %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>ru</v8:lang>
+{{ indent }}			<v8:content>{{ col.title_ru |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- endif %}
+{%- if col.title_uk %}
+{{ indent }}		<v8:item>
+{{ indent }}			<v8:lang>uk</v8:lang>
+{{ indent }}			<v8:content>{{ col.title_uk |x }}</v8:content>
+{{ indent }}		</v8:item>
+{%- endif %}
+{{ indent }}	</Title>
+{%- endif %}
+{%- if col.width %}
+{{ indent }}	<Width>{{ col.width }}</Width>
+{%- endif %}
+{{ indent }}	<ContextMenu name="{{ col.name }}КонтекстноеМеню" id="{{ col.id + 1 }}"/>
+{{ indent }}	<ExtendedTooltip name="{{ col.name }}РасширеннаяПодсказка" id="{{ col.id + 2 }}"/>
+{{ indent }}</LabelField>
+{%- elif col.type == 'CheckBox' %}
+{{ indent }}<CheckBoxField name="{{ elem.name }}{{ col.name }}" id="{{ col.id }}">
+{{ render_column_data_path(elem, col, indent + '\t') }}
+{{ indent }}	<EditMode>EnterOnInput</EditMode>
+{{ indent }}	<CheckBoxType>Auto</CheckBoxType>
+{{ indent }}	<ContextMenu name="{{ elem.name }}{{ col.name }}КонтекстноеМеню" id="{{ col.id + 1 }}"/>
+{{ indent }}	<ExtendedTooltip name="{{ elem.name }}{{ col.name }}РасширеннаяПодсказка" id="{{ col.id + 2 }}"/>
+{{ indent }}</CheckBoxField>
+{%- else %}
+{{ indent }}<InputField name="{{ elem.name }}{{ col.name }}" id="{{ col.id }}">
+{{ render_column_data_path(elem, col, indent + '\t') }}
+{%- if col.read_only %}
+{{ indent }}	<ReadOnly>true</ReadOnly>
+{%- endif %}
+{{ indent }}	<EditMode>EnterOnInput</EditMode>
+{{ indent }}	<ContextMenu name="{{ elem.name }}{{ col.name }}КонтекстноеМеню" id="{{ col.id + 1 }}"/>
+{{ indent }}	<ExtendedTooltip name="{{ elem.name }}{{ col.name }}РасширеннаяПодсказка" id="{{ col.id + 2 }}"/>
+{{ indent }}</InputField>
+{%- endif %}
+{%- endmacro %}
+
+{% macro render_element(elem, indent='', ctx=none) -%}
+{%- set ctx = ctx or {'version': '2.11', 'command_pictures': none} %}
+{%- if elem.type == 'InputField' %}
+{{ render_input_field(elem, indent) }}
+{%- elif elem.type == 'LabelField' %}
+{{ render_label_field(elem, indent) }}
+{%- elif elem.type == 'LabelDecoration' %}
+{{ render_label_decoration(elem, indent) }}
+{%- elif elem.type == 'PictureDecoration' %}
+{{ render_picture_decoration(elem, indent) }}
+{%- elif elem.type == 'PictureField' %}
+{{ render_picture_field(elem, indent) }}
+{%- elif elem.type == 'RadioButtonField' %}
+{{ render_radio_button_field(elem, indent) }}
+{%- elif elem.type == 'CheckBoxField' %}
+{{ render_checkbox_field(elem, indent) }}
+{%- elif elem.type == 'SpreadSheetDocumentField' %}
+{{ render_spreadsheet_document_field(elem, indent) }}
+{%- elif elem.type == 'HTMLDocumentField' %}
+{{ render_html_document_field(elem, indent) }}
+{%- elif elem.type == 'CalendarField' %}
+{{ render_calendar_field(elem, indent) }}
+{%- elif elem.type == 'ChartField' %}
+{{ render_chart_field(elem, indent) }}
+{%- elif elem.type == 'PlannerField' %}
+{{ render_planner_field(elem, indent) }}
+{%- elif elem.type == 'Button' %}
+{{ render_button(elem, indent, ctx) }}
+{%- elif elem.type == 'Popup' %}
+{{ render_popup(elem, indent, render_element, ctx) }}
+{%- elif elem.type == 'ButtonGroup' %}
+{{ render_button_group(elem, indent, render_element, ctx) }}
+{%- elif elem.type == 'UsualGroup' %}
+{{ render_usual_group(elem, indent, render_element, ctx) }}
+{%- elif elem.type == 'ColumnGroup' %}
+{{ render_column_group(elem, indent, render_element, ctx) }}
+{%- elif elem.type == 'Table' %}
+{{ render_table(elem, indent, render_element, ctx) }}
+{%- elif elem.type == 'Pages' %}
+{{ render_pages(elem, indent, render_element, ctx) }}
+{%- endif %}
+{%- endmacro %}

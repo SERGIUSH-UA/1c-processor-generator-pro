@@ -1,0 +1,66 @@
+# Tests for УправлениеПроектами - Complex Project Management Processor
+# Testing Framework v2.16.0+ verification - CORRECTED VERSION
+#
+# ⚠️ IMPORTANT: Tests call EXPORTED procedures from ObjectModule.bsl
+# Tests must use procedures marked with 'Экспорт' keyword to be accessible via COM
+
+# ========================================================================
+# DECLARATIVE TESTS (Simple scenarios via YAML)
+# ========================================================================
+declarative_tests:
+  # Test 1: Export data to JSON format
+  - name: test_export_json
+    description: "Verify JSON export functionality"
+    setup:
+      table_rows:
+        Проекты:
+          - ПроектИД: "TEST-001"
+            Код: "T001"
+            Название: "Test Project"
+            Статус: "Активен"
+    execute_procedure: ЭкспортироватьДанныеВJSON
+    # Result is JSON string, can't easily assert structure in declarative test
+
+  # Test 2: Statistics calculation
+  - name: test_statistics_calculation
+    description: "Test statistics calculation for projects"
+    setup:
+      table_rows:
+        Проекты:
+          - ПроектИД: "STAT-001"
+            Код: "S001"
+            Название: "Stats Project"
+            Статус: "Активен"
+    execute_procedure: РассчитатьСтатистикуПроектов
+    # Returns ValueTable with statistics
+
+  # Test 3: Data validation
+  - name: test_data_validation
+    description: "Test data correctness validation"
+    setup:
+      table_rows:
+        Проекты:
+          - ПроектИД: "VAL-001"
+            Код: "V001"
+            Название: "Validation Test"
+            Статус: "Активен"
+    execute_procedure: ПроверитьКорректностьДанных
+    # Returns array of validation errors (empty if all OK)
+
+# ========================================================================
+# PROCEDURAL TESTS (Complex logic in BSL)
+# ========================================================================
+procedural_tests:
+  file: complex_tests_corrected.bsl
+  procedures:
+    - Тест_ExportImportCycle
+    - Тест_ValidationRules
+    - Тест_StatisticsCalculation
+
+# ========================================================================
+# SETTINGS
+# ========================================================================
+settings:
+  use_external_connection: true   # Fast mode (no UI)
+  use_automation_server: false    # Disable UI mode for speed
+  timeout: 600                    # 10 minutes timeout for complex tests

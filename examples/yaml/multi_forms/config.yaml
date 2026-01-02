@@ -1,0 +1,89 @@
+processor:
+  name: МультиФормы
+  platform_version: '2.11'
+  synonym:
+    ru: Мультиформы
+    uk: Мультіформи
+attributes:
+  - name: Параметр1
+    type: string
+    length: 100
+    synonym:
+      ru: Параметр 1
+      uk: Параметр 1
+  - name: Параметр2
+    type: number
+    digits: 10
+    fraction_digits: 2
+    synonym:
+      ru: Параметр 2
+      uk: Параметр 2
+forms:
+  - name: Форма
+    default: true
+    handlers_dir: handlers_main
+    properties:
+      Title_ru: Главная форма
+      Title_uk: Головна форма
+      WindowOpeningMode: LockOwnerWindow
+    elements:
+      - type: InputField
+        name: Параметр1
+        attribute: Параметр1
+      - type: InputField
+        name: Параметр2
+        attribute: Параметр2
+      - type: Button
+        name: КнопкаНастройки
+        command: ОткрытьНастройки
+        properties:
+          title: Настройки
+    commands:
+      - name: ОткрытьНастройки
+        handler: ОткрытьНастройки
+        shortcut: F9
+        title:
+          ru: Открыть настройки
+          uk: Відкрити налаштування
+        tooltip:
+          ru: Открыть форму настроек
+          uk: Відкрити форму налаштувань
+      - name: ВыполнитьОбработку
+        handler: ВыполнитьОбработку
+        picture: StdPicture.ExecuteTask
+        title:
+          ru: Выполнить
+          uk: Виконати
+    events:
+      OnOpen: ПриОткрытии
+  - name: Настройки
+    default: false
+    handlers_dir: handlers_settings
+    properties:
+      Title_ru: Настройки обработки
+      Title_uk: Налаштування обробки
+      WindowOpeningMode: LockOwnerWindow
+    elements:
+      - type: LabelDecoration
+        name: ЗаголовокНастроек
+        properties:
+          title: Настройки параметров обработки
+      - type: InputField
+        name: ПараметрНастройки
+        attribute: Параметр1
+        properties:
+          title_location: Left
+    commands:
+      - name: Сохранить
+        handler: Сохранить
+        picture: StdPicture.Write
+        title:
+          ru: Сохранить
+          uk: Зберегти
+      - name: ЗакрытьФорму
+        handler: ЗакрытьФорму
+        title:
+          ru: Закрыть
+          uk: Закрити
+    events:
+      OnOpen: НастройкиПриОткрытии

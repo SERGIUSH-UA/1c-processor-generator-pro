@@ -1,0 +1,12 @@
+# Конфігурація validator.epf для перевірки синтаксису EPF файлів
+# Генерується один раз і використовується для валідації
+# Запускається через: /EXECUTE /C"path_to_epf_for_validation"
+
+processor:
+  name: "EPFValidator"
+  synonym_ru: "Валидатор EPF"
+  synonym_uk: "Валідатор EPF"
+  comment: "Automatic syntax validation for external processing files"
+
+object_module:
+  file: "validator_object_module.bsl"

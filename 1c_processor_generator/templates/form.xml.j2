@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form {{ namespaces }} version="{{ version }}">
+
+{% from "macros/_elements.j2" import render_element %}
+
+{%- set ctx = {'version': version, 'command_pictures': command_pictures} %}
+
+{%- if form.properties.get('Title') %}
+	<Title>
+{%- if form.properties.get('Title_ru') %}
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>{{ form.properties['Title_ru'] |x }}</v8:content>
+		</v8:item>
+{%- endif %}
+{%- if form.properties.get('Title_uk') %}
+		<v8:item>
+			<v8:lang>uk</v8:lang>
+			<v8:content>{{ form.properties['Title_uk'] |x }}</v8:content>
+		</v8:item>
+{%- endif %}
+{%- if form.properties.get('Title_en') %}
+		<v8:item>
+			<v8:lang>en</v8:lang>
+			<v8:content>{{ form.properties['Title_en'] |x }}</v8:content>
+		</v8:item>
+{%- endif %}
+	</Title>
+{%- endif %}
+{%- if form.properties.get('WindowOpeningMode') %}
+	<WindowOpeningMode>{{ form.properties['WindowOpeningMode'] }}</WindowOpeningMode>
+{%- endif %}
+{%- if form.properties.get('CommandBarLocation') %}
+	<CommandBarLocation>{{ form.properties['CommandBarLocation'] }}</CommandBarLocation>
+{%- endif %}
+{%- if form.properties.get('AutoTitle') is not none %}
+	<AutoTitle>{{ form.properties['AutoTitle']|lower }}</AutoTitle>
+{%- endif %}
+
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+{%- if auto_command_bar_elements %}
+		<ChildItems>
+{%- for elem in auto_command_bar_elements %}
+{{ render_element(elem, '\t\t\t', ctx) }}
+{%- endfor %}
+		</ChildItems>
+{%- endif %}
+	</AutoCommandBar>
+
+{%- if form.events %}
+	<Events>
+{%- for event_name, event_handler in form.events.items() %}
+		<Event name="{{ event_name }}">{{ event_handler }}</Event>
+{%- endfor %}
+	</Events>
+{%- endif %}
+
+	<ChildItems>
+{%- for elem in form_elements %}
+{{ render_element(elem, '\t\t', ctx) }}
+{%- endfor %}
+	</ChildItems>
+
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>ExternalDataProcessorObject.{{ processor.name }}</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+{%- for fa_attr in form_attributes %}
+		<Attribute name="{{ fa_attr.name }}" id="{{ fa_attr.id }}">
+{%- if fa_attr.title_ru or fa_attr.title_uk or fa_attr.title_en %}
+			<Title>
+{%- if fa_attr.title_ru %}
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>{{ fa_attr.title_ru |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+{%- if fa_attr.title_uk %}
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>{{ fa_attr.title_uk |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+{%- if fa_attr.title_en %}
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>{{ fa_attr.title_en |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+			</Title>
+{%- endif %}
+			<Type>
+{%- if fa_attr.type == 'planner' %}
+				<v8:Type xmlns:pl="http://v8.1c.ru/8.3/data/planner">{{ fa_attr.xml_type }}</v8:Type>
+{%- elif fa_attr.type == 'spreadsheet_document' %}
+				<v8:Type xmlns:mxl="http://v8.1c.ru/8.2/data/spreadsheet">{{ fa_attr.xml_type }}</v8:Type>
+{%- else %}
+				<v8:Type>{{ fa_attr.xml_type }}</v8:Type>
+{%- endif %}
+			</Type>
+{%- if fa_attr.type == 'planner' %}
+			<Settings xmlns:pl="http://v8.1c.ru/8.3/data/planner" xsi:type="pl:Planner">
+				<pl:timeScale>
+					<placement xmlns="http://v8.1c.ru/8.2/data/chart">Left</placement>
+					<level xmlns="http://v8.1c.ru/8.2/data/chart">
+						<measure>{{ fa_attr.time_scale }}</measure>
+						<interval>{{ fa_attr.time_scale_interval }}</interval>
+						<show>true</show>
+						<scaleColor>auto</scaleColor>
+						<dayFormatRule>MonthDayWeekDay</dayFormatRule>
+						<format>
+							<v8:item>
+								<v8:lang>#</v8:lang>
+								<v8:content>{{ fa_attr.time_scale_format }}</v8:content>
+							</v8:item>
+						</format>
+						<backColor>auto</backColor>
+						<textColor>auto</textColor>
+					</level>
+					<transparent xmlns="http://v8.1c.ru/8.2/data/chart">false</transparent>
+					<backColor xmlns="http://v8.1c.ru/8.2/data/chart">auto</backColor>
+					<textColor xmlns="http://v8.1c.ru/8.2/data/chart">auto</textColor>
+					<currentLevel xmlns="http://v8.1c.ru/8.2/data/chart">0</currentLevel>
+				</pl:timeScale>
+				<pl:displayCurrentDate>{{ fa_attr.display_current_date|lower }}</pl:displayCurrentDate>
+				<pl:itemsTimeRepresentation>BeginTime</pl:itemsTimeRepresentation>
+				<pl:itemsBehaviorWhenSpaceInsufficient>CollapseItems</pl:itemsBehaviorWhenSpaceInsufficient>
+				<pl:newItemsTextType>String</pl:newItemsTextType>
+			</Settings>
+{%- endif %}
+		</Attribute>
+{%- endfor %}
+
+{%- for vt_attr in value_table_attributes %}
+		<Attribute name="{{ vt_attr.name }}" id="{{ vt_attr.id }}">
+{%- if vt_attr.title_ru or vt_attr.title_uk or vt_attr.title_en %}
+			<Title>
+{%- if vt_attr.title_ru %}
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>{{ vt_attr.title_ru |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+{%- if vt_attr.title_uk %}
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>{{ vt_attr.title_uk |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+{%- if vt_attr.title_en %}
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>{{ vt_attr.title_en |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+			</Title>
+{%- endif %}
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+{%- if vt_attr.columns %}
+			<Columns>
+{%- for col in vt_attr.columns %}
+				<Column name="{{ col.name }}" id="{{ col.id }}">
+{%- if col.synonym_ru or col.synonym_uk or col.synonym_en %}
+					<Title>
+{%- if col.synonym_ru %}
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>{{ col.synonym_ru |x }}</v8:content>
+						</v8:item>
+{%- endif %}
+{%- if col.synonym_uk %}
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>{{ col.synonym_uk |x }}</v8:content>
+						</v8:item>
+{%- endif %}
+{%- if col.synonym_en %}
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>{{ col.synonym_en |x }}</v8:content>
+						</v8:item>
+{%- endif %}
+					</Title>
+{%- endif %}
+					<Type>
+{%- if col.type == 'string' %}
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>{{ col.length or 0 }}</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+{%- elif col.type == 'boolean' %}
+						<v8:Type>xs:boolean</v8:Type>
+{%- elif col.type == 'number' %}
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>{{ col.digits or 10 }}</v8:Digits>
+							<v8:FractionDigits>{{ col.fraction_digits or 0 }}</v8:FractionDigits>
+						</v8:NumberQualifiers>
+{%- elif col.type == 'date' %}
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>DateTime</v8:DateFractions>
+						</v8:DateQualifiers>
+{%- elif col.type.startswith('CatalogRef.') %}
+						<v8:Type>cfg:{{ col.type }}</v8:Type>
+{%- elif col.type.startswith('DocumentRef.') %}
+						<v8:Type>cfg:{{ col.type }}</v8:Type>
+{%- elif col.type.startswith('EnumRef.') %}
+						<v8:Type>cfg:{{ col.type }}</v8:Type>
+{%- elif col.type == 'DocumentRef' %}
+						<v8:TypeSet>cfg:DocumentRef</v8:TypeSet>
+{%- elif col.type == 'CatalogRef' %}
+						<v8:TypeSet>cfg:CatalogRef</v8:TypeSet>
+{%- endif %}
+					</Type>
+				</Column>
+{%- endfor %}
+			</Columns>
+{%- endif %}
+		</Attribute>
+{%- endfor %}
+
+{%- for vt_attr in value_tree_attributes %}
+		<Attribute name="{{ vt_attr.name }}" id="{{ vt_attr.id }}">
+{%- if vt_attr.title_ru or vt_attr.title_uk or vt_attr.title_en %}
+			<Title>
+{%- if vt_attr.title_ru %}
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>{{ vt_attr.title_ru |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+{%- if vt_attr.title_uk %}
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>{{ vt_attr.title_uk |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+{%- if vt_attr.title_en %}
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>{{ vt_attr.title_en |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+			</Title>
+{%- endif %}
+			<Type>
+				<v8:Type>v8:ValueTree</v8:Type>
+			</Type>
+{%- if vt_attr.columns %}
+			<Columns>
+{%- for col in vt_attr.columns %}
+				<Column name="{{ col.name }}" id="{{ col.id }}">
+{%- if col.synonym_ru or col.synonym_uk or col.synonym_en %}
+					<Title>
+{%- if col.synonym_ru %}
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>{{ col.synonym_ru |x }}</v8:content>
+						</v8:item>
+{%- endif %}
+{%- if col.synonym_uk %}
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>{{ col.synonym_uk |x }}</v8:content>
+						</v8:item>
+{%- endif %}
+{%- if col.synonym_en %}
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>{{ col.synonym_en |x }}</v8:content>
+						</v8:item>
+{%- endif %}
+					</Title>
+{%- endif %}
+					<Type>
+{%- if col.type == 'string' %}
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>{{ col.length or 0 }}</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+{%- elif col.type == 'boolean' %}
+						<v8:Type>xs:boolean</v8:Type>
+{%- elif col.type == 'number' %}
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>{{ col.digits or 10 }}</v8:Digits>
+							<v8:FractionDigits>{{ col.fraction_digits or 0 }}</v8:FractionDigits>
+						</v8:NumberQualifiers>
+{%- elif col.type == 'date' %}
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>DateTime</v8:DateFractions>
+						</v8:DateQualifiers>
+{%- elif col.type.startswith('CatalogRef.') %}
+						<v8:Type>cfg:{{ col.type }}</v8:Type>
+{%- elif col.type.startswith('DocumentRef.') %}
+						<v8:Type>cfg:{{ col.type }}</v8:Type>
+{%- elif col.type.startswith('EnumRef.') %}
+						<v8:Type>cfg:{{ col.type }}</v8:Type>
+{%- elif col.type == 'DocumentRef' %}
+						<v8:TypeSet>cfg:DocumentRef</v8:TypeSet>
+{%- elif col.type == 'CatalogRef' %}
+						<v8:TypeSet>cfg:CatalogRef</v8:TypeSet>
+{%- endif %}
+					</Type>
+				</Column>
+{%- endfor %}
+			</Columns>
+{%- endif %}
+		</Attribute>
+{%- endfor %}
+
+{%- for dl_attr in dynamic_list_attributes %}
+		<Attribute name="{{ dl_attr.name }}" id="{{ dl_attr.id }}">
+{%- if dl_attr.title_ru or dl_attr.title_uk %}
+			<Title>
+{%- if dl_attr.title_ru %}
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>{{ dl_attr.title_ru |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+{%- if dl_attr.title_uk %}
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>{{ dl_attr.title_uk |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+			</Title>
+{%- endif %}
+			<Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
+			</Type>
+{%- if dl_attr.main_attribute %}
+			<MainAttribute>true</MainAttribute>
+{%- endif %}
+{%- if dl_attr.use_always_fields %}
+			<UseAlways>
+{%- for field in dl_attr.use_always_fields %}
+				<Field>{{ dl_attr.name }}.{{ field }}</Field>
+{%- endfor %}
+			</UseAlways>
+{%- endif %}
+{%- if dl_attr.functional_options %}
+			<FunctionalOptions>
+{%- for opt in dl_attr.functional_options %}
+				<Item>FunctionalOption.{{ opt }}</Item>
+{%- endfor %}
+			</FunctionalOptions>
+{%- endif %}
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>{{ dl_attr.manual_query|lower }}</ManualQuery>
+				<DynamicDataRead>{{ dl_attr.dynamic_data_read|lower }}</DynamicDataRead>
+{%- if dl_attr.manual_query and dl_attr.query_text %}
+				<QueryText>{{ dl_attr.query_text|e }}</QueryText>
+{%- endif %}
+{%- if dl_attr.main_table %}
+				<MainTable>{{ dl_attr.main_table }}</MainTable>
+{%- endif %}
+{%- if dl_attr.auto_save_user_settings is not none %}
+				<AutoSaveUserSettings>{{ dl_attr.auto_save_user_settings|lower }}</AutoSaveUserSettings>
+{%- endif %}
+				<ListSettings>
+					<dcsset:filter>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>{{ dl_attr.filter_setting_id }}</dcsset:userSettingID>
+					</dcsset:filter>
+					<dcsset:order>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>{{ dl_attr.order_setting_id }}</dcsset:userSettingID>
+					</dcsset:order>
+					<dcsset:conditionalAppearance>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>{{ dl_attr.appearance_setting_id }}</dcsset:userSettingID>
+					</dcsset:conditionalAppearance>
+					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+					<dcsset:itemsUserSettingID>{{ dl_attr.items_setting_id }}</dcsset:itemsUserSettingID>
+				</ListSettings>
+			</Settings>
+		</Attribute>
+{%- endfor %}
+	</Attributes>
+
+{%- if commands %}
+	<Commands>
+{%- for cmd in commands %}
+		<Command name="{{ cmd.name }}" id="{{ cmd.id }}">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>{{ cmd.title_ru |x }}</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>{{ cmd.title_uk |x }}</v8:content>
+				</v8:item>
+{%- if cmd.title_en %}
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>{{ cmd.title_en |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+			</Title>
+{%- if cmd.tooltip_ru or cmd.tooltip_uk or cmd.tooltip_en %}
+			<ToolTip>
+{%- if cmd.tooltip_ru %}
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>{{ cmd.tooltip_ru |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+{%- if cmd.tooltip_uk %}
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>{{ cmd.tooltip_uk |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+{%- if cmd.tooltip_en %}
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>{{ cmd.tooltip_en |x }}</v8:content>
+				</v8:item>
+{%- endif %}
+			</ToolTip>
+{%- endif %}
+{%- if cmd.picture %}
+			<Picture>
+				<xr:Ref>{{ cmd.picture }}</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+{%- endif %}
+{%- if cmd.shortcut %}
+			<Shortcut>{{ cmd.shortcut }}</Shortcut>
+{%- endif %}
+			<Action>{{ cmd.action }}</Action>
+		</Command>
+{%- endfor %}
+	</Commands>
+{%- endif %}
+
+{%- if form.parameters %}
+	<Parameters>
+{%- for param in form.parameters %}
+		<Parameter name="{{ param.name }}">
+			<Type>
+{%- if param.type == 'string' or param.type == 'xs:string' %}
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+{%- elif param.type == 'boolean' or param.type == 'xs:boolean' %}
+				<v8:Type>xs:boolean</v8:Type>
+{%- elif param.type == 'number' or param.type == 'xs:decimal' %}
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+{%- elif param.type == 'date' or param.type == 'xs:dateTime' %}
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>DateTime</v8:DateFractions>
+				</v8:DateQualifiers>
+{%- else %}
+				<v8:Type>{{ param.type }}</v8:Type>
+{%- endif %}
+			</Type>
+		</Parameter>
+{%- endfor %}
+	</Parameters>
+{%- endif %}
+</Form>

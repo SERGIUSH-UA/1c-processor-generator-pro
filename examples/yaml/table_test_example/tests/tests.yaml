@@ -1,0 +1,43 @@
+# Test Configuration for ТестированиеПростое (v2.23.2+ format)
+# Architecture: Forms tests via Automation Server (with UI)
+
+# Form tests - через Automation Server (повільно, з UI доступом)
+forms:
+  - name: Форма  # ← ОБОВ'ЯЗКОВО: ім'я форми з config.yaml
+
+    # Процедурні тести (складна логіка, послідовні операції)
+    procedural:
+      file: form_tests.bsl  # ← Відносний шлях від цього файлу
+      procedures:
+        - Тест_Сложение           # 5 + 3 = 8
+        - Тест_Очистка            # Очистка всіх полів
+        - Тест_ОтрицательныеЧисла # -10 + 5 = -5
+        - Тест_БольшиеЧисла       # Робота з великими числами
+        - Тест_Ноль               # Додавання нуля
+
+# Загальні налаштування
+timeout: 300  # Таймаут для всіх тестів (секунди)
+
+# ПРИМІТКИ ПО МІГРАЦІЇ З v2.16.0:
+#
+# СТАРИЙ ФОРМАТ (v2.16.0 - НЕ ПРАЦЮЄ):
+# tests:
+#   - name: test_addition
+#     type: procedural
+#     connection_type: Automation
+#     procedure: |
+#       Форма = ПолучитьФорму(...);
+#
+# НОВИЙ ФОРМАТ (v2.23.2 - ПРАЦЮЄ):
+# forms:
+#   - name: Форма
+#     procedural:
+#       file: form_tests.bsl
+#       procedures: [Тест_Додавання]
+#
+# КЛЮЧОВІ ЗМІНИ:
+# 1. tests: → forms:
+# 2. Inline BSL → окремий .bsl файл
+# 3. Додано обов'язкове поле name: Форма
+# 4. Видалено поля type та connection_type
+# 5. BSL стиль: Form Module (з Объект., &НаСервере)

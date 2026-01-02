@@ -1,0 +1,36 @@
+processor:
+  name: WebSPADemo
+  synonym_ru: Веб SPA Демо
+  synonym_uk: Веб SPA Демо
+  comment: Демонстрація Web SPA патернів
+
+attributes:
+  - name: ОбработаноСобытий
+    type: number
+    synonym_ru: Оброблено подій
+  - name: ТекущийЭкран
+    type: string
+    synonym_ru: Поточний екран
+  - name: WebContent
+    type: string
+    synonym_ru: HTML контент
+
+templates:
+  - name: MainSPA
+    type: HTMLDocument
+    file: templates/main.html
+
+forms:
+  - name: Форма
+    default: true
+    elements:
+      - type: HTMLDocumentField
+        name: WebView
+        attribute: WebContent
+        stretch: HorizontalAndVertically
+        title_location: None
+        events:
+          OnClick: WebViewПриНажатии
+    events:
+      OnCreateAtServer: ПриСозданииНаСервере
+      OnOpen: ПриОткрытии

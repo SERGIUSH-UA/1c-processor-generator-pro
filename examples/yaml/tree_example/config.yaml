@@ -1,0 +1,93 @@
+# ValueTree Example (v2.64.0+)
+# Demonstrates hierarchical tree display for JSON data, catalog structures, etc.
+
+processor:
+  name: ПримерДерева
+  synonym:
+    ru: Пример дерева
+    uk: Приклад дерева
+    en: Tree Example
+  comment:
+    ru: Демонстрация иерархического дерева значений (ValueTree)
+    uk: Демонстрація ієрархічного дерева значень (ValueTree)
+
+forms:
+  - name: Форма
+    default: true
+
+    # ValueTree attribute - hierarchical data structure
+    value_trees:
+      - name: ДеревоДанных
+        title:
+          ru: Дерево данных
+          uk: Дерево даних
+          en: Data Tree
+        columns:
+          - name: Наименование
+            type: string
+            synonym:
+              ru: Наименование
+              uk: Найменування
+              en: Name
+          - name: Значение
+            type: string
+            synonym:
+              ru: Значение
+              uk: Значення
+              en: Value
+          - name: Тип
+            type: string
+            length: 50
+            synonym:
+              ru: Тип
+              uk: Тип
+              en: Type
+          - name: ЕстьПодчиненные
+            type: boolean
+            synonym:
+              ru: Есть подчиненные
+              uk: Є підлеглі
+
+    elements:
+      # Tree table with hierarchical display
+      - type: Table
+        name: ДеревоТаблица
+        tabular_section: ДеревоДанных
+        representation: tree
+        initial_tree_view: expand_top_level
+        show_root: false
+        allow_root_choice: false
+        choice_folders_and_items: folders_and_items
+        read_only: true
+        height: 15
+        horizontal_stretch: true
+        events:
+          OnActivateRow: ДеревоТаблицаПриАктивизацииСтроки
+          Selection: ДеревоТаблицаВыбор
+        columns:
+          - name: Наименование
+          - name: Значение
+          - name: Тип
+
+      # Info label
+      - type: LabelDecoration
+        name: ИнформацияОВыбранном
+        title:
+          ru: Выберите элемент дерева
+          uk: Оберіть елемент дерева
+
+    commands:
+      - name: Обновить
+        handler: Обновить
+        title:
+          ru: Обновить дерево
+          uk: Оновити дерево
+        picture: StdPicture.Refresh
+        shortcut: F5
+
+      - name: ЗагрузитьJSON
+        handler: ЗагрузитьJSON
+        title:
+          ru: Загрузить JSON
+          uk: Завантажити JSON
+        picture: StdPicture.OpenFile

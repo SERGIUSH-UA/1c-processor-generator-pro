@@ -1,0 +1,137 @@
+processor:
+  name: СтроковыеТипы
+  synonym:
+    ru: Демонстрация строковых типов
+    uk: Демонстрація строкових типів
+attributes:
+  - name: ПолноеОписание
+    type: string
+    synonym:
+      ru: Полное описание
+      uk: Повний опис
+  - name: ДлинныйТекст
+    type: string
+    length: 0
+    synonym:
+      ru: Длинный текст
+      uk: Довгий текст
+  - name: КороткийКод
+    type: string
+    length: 10
+    synonym:
+      ru: Короткий код
+      uk: Короткий код
+  - name: СреднееПоле
+    type: string
+    length: 100
+    synonym:
+      ru: Среднее поле
+      uk: Середнє поле
+tabular_sections:
+  - name: Строки
+    columns:
+      - name: Комментарий
+        type: string
+        synonym:
+          ru: Комментарий
+          uk: Коментар
+      - name: Код
+        type: string
+        length: 20
+        synonym:
+          ru: Код
+          uk: Код
+    synonym:
+      ru: Строки документа
+      uk: Рядки документа
+
+forms:
+  - name: Форма
+    default: true
+    properties:
+      auto_title: false
+      title:
+        ru: Демонстрация строковых типов
+        uk: Демонстрація строкових типів
+    events:
+      OnOpen: ПриОткрытии
+    commands:
+    - name: ЗаполнитьПример
+      handler: ЗаполнитьПример
+      picture: StdPicture.InputFieldClear
+      title:
+        ru: Заполнить пример
+        uk: Заповнити приклад
+    - name: ПроверитьДлину
+      handler: ПроверитьДлину
+      picture: StdPicture.ExecuteTask
+      title:
+        ru: Проверить длину
+        uk: Перевірити довжину
+    value_tables:
+    - name: Результаты
+      columns:
+        - name: Описание
+          type: string
+          synonym:
+            ru: Описание
+            uk: Опис
+        - name: Статус
+          type: string
+          length: 50
+          synonym:
+            ru: Статус
+            uk: Статус
+    elements:
+      - type: UsualGroup
+        name: ГруппаНеограниченные
+        show_title: true
+        group_direction: Vertical
+        child_items:
+          - type: InputField
+            name: ПолноеОписаниеПоле
+            attribute: ПолноеОписание
+            multi_line: true
+            height: 3
+          - type: InputField
+            name: ДлинныйТекстПоле
+            attribute: ДлинныйТекст
+            multi_line: true
+            height: 3
+        title:
+          ru: Неограниченные строки (по умолчанию)
+          uk: Необмежені рядки (за замовчуванням)
+      - type: UsualGroup
+        name: ГруппаОграниченные
+        show_title: true
+        group_direction: Vertical
+        child_items:
+          - type: InputField
+            name: КороткийКодПоле
+            attribute: КороткийКод
+            width: 15
+          - type: InputField
+            name: СреднееПолеПоле
+            attribute: СреднееПоле
+            width: 30
+        title:
+          ru: Ограниченные строки
+          uk: Обмежені рядки
+      - type: Table
+        name: РезультатыТаблица
+        tabular_section: Результаты
+        is_value_table: true
+      - type: Table
+        name: СтрокиТаблица
+        tabular_section: Строки
+      - type: UsualGroup
+        name: ГруппаКнопок
+        group_direction: Horizontal
+        show_title: false
+        child_items:
+          - type: Button
+            name: ЗаполнитьПримерКнопка
+            command: ЗаполнитьПример
+          - type: Button
+            name: ПроверитьДлинуКнопка
+            command: ПроверитьДлину
