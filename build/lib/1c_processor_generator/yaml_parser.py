@@ -37,11 +37,16 @@ from .parsing import ElementParser, normalize_multilang
 class YAMLParser:
                                                       
 
+                                                  
+    DEFAULT_LANGUAGES = ["ru", "uk", "en"]
+
     def __init__(self, yaml_path: Path):
                    
         self.yaml_path = Path(yaml_path)
         self.config: Dict = {}
         self._element_parser = ElementParser()
+                                              
+        self.languages: List[str] = self.DEFAULT_LANGUAGES.copy()
 
     def load_yaml(self) -> bool:
                    
@@ -198,7 +203,16 @@ class YAMLParser:
 
     def _create_processor(self) -> Processor:
                                                               
-        processor_config = normalize_multilang(self.config.get("processor", {}))
+                                                                                  
+        self.languages = self.config.get("languages", self.DEFAULT_LANGUAGES.copy())
+
+                                                                               
+        self._element_parser = ElementParser(languages=self.languages)
+
+        processor_config = normalize_multilang(
+            self.config.get("processor", {}),
+            languages=self.languages
+        )
 
         processor = Processor(
             name=processor_config["name"],
@@ -206,6 +220,7 @@ class YAMLParser:
             synonym_uk=processor_config.get("synonym_uk", processor_config["name"]),
             synonym_en=processor_config.get("synonym_en", processor_config["name"]),
             platform_version=processor_config.get("platform_version", "2.11"),
+            languages=self.languages,            
         )
 
                                                       
@@ -220,7 +235,7 @@ class YAMLParser:
     def _parse_attributes(self, processor: Processor) -> None:
                                         
         for attr_config in self.config.get("attributes", []):
-            attr_config = normalize_multilang(attr_config)
+            attr_config = normalize_multilang(attr_config, languages=self.languages)
             attr = Attribute(
                 name=attr_config["name"],
                 type=attr_config["type"],
@@ -236,7 +251,7 @@ class YAMLParser:
     def _parse_tabular_sections(self, processor: Processor) -> None:
                                               
         for ts_config in self.config.get("tabular_sections", []):
-            ts_config = normalize_multilang(ts_config)
+            ts_config = normalize_multilang(ts_config, languages=self.languages)
             ts = TabularSection(
                 name=ts_config["name"],
                 synonym_ru=ts_config.get("synonym_ru", ts_config["name"]),
@@ -250,7 +265,7 @@ class YAMLParser:
                                                                             
         columns = []
         for col_config in columns_config:
-            col_config = normalize_multilang(col_config)
+            col_config = normalize_multilang(col_config, languages=self.languages)
             col = Column(
                 name=col_config["name"],
                 type=col_config["type"],
@@ -529,7 +544,7 @@ class YAMLParser:
 
     def _parse_command(self, config: Dict) -> Command:
                                             
-        config = normalize_multilang(config)
+        config = normalize_multilang(config, languages=self.languages)
 
         long_operation_settings = None
         if "long_operation_settings" in config:
@@ -581,7 +596,7 @@ class YAMLParser:
 
     def _parse_value_table_config(self, config: Dict) -> ValueTableAttribute:
                                               
-        config = normalize_multilang(config)
+        config = normalize_multilang(config, languages=self.languages)
         vt = ValueTableAttribute(
             name=config["name"],
             title_ru=config.get("title_ru", config["name"]),
@@ -593,7 +608,7 @@ class YAMLParser:
 
     def _parse_value_tree_config(self, config: Dict) -> ValueTreeAttribute:
                    
-        config = normalize_multilang(config)
+        config = normalize_multilang(config, languages=self.languages)
         vt = ValueTreeAttribute(
             name=config["name"],
             title_ru=config.get("title_ru", config["name"]),
@@ -618,7 +633,7 @@ class YAMLParser:
                  
         columns = []
         for col_config in config.get("columns", []):
-            col_config = normalize_multilang(col_config)
+            col_config = normalize_multilang(col_config, languages=self.languages)
             col = DynamicListColumn(
                 field=col_config["field"],
                 title_ru=col_config.get("title_ru"),
@@ -628,7 +643,7 @@ class YAMLParser:
             )
             columns.append(col)
 
-        config = normalize_multilang(config)
+        config = normalize_multilang(config, languages=self.languages)
         return DynamicListAttribute(
             name=config["name"],
             title_ru=config.get("title_ru", config["name"]),
@@ -803,7 +818,7 @@ class YAMLParser:
                         
         commands = []
         for cmd_data in bsp_data.get("commands", []):
-            cmd_data = normalize_multilang(cmd_data)
+            cmd_data = normalize_multilang(cmd_data, languages=self.languages)
 
                          
             raw_usage = cmd_data.get("usage", "server_method")

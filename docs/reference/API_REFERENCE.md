@@ -167,11 +167,43 @@ processor:
 
 Це найпростіша валідна конфігурація. Згенерує пусту обробку з формою.
 
-### Локалізація (v2.42.0+)
+### Compact Multilang Syntax (v2.69.0+)
 
-Підтримуються два формати для локалізованих полів (`title`, `synonym`, `tooltip`, `input_hint`, `presentation`, `progress_message`):
+Підтримуються **три еквівалентні формати** для локалізованих полів (`title`, `synonym`, `tooltip`, `input_hint`, `presentation`, `progress_message`).
 
-**Nested формат (рекомендований):**
+**ВАЖЛИВО:** На початку config.yaml потрібно вказати `languages:`:
+```yaml
+languages: [ru, uk, en]  # Визначає порядок мов для pipe/array форматів
+```
+
+#### Формат 1: Pipe String (рекомендований, v2.69.0+)
+
+Найкомпактніший формат - одна мова розділена символом `|`:
+
+```yaml
+languages: [ru, uk, en]
+
+processor:
+  name: МояОбробка
+  synonym: "Моя обработка | Моя обробка | My Processor"
+
+forms:
+  - name: Форма
+    default: true
+    properties:
+      title: "Калькулятор | Калькулятор | Calculator"
+    commands:
+      - name: Выполнить
+        title: "Выполнить | Виконати | Execute"
+        handler: Выполнить
+```
+
+**Переваги:** Максимальна компактність (~67% менше рядків), легко читається.
+
+#### Формат 2: Dict (explicit keys)
+
+Явне вказування ключів мов:
+
 ```yaml
 processor:
   name: МояОбробка
@@ -180,18 +212,32 @@ processor:
     uk: Моя обробка
     en: My Processor
 
-forms:
-  - name: Форма
-    default: true
-    commands:
-      - name: Выполнить
-        title:
-          ru: Выполнить
-          uk: Виконати
-        handler: Выполнить
+commands:
+  - name: Выполнить
+    title:
+      ru: Выполнить
+      uk: Виконати
+      en: Execute
 ```
 
-**Flat формат (backward compatible):**
+**Переваги:** Самодокументований, не залежить від порядку `languages:`.
+
+#### Формат 3: Array (positional)
+
+Масив значень у порядку `languages:`:
+
+```yaml
+languages: [ru, uk, en]
+
+processor:
+  name: МояОбробка
+  synonym: ["Моя обработка", "Моя обробка", "My Processor"]
+```
+
+**Переваги:** Компактний для inline використання.
+
+#### Формат 4: Flat Suffix (legacy, backward compatible)
+
 ```yaml
 processor:
   name: МояОбробка
@@ -200,17 +246,35 @@ processor:
   synonym_en: My Processor
 ```
 
-**Простий string (для однієї мови):**
+**Використання:** Тільки для сумісності зі старими файлами.
+
+#### Smart Fallback
+
+Якщо вказано менше значень ніж мов, використовується перша (основна) мова:
+
 ```yaml
-- type: LabelDecoration
-  name: Header
-  title: Заголовок  # Буде використано для всіх мов
+languages: [ru, uk, en]
+
+# Двомовне значення → en отримує значення ru
+synonym: "Калькулятор | Калькулятор"  # en = "Калькулятор"
+
+# Одномовне значення → всі мови отримують це значення
+title: "Заголовок"  # ru, uk, en = "Заголовок"
 ```
 
-> 💡 **Міграція**: Для конвертації існуючих файлів з flat у nested формат:
-> ```bash
-> python scripts/migrate_yaml_localization.py path/to/config.yaml
-> ```
+#### choice_list: Inline Dict Format
+
+Для `choice_list` рекомендується inline dict формат:
+
+```yaml
+choice_list:
+  - v: "Production"
+    presentation: {ru: "Продакшн", uk: "Продакшн", en: "Production"}
+  - v: "Staging"
+    presentation: {ru: "Стейджинг", uk: "Стейджинг", en: "Staging"}
+```
+
+> 💡 **Рекомендація:** Використовуйте pipe формат для нових проектів - це найкомпактніший варіант.
 
 ### Повна структура
 
@@ -950,7 +1014,12 @@ forms:
   password_mode: boolean      # Password field (masked input)
   text_edit: boolean          # Enable text editing
   auto_max_width: boolean     # Auto-adjust width
-  choice_list: []             # Choice list items
+  choice_list:                # Choice list items (array of objects)
+    - v: string               # Value stored in attribute (no spaces)
+      ru: string              # Display text (Russian)
+      uk: string              # Display text (Ukrainian, optional)
+      en: string              # Display text (English, optional)
+      t: string               # Optional: xs:string (default), xs:decimal
   input_hint_ru: string       # Input hint (Russian)
   input_hint_uk: string       # Input hint (Ukrainian)
   input_hint_en: string       # Input hint (English)

@@ -212,6 +212,304 @@ def validate_picture(picture: str) -> Tuple[bool, str]:
     )
 
 
+def validate_choice_list(choice_list: list, context: str) -> Tuple[bool, str]:
+           
+    if not choice_list:
+        return True, ""
+
+    if not isinstance(choice_list, list):
+        return False, (
+            f"{context}: choice_list має бути списком, отримано {type(choice_list).__name__}"
+        )
+
+    for i, item in enumerate(choice_list):
+        if isinstance(item, str):
+            return False, (
+                f"{context}: choice_list[{i}] має бути об'єктом { v, ru} , отримано рядок \"{item}\"\n\n"
+                f"💡 Правильний формат (v2.69.0+):\n"
+                f"    choice_list:\n"
+                f"      - v: \"Value\"     # значення (без пробілів)\n"
+                f"        ru: \"Опис\"     # відображення\n"
+                f"        uk: \"Опис\"     # опціонально"
+            )
+
+        if not isinstance(item, dict):
+            return False, (
+                f"{context}: choice_list[{i}] має бути об'єктом, отримано {type(item).__name__}"
+            )
+
+                                       
+        if 'v' not in item:
+                                             
+            if 'value' in item:
+                return False, (
+                    f"{context}: choice_list[{i}] використовує застарілий ключ 'value'\n\n"
+                    f"💡 Новий формат (v2.69.0+):\n"
+                    f"    - v: \"{item.get('value', '')}\"     # замість 'value'\n"
+                    f"      ru: \"...\"                        # замість 'presentation_ru'"
+                )
+            return False, (
+                f"{context}: choice_list[{i}] відсутній обов'язковий ключ 'v' (value)"
+            )
+
+                                                
+        has_lang = any(item.get(lang) for lang in ['ru', 'uk', 'en'])
+        if not has_lang:
+                                                       
+            if item.get('presentation_ru') or item.get('presentation'):
+                return False, (
+                    f"{context}: choice_list[{i}] використовує застарілі ключі\n\n"
+                    f"💡 Новий формат (v2.69.0+):\n"
+                    f"    - v: \"{item.get('v', '')}\"     # value\n"
+                    f"      ru: \"...\"                   # замість 'presentation_ru'"
+                )
+            return False, (
+                f"{context}: choice_list[{i}] потрібен мінімум один ключ мови: ru, uk, або en"
+            )
+
+                                      
+        if not item.get('v') and item.get('v') != 0:                                  
+            return False, (
+                f"{context}: choice_list[{i}] значення 'v' не може бути порожнім"
+            )
+
+    return True, ""
+
+
+                                              
+                                
+                                              
+
+                                          
+VALID_HORIZONTAL_ALIGN = {"Left", "Right", "Center", "Auto"}
+VALID_VERTICAL_ALIGN = {"Top", "Bottom", "Center", "Auto"}
+VALID_TITLE_LOCATION = {"None", "Left", "Right", "Top", "Bottom", "Auto"}
+VALID_GROUP_DIRECTION = {"Horizontal", "Vertical"}
+VALID_REPRESENTATION = {"None", "NormalSeparation", "WeakSeparation", "StrongSeparation"}             
+VALID_TABLE_REPRESENTATION = {"list", "tree"}                        
+VALID_BEHAVIOR = {"Usual", "Collapsible"}
+VALID_RADIO_BUTTON_TYPE = {"RadioButton", "Tumbler"}
+VALID_PICTURE_SIZE = {"Proportionally", "Stretch", "AutoSize", "Tile", "RealSize"}
+VALID_CHART_TYPE = {"Line", "Area", "StackedArea", "Bar", "Bar3D", "Pie", "Pie3D", "Doughnut", "Radar", "Stock", "Funnel"}
+
+                                 
+ENUM_ALIASES = {
+                      
+    "center": "Center", "middle": "Center", "left": "Left", "right": "Right",
+                    
+    "top": "Top", "bottom": "Bottom",
+                    
+    "none": "None", "above": "Top", "below": "Bottom",
+                     
+    "horizontal": "Horizontal", "vertical": "Vertical", "row": "Horizontal", "column": "Vertical",
+                    
+    "normal": "NormalSeparation", "weak": "WeakSeparation", "strong": "StrongSeparation",
+    "border": "NormalSeparation", "frame": "NormalSeparation",
+              
+    "collapsible": "Collapsible", "expandable": "Collapsible", "collapse": "Collapsible",
+                       
+    "radio": "RadioButton", "tumbler": "Tumbler", "switch": "Tumbler", "toggle": "Tumbler",
+                  
+    "proportionally": "Proportionally", "stretch": "Stretch", "auto": "AutoSize",
+    "fit": "Proportionally", "fill": "Stretch", "tile": "Tile",
+}
+
+
+def validate_enum(value: str, valid_values: set, property_name: str, context: str) -> Tuple[bool, str]:
+           
+    if not value:
+        return True, ""
+
+                       
+    if value in valid_values:
+        return True, ""
+
+                                         
+    if value.lower() in ENUM_ALIASES:
+        suggested = ENUM_ALIASES[value.lower()]
+        if suggested in valid_values:
+            return False, (
+                f"{context}: {property_name}=\"{value}\" невірне значення\n\n"
+                f"💡 Можливо ви мали на увазі: {suggested}\n"
+                f"   {property_name}: {suggested}"
+            )
+
+                    
+    suggestions = get_close_matches(value, valid_values, n=3, cutoff=0.4)
+    if suggestions:
+        suggestions_str = ", ".join(suggestions)
+        return False, (
+            f"{context}: {property_name}=\"{value}\" невірне значення\n\n"
+            f"💡 Схожі варіанти: {suggestions_str}\n"
+            f"   Доступні: {', '.join(sorted(valid_values))}"
+        )
+
+    return False, (
+        f"{context}: {property_name}=\"{value}\" невірне значення\n\n"
+        f"💡 Доступні значення: {', '.join(sorted(valid_values))}"
+    )
+
+
+def validate_font(font, context: str) -> Tuple[bool, str]:
+           
+    if not font:
+        return True, ""
+
+    if isinstance(font, str):
+        return False, (
+            f"{context}: font має бути об'єктом, отримано рядок \"{font}\"\n\n"
+            f"💡 Правильний формат:\n"
+            f"    font:\n"
+            f"      size: 14\n"
+            f"      bold: true"
+        )
+
+    if not isinstance(font, dict):
+        return False, (
+            f"{context}: font має бути об'єктом, отримано {type(font).__name__}"
+        )
+
+    valid_keys = {"size", "height", "bold", "italic", "underline", "strikethrough",
+                  "scale", "face_name", "faceName", "kind", "ref"}
+    unknown_keys = set(font.keys()) - valid_keys
+    if unknown_keys:
+        suggestions = []
+        for key in unknown_keys:
+            matches = get_close_matches(key, valid_keys, n=1, cutoff=0.5)
+            if matches:
+                suggestions.append(f"'{key}' → '{matches[0]}'")
+
+        if suggestions:
+            return False, (
+                f"{context}: font містить невідомі ключі: {unknown_keys}\n\n"
+                f"💡 Можливо ви мали на увазі: {', '.join(suggestions)}\n"
+                f"   Доступні: {', '.join(sorted(valid_keys))}"
+            )
+        return False, (
+            f"{context}: font містить невідомі ключі: {unknown_keys}\n\n"
+            f"💡 Доступні ключі: {', '.join(sorted(valid_keys))}"
+        )
+
+                             
+    for bool_key in ["bold", "italic", "underline", "strikethrough"]:
+        if bool_key in font and not isinstance(font[bool_key], bool):
+            return False, (
+                f"{context}: font.{bool_key} має бути boolean (true/false), "
+                f"отримано {type(font[bool_key]).__name__}"
+            )
+
+    return True, ""
+
+
+def validate_color(color: str, property_name: str, context: str) -> Tuple[bool, str]:
+           
+    if not color:
+        return True, ""
+
+    if not isinstance(color, str):
+        return False, (
+            f"{context}: {property_name} має бути рядком у форматі #RRGGBB, "
+            f"отримано {type(color).__name__}"
+        )
+
+                                    
+    named_colors = {"red", "green", "blue", "white", "black", "yellow", "orange", "gray", "grey"}
+    if color.lower() in named_colors:
+                                 
+        color_map = {
+            "red": "#FF0000", "green": "#00FF00", "blue": "#0000FF",
+            "white": "#FFFFFF", "black": "#000000", "yellow": "#FFFF00",
+            "orange": "#FFA500", "gray": "#808080", "grey": "#808080"
+        }
+        hex_color = color_map.get(color.lower(), "#RRGGBB")
+        return False, (
+            f"{context}: {property_name}=\"{color}\" - іменовані кольори не підтримуються\n\n"
+            f"💡 Використовуйте HEX формат: {hex_color}"
+        )
+
+                      
+    import re
+    if not re.match(r'^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$', color):
+        return False, (
+            f"{context}: {property_name}=\"{color}\" невірний формат кольору\n\n"
+            f"💡 Використовуйте HEX формат:\n"
+            f"    {property_name}: \"#RRGGBB\"   # повний (напр. #FF5500)\n"
+            f"    {property_name}: \"#RGB\"      # скорочений (напр. #F50)"
+        )
+
+    return True, ""
+
+
+def validate_conditional_appearance(ca: dict, index: int, context: str) -> Tuple[bool, str]:
+           
+    if not ca:
+        return True, ""
+
+    if not isinstance(ca, dict):
+        return False, (
+            f"{context}: conditional_appearances[{index}] має бути об'єктом, "
+            f"отримано {type(ca).__name__}"
+        )
+
+                         
+    if 'filter' not in ca and 'appearance' not in ca:
+        return False, (
+            f"{context}: conditional_appearances[{index}] потрібен 'filter' або 'appearance'\n\n"
+            f"💡 Формат:\n"
+            f"    conditional_appearances:\n"
+            f"      - filter:\n"
+            f"          field: \"Статус\"\n"
+            f"          comparison: Equal\n"
+            f"          value: \"Ошибка\"\n"
+            f"        appearance:\n"
+            f"          text_color: \"#FF0000\""
+        )
+
+                     
+    if 'filter' in ca:
+        flt = ca['filter']
+        if not isinstance(flt, dict):
+            return False, (
+                f"{context}: conditional_appearances[{index}].filter має бути об'єктом"
+            )
+
+        valid_comparisons = {"Equal", "NotEqual", "Greater", "GreaterOrEqual",
+                           "Less", "LessOrEqual", "Contains", "InList", "Filled"}
+        if 'comparison' in flt and flt['comparison'] not in valid_comparisons:
+            suggestions = get_close_matches(flt['comparison'], valid_comparisons, n=2, cutoff=0.4)
+            if suggestions:
+                return False, (
+                    f"{context}: conditional_appearances[{index}].filter.comparison=\"{flt['comparison']}\" невірне\n\n"
+                    f"💡 Можливо: {', '.join(suggestions)}\n"
+                    f"   Доступні: {', '.join(sorted(valid_comparisons))}"
+                )
+            return False, (
+                f"{context}: conditional_appearances[{index}].filter.comparison=\"{flt['comparison']}\" невірне\n\n"
+                f"💡 Доступні: {', '.join(sorted(valid_comparisons))}"
+            )
+
+                         
+    if 'appearance' in ca:
+        app = ca['appearance']
+        if not isinstance(app, dict):
+            return False, (
+                f"{context}: conditional_appearances[{index}].appearance має бути об'єктом"
+            )
+
+                                       
+        for color_key in ['text_color', 'back_color', 'border_color']:
+            if color_key in app:
+                is_valid, error = validate_color(
+                    app[color_key],
+                    f"appearance.{color_key}",
+                    f"{context}: conditional_appearances[{index}]"
+                )
+                if not is_valid:
+                    return False, error
+
+    return True, ""
+
+
 def validate_handler_name(handler_name: str) -> Tuple[bool, str]:
            
     if not handler_name:
@@ -458,6 +756,29 @@ class ProcessorValidator:
                                                                                          
             self._validate_element_pictures(form.elements, form.name)
 
+                                                                
+            self._validate_element_choice_lists(form.elements, form.name)
+
+                                                                                                      
+            self._validate_element_properties(form.elements, form.name)
+
+                                                                     
+            if hasattr(form, 'conditional_appearances') and form.conditional_appearances:
+                context = f"Форма '{form.name}'"
+                for i, ca in enumerate(form.conditional_appearances):
+                                                                                                
+                    if hasattr(ca, 'appearance') and ca.appearance:
+                        app = ca.appearance
+                        for color_attr in ['text_color', 'back_color', 'border_color']:
+                            color_val = getattr(app, color_attr, None)
+                            if color_val:
+                                is_valid, error = validate_color(
+                                    color_val, color_attr,
+                                    f"{context}: conditional_appearances[{i}].appearance"
+                                )
+                                if not is_valid:
+                                    self.errors.append(error)
+
                                                    
         self._validate_long_operations()
 
@@ -643,6 +964,103 @@ class ProcessorValidator:
                                                               
             if elem.child_items:
                 self._validate_element_pictures(elem.child_items, form_name, elem_path)
+
+    def _validate_element_choice_lists(self, elements, form_name: str, parent_path: str = "") -> None:
+                   
+        if not elements:
+            return
+
+        for elem in elements:
+            elem_path = f"{parent_path}/{elem.name}" if parent_path else elem.name
+
+                                                                    
+            if elem.element_type in ("InputField", "RadioButtonField"):
+                choice_list = elem.properties.get('choice_list') if elem.properties else None
+                if choice_list:
+                    context = f"Форма '{form_name}' - {elem.element_type} '{elem_path}'"
+                    is_valid, error = validate_choice_list(choice_list, context)
+                    if not is_valid:
+                        self.errors.append(error)
+
+                                             
+            if elem.child_items:
+                self._validate_element_choice_lists(elem.child_items, form_name, elem_path)
+
+    def _validate_element_properties(self, elements, form_name: str, parent_path: str = "") -> None:
+                   
+        if not elements:
+            return
+
+        for elem in elements:
+            elem_path = f"{parent_path}/{elem.name}" if parent_path else elem.name
+            context = f"Форма '{form_name}' - {elem.element_type} '{elem_path}'"
+            props = elem.properties or {}
+
+                                      
+            enum_checks = [
+                ('horizontal_align', VALID_HORIZONTAL_ALIGN),
+                ('vertical_align', VALID_VERTICAL_ALIGN),
+                ('title_location', VALID_TITLE_LOCATION),
+                ('group_direction', VALID_GROUP_DIRECTION),
+                ('behavior', VALID_BEHAVIOR),
+                ('radio_button_type', VALID_RADIO_BUTTON_TYPE),
+                ('picture_size', VALID_PICTURE_SIZE),
+            ]
+            for prop_name, valid_values in enum_checks:
+                if prop_name in props:
+                    is_valid, error = validate_enum(
+                        props[prop_name], valid_values, prop_name, context
+                    )
+                    if not is_valid:
+                        self.errors.append(error)
+
+                                                                              
+            if 'representation' in props:
+                if elem.element_type == 'Table':
+                    valid_repr = VALID_TABLE_REPRESENTATION
+                else:
+                    valid_repr = VALID_REPRESENTATION
+                is_valid, error = validate_enum(
+                    props['representation'], valid_repr, 'representation', context
+                )
+                if not is_valid:
+                    self.errors.append(error)
+
+                                     
+            if 'font' in props:
+                is_valid, error = validate_font(props['font'], context)
+                if not is_valid:
+                    self.errors.append(error)
+
+                                       
+            color_props = ['text_color', 'back_color', 'border_color']
+            for color_prop in color_props:
+                if color_prop in props:
+                    is_valid, error = validate_color(
+                        props[color_prop], color_prop, context
+                    )
+                    if not is_valid:
+                        self.errors.append(error)
+
+                                                                      
+            if hasattr(elem, 'conditional_appearances') and elem.conditional_appearances:
+                for i, ca in enumerate(elem.conditional_appearances):
+                                                                                                
+                    if hasattr(ca, 'appearance') and ca.appearance:
+                        app = ca.appearance
+                        for color_attr in ['text_color', 'back_color', 'border_color']:
+                            color_val = getattr(app, color_attr, None)
+                            if color_val:
+                                is_valid, error = validate_color(
+                                    color_val, color_attr,
+                                    f"{context}: conditional_appearances[{i}].appearance"
+                                )
+                                if not is_valid:
+                                    self.errors.append(error)
+
+                                             
+            if elem.child_items:
+                self._validate_element_properties(elem.child_items, form_name, elem_path)
 
     def _validate_form_modules(self) -> Tuple[List[str], List[str]]:
                    

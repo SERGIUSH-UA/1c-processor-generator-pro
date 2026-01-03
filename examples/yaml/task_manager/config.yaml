@@ -125,14 +125,14 @@ forms:
             title_ru: "Статус"
             list_choice_mode: true
             choice_list:
-              - value: ""
-                presentation_ru: "Все"
-              - value: "Новая"
-                presentation_ru: "Новая"
-              - value: "В работе"
-                presentation_ru: "В работе"
-              - value: "Завершена"
-                presentation_ru: "Завершена"
+              - v: "All"
+                ru: "Все"
+              - v: "New"
+                ru: "Новая"
+              - v: "InProgress"
+                ru: "В работе"
+              - v: "Done"
+                ru: "Завершена"
             events:
               OnChange: ФильтрИзменен
           - type: InputField
@@ -142,14 +142,14 @@ forms:
             title_ru: "Приоритет"
             list_choice_mode: true
             choice_list:
-              - value: ""
-                presentation_ru: "Все"
-              - value: "Высокий"
-                presentation_ru: "Высокий"
-              - value: "Средний"
-                presentation_ru: "Средний"
-              - value: "Низкий"
-                presentation_ru: "Низкий"
+              - v: "All"
+                ru: "Все"
+              - v: "High"
+                ru: "Высокий"
+              - v: "Medium"
+                ru: "Средний"
+              - v: "Low"
+                ru: "Низкий"
             events:
               OnChange: ФильтрИзменен
           - type: CheckBoxField

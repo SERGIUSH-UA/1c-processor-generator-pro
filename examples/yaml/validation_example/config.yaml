@@ -1,9 +1,10 @@
+languages: [ru, uk]
+
 processor:
   name: ПрикладВалидации
   platform_version: '2.18'
-  synonym:
-    ru: Пример расширенной валидации BSL
-    uk: Приклад розширеної валідації BSL
+  synonym: "Пример расширенной валидации BSL | Приклад розширеної валідації BSL"
+
 validation:
   syntax_check_enabled: true
   check_thin_client: true
@@ -17,45 +18,34 @@ validation:
   check_empty_handlers: true
   check_unreference_procedures: false
   check_extended_modules: true
+
 attributes:
   - name: ТестовыйРеквизит
     type: string
-    synonym:
-      ru: Тестовый реквизит
-      uk: Тестовий реквізит
+    synonym: "Тестовый реквизит | Тестовий реквізит"
   - name: Число
     type: number
     digits: 10
     fraction_digits: 2
-    synonym:
-      ru: Число
-      uk: Число
+    synonym: "Число | Число"
   - name: Контрагент
     type: CatalogRef.Контрагенты
-    synonym:
-      ru: Контрагент
-      uk: Контрагент
+    synonym: "Контрагент | Контрагент"
 
 forms:
   - name: Форма
     default: true
     properties:
-      title:
-        ru: Пример валидации BSL
-        uk: Приклад валідації BSL
+      title: "Пример валидации BSL | Приклад валідації BSL"
       auto_title: false
     events:
       OnOpen: ПриОткрытии
     commands:
-    - name: ВыполнитьКоманду
-      handler: ВыполнитьКоманду
-      shortcut: F5
-      title:
-        ru: Выполнить
-        uk: Виконати
-      tooltip:
-        ru: Выполнить проверку
-        uk: Виконати перевірку
+      - name: ВыполнитьКоманду
+        handler: ВыполнитьКоманду
+        shortcut: F5
+        title: "Выполнить | Виконати"
+        tooltip: "Выполнить проверку | Виконати перевірку"
     elements:
       - type: InputField
         name: ТестовыйРеквизитПоле

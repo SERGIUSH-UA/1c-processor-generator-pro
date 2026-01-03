@@ -15,12 +15,11 @@
 #     --output output \
 #     --output-format epf
 
+languages: [ru, uk, en]
+
 processor:
   name: ПечатьКарточкиНоменклатуры
-  synonym:
-    ru: Карточка номенклатуры
-    uk: Картка номенклатури
-    en: Product Card
+  synonym: "Карточка номенклатуры | Картка номенклатури | Product Card"
 
 # BSP Integration Configuration
 bsp:
@@ -34,10 +33,7 @@ bsp:
 
   commands:
     - id: КарточкаНоменклатуры
-      title:
-        ru: Карточка номенклатуры
-        uk: Картка номенклатури
-        en: Product Card
+      title: "Карточка номенклатуры | Картка номенклатури | Product Card"
       usage: server_method
       modifier: ПечатьMXL
       template_name: ПФ_MXL_КарточкаНоменклатуры

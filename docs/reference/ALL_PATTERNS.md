@@ -117,8 +117,7 @@ forms:
 
     commands:
       - name: Generate
-        title_ru: Сформировать
-        title_uk: Сформувати
+        title: "Сформировать | Сформувати"
         handler: Generate
 ```
 
@@ -167,10 +166,11 @@ Results.Clear();
 - Columns auto-generated from table fields
 
 ```yaml
+languages: [ru, uk]
+
 processor:
   name: СписокДокументов
-  synonym_ru: Список документов
-  synonym_uk: Список документів
+  synonym: "Список документов | Список документів"
   platform_version: "2.11"  # Optional: Supports any version (2.10, 2.11, 2.18, 2.19, etc.)
 
 forms:
@@ -180,8 +180,7 @@ forms:
     # 1. Define DynamicList data source
     dynamic_lists:
       - name: СписокЗаказов
-        title_ru: Список заказов
-        title_uk: Список замовлень
+        title: "Список заказов | Список замовлень"
         main_table: Document.Заказ  # ⚠️ CRITICAL: Automatic query from this table
         # manual_query: false is default - no custom query needed!
 
@@ -209,29 +208,27 @@ forms:
 - **Properties in Table** - `is_dynamic_list: true` must be under `properties:`, not top-level!
 
 ```yaml
+languages: [ru, uk]
+
 processor:
   name: СписокПлатежей
-  synonym_ru: Список платежных поручений
-  synonym_uk: Список платіжних доручень
+  synonym: "Список платежных поручений | Список платіжних доручень"
 
 # Optional: Filter attributes
 attributes:
   - name: ДатаНачала
     type: date
-    synonym_ru: Дата начала
-    synonym_uk: Дата початку
+    synonym: "Дата начала | Дата початку"
   - name: ДатаОкончания
     type: date
-    synonym_ru: Дата окончания
-    synonym_uk: Дата закінчення
+    synonym: "Дата окончания | Дата закінчення"
 
 forms:
   - name: Форма
     default: true
 
     properties:
-      title_ru: Список платежных поручений
-      title_uk: Список платіжних доручень
+      title: "Список платежных поручений | Список платіжних доручень"
       auto_title: false
 
     events:
@@ -240,8 +237,7 @@ forms:
     # 1. Define complex DynamicList with MainTable
     dynamic_lists:
       - name: СписокПлатежей
-        title_ru: Список платежных поручений
-        title_uk: Список платіжних доручень
+        title: "Список платежных поручений | Список платіжних доручень"
         main_attribute: true  # Main form attribute
         manual_query: true
         main_table: Document.ПлатежноеПоручение  # ⚠️ CRITICAL: Enables DynamicDataRead=true
@@ -273,24 +269,19 @@ forms:
         # Columns - define display order and widths
         columns:
           - field: Дата
-            title_ru: Дата
-            title_uk: Дата
+            title: "Дата | Дата"
             width: 12
           - field: Номер
-            title_ru: Номер
-            title_uk: Номер
+            title: "Номер | Номер"
             width: 8
           - field: Контрагент
-            title_ru: Контрагент
-            title_uk: Контрагент
+            title: "Контрагент | Контрагент"
             width: 20
           - field: СуммаДокумента
-            title_ru: Сумма
-            title_uk: Сума
+            title: "Сумма | Сума"
             width: 12
           - field: Оплачено
-            title_ru: Оплачено
-            title_uk: Оплачено
+            title: "Оплачено | Оплачено"
             width: 8
 
     # 2. Display DynamicList on form with Table element
@@ -317,8 +308,7 @@ forms:
 
     commands:
       - name: Обновить
-        title_ru: Обновить
-        title_uk: Оновити
+        title: "Обновить | Оновити"
         handler: ОбновитьСписок
         picture: StdPicture.Refresh
 ```
@@ -449,12 +439,10 @@ forms:
 
     commands:
       - name: SelectFile
-        title_ru: Выбрать файл
-        title_uk: Вибрати файл
+        title: "Выбрать файл | Вибрати файл"
         handler: SelectFile
       - name: Import
-        title_ru: Импорт
-        title_uk: Імпорт
+        title: "Импорт | Імпорт"
         handler: Import
 ```
 
@@ -465,10 +453,11 @@ forms:
 **Use case:** Table + auto-loading details when row selected
 
 ```yaml
+languages: [ru, uk]
+
 processor:
   name: UsersByRole
-  synonym_ru: Просмотр пользователей по ролям
-  synonym_uk: Перегляд користувачів за ролями
+  synonym: "Просмотр пользователей по ролям | Перегляд користувачів за ролями"
 
 forms:
   - name: Форма
@@ -651,16 +640,13 @@ forms:
 
     commands:
       - name: Add
-        title_ru: Добавить
-        title_uk: Додати
+        title: "Добавить | Додати"
         handler: Add
       - name: Update
-        title_ru: Изменить
-        title_uk: Змінити
+        title: "Изменить | Змінити"
         handler: Update
       - name: Delete
-        title_ru: Удалить
-        title_uk: Видалити
+        title: "Удалить | Видалити"
         handler: Delete
 ```
 
@@ -677,43 +663,39 @@ forms:
 - `InputField + InputHint` - Placeholder text in input fields
 
 ```yaml
+languages: [ru, uk]
+
 processor:
   name: НастройкиОбработки
-  synonym_ru: Настройки обработки
-  synonym_uk: Налаштування обробки
+  synonym: "Настройки обработки | Налаштування обробки"
 
 attributes:
   # RadioButtonField attribute
   - name: ТипОперации
     type: string
     length: 20
-    synonym_ru: Тип операции
-    synonym_uk: Тип операції
+    synonym: "Тип операции | Тип операції"
 
   # CheckBoxField attributes
   - name: ВыполнитьПроверку
     type: boolean
-    synonym_ru: Выполнить проверку
-    synonym_uk: Виконати перевірку
+    synonym: "Выполнить проверку | Виконати перевірку"
 
   - name: АвтоОбновление
     type: boolean
-    synonym_ru: Автоматическое обновление
-    synonym_uk: Автоматичне оновлення
+    synonym: "Автоматическое обновление | Автоматичне оновлення"
 
   # InputField with ChoiceList
   - name: РежимРаботы
     type: string
     length: 50
-    synonym_ru: Режим работы
-    synonym_uk: Режим роботи
+    synonym: "Режим работы | Режим роботи"
 
   # InputField with InputHint
   - name: ПоискСтроки
     type: string
     length: 150
-    synonym_ru: Поиск
-    synonym_uk: Пошук
+    synonym: "Поиск | Пошук"
 
   # Status field
   - name: Статус
@@ -725,9 +707,7 @@ forms:
     default: true
 
     properties:
-      title: true
-      title_ru: "Настройки обработки"
-      title_uk: "Налаштування обробки"
+      title: "Настройки обработки | Налаштування обробки"
       auto_title: false
 
     events:
@@ -747,18 +727,15 @@ forms:
           title_location: None
           radio_button_type: Tumbler  # or RadioButton
           choice_list:
-            - value: "Импорт"
-              value_type: "xs:string"
-              presentation_ru: "Импорт данных"
-              presentation_uk: "Імпорт даних"
-            - value: "Экспорт"
-              value_type: "xs:string"
-              presentation_ru: "Экспорт данных"
-              presentation_uk: "Експорт даних"
-            - value: "Обмен"
-              value_type: "xs:string"
-              presentation_ru: "Обмен данными"
-              presentation_uk: "Обмін даними"
+            - v: "Import"
+              ru: "Импорт данных"
+              uk: "Імпорт даних"
+            - v: "Export"
+              ru: "Экспорт данных"
+              uk: "Експорт даних"
+            - v: "Exchange"
+              ru: "Обмен данными"
+              uk: "Обмін даними"
           events:
             OnChange: ТипОперацииПриИзменении
 
@@ -795,18 +772,15 @@ forms:
           width: 40
           horizontal_stretch: false
           choice_list:
-            - value: "Автоматический"
-              value_type: "xs:string"
-              presentation_ru: "Автоматический"
-              presentation_uk: "Автоматичний"
-            - value: "Ручной"
-              value_type: "xs:string"
-              presentation_ru: "Ручной"
-              presentation_uk: "Ручний"
-            - value: "Пошаговый"
-              value_type: "xs:string"
-              presentation_ru: "Пошаговый"
-              presentation_uk: "Покроковий"
+            - v: "Auto"
+              ru: "Автоматический"
+              uk: "Автоматичний"
+            - v: "Manual"
+              ru: "Ручной"
+              uk: "Ручний"
+            - v: "Step"
+              ru: "Пошаговый"
+              uk: "Покроковий"
 
     # Group 4: Search (InputField with InputHint)
     - type: UsualGroup
@@ -917,17 +891,17 @@ forms:
 - Each nested level maintains proper ID sequencing
 
 ```yaml
+languages: [ru, uk]
+
 processor:
   name: ПоискDuckDuckGo
-  synonym_ru: Поиск DuckDuckGo
-  synonym_uk: Пошук DuckDuckGo
+  synonym: "Поиск DuckDuckGo | Пошук DuckDuckGo"
 
 attributes:
   - name: ПоисковыйЗапрос
     type: string
     length: 300
-    synonym_ru: Поисковый запрос
-    synonym_uk: Пошуковий запит
+    synonym: "Поисковый запрос | Пошуковий запит"
 
 forms:
   - name: Форма
@@ -984,13 +958,11 @@ forms:
 
     commands:
       - name: Search
-        title_ru: Поиск
-        title_uk: Пошук
+        title: "Поиск | Пошук"
         handler: ВыполнитьПоиск
         shortcut: F5
       - name: Clear
-        title_ru: Очистить
-        title_uk: Очистити
+        title: "Очистить | Очистити"
         handler: ОчиститьРезультаты
 ```
 
@@ -1918,14 +1890,14 @@ forms:
             width: 15
             list_choice_mode: true
             choice_list:
-              - value: ""
-                presentation_ru: "Все"
-              - value: "Новая"
-                presentation_ru: "Новые"
-              - value: "В работе"
-                presentation_ru: "В работе"
-              - value: "Готово"
-                presentation_ru: "Готовые"
+              - v: "All"
+                ru: "Все"
+              - v: "New"
+                ru: "Новые"
+              - v: "InProgress"
+                ru: "В работе"
+              - v: "Done"
+                ru: "Готовые"
             events:
               OnChange: ФильтрИзменен
 
@@ -2204,10 +2176,10 @@ forms:
             attribute: ОтчетОператор
             list_choice_mode: true
             choice_list:
-              - value: ""
-                presentation_ru: "Все"
-              - value: "Иванов И.И."
-                presentation_ru: "Иванов И.И."
+              - v: "All"
+                ru: "Все"
+              - v: "Ivanov"
+                ru: "Иванов И.И."
           - type: Button
             name: КнопкаСформировать
             command: СформироватьОтчет

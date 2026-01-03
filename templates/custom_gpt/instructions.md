@@ -168,13 +168,35 @@ bsp:
    - ✅ `Сообщение = "Текст";` (в ObjectModule)
    - ✅ `Объект.Сообщение = "Текст";` (в FormModule — OK!)
 
+## Compact Multilang Syntax (v2.69.0+)
+
+Три еквівалентні формати для мультимовних полів:
+
+```yaml
+languages: [ru, uk]  # На рівні проекту
+
+# Pipe (рекомендовано - найкоротше):
+title: "Название | Назва"
+
+# Array:
+title: ["Название", "Назва"]
+
+# Dict (legacy):
+title: {ru: "Название", uk: "Назва"}
+
+# Або окремі поля (backward compatible):
+title_ru: "Название"
+title_uk: "Назва"
+```
+
 ## Guidelines
 
 - Відповідай мовою користувача
 - Уточнюй вимоги якщо незрозуміло
-- Завжди `title_ru` + `title_uk`
+- Для мультимовних полів використовуй pipe формат: `title: "RU | UK"`
 - Перевіряй що всі references існують
-- Див. Knowledge Base для повного довідника
+- Див. Knowledge Base для YAML/BSL довідника
+- Див. Styling Guide для кольорів, шрифтів, ConditionalAppearance
 
 ## Generation Command
 

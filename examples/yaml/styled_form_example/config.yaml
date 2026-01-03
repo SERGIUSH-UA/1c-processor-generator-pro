@@ -1,62 +1,38 @@
 # Styled Form Example - v2.43.0+
 # Demonstrates InputField styling: colors and fonts
 
+languages: [ru, uk, en]
+
 processor:
   name: СтилизованнаяФорма
-  synonym:
-    ru: Стилизованная форма
-    uk: Стилізована форма
-    en: Styled Form
+  synonym: "Стилизованная форма | Стилізована форма | Styled Form"
 
 attributes:
   - name: Заголовок
     type: string
     length: 200
-    synonym:
-      ru: Заголовок
-      uk: Заголовок
-      en: Title
-
+    synonym: "Заголовок | Заголовок | Title"
   - name: Описание
     type: string
-    synonym:
-      ru: Описание
-      uk: Опис
-      en: Description
-
+    synonym: "Описание | Опис | Description"
   - name: ВажноеПоле
     type: string
     length: 100
-    synonym:
-      ru: Важное поле
-      uk: Важливе поле
-      en: Important Field
-
+    synonym: "Важное поле | Важливе поле | Important Field"
   - name: Результат
     type: string
-    synonym:
-      ru: Результат
-      uk: Результат
-      en: Result
+    synonym: "Результат | Результат | Result"
 
 forms:
   - name: Форма
     default: true
-
     properties:
-      title:
-        ru: Демонстрация стилизации
-        uk: Демонстрація стилізації
-        en: Styling Demo
-
+      title: "Демонстрация стилизации | Демонстрація стилізації | Styling Demo"
     elements:
       # Section header - LabelDecoration with bold font
       - type: LabelDecoration
         name: ЗаголовокСекции
-        title:
-          ru: Стилизованные поля ввода
-          uk: Стилізовані поля введення
-          en: Styled Input Fields
+        title: "Стилизованные поля ввода | Стилізовані поля введення | Styled Input Fields"
         font:
           ref: "style:LargeTextFont"
           bold: true
@@ -87,10 +63,7 @@ forms:
           faceName: "Arial"
           height: 10
         width: 30
-        tooltip:
-          ru: Это важное поле выделено цветом
-          uk: Це важливе поле виділено кольором
-          en: This important field is highlighted
+        tooltip: "Это важное поле выделено цветом | Це важливе поле виділено кольором | This important field is highlighted"
 
       # Multiline description with custom styling
       - type: InputField
@@ -127,9 +100,6 @@ forms:
 
     commands:
       - name: Обработать
-        title:
-          ru: Обработать
-          uk: Обробити
-          en: Process
+        title: "Обработать | Обробити | Process"
         handler: ОбработатьОбработчик
         picture: StdPicture.ExecuteTask

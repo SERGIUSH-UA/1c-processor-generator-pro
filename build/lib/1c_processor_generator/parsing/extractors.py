@@ -1,22 +1,96 @@
    
 
-from typing import Dict, List, Any, Optional
+import re
+from typing import Dict, List, Any, Optional, Union
 from .schemas import PropSpec, ElementSchema
 
 
-def normalize_multilang(config: Dict[str, Any], fields: Optional[List[str]] = None) -> Dict[str, Any]:
+                                              
+DEFAULT_LANGUAGES = ["ru", "uk", "en"]
+
+
+def parse_multilang_value(
+    value: Union[str, List[str], Dict[str, str]],
+    languages: List[str]
+) -> Dict[str, str]:
+           
+    if not languages:
+        languages = DEFAULT_LANGUAGES
+
+                                             
+    if isinstance(value, dict):
+        return value
+
+                                                            
+    if isinstance(value, list):
+        if not value:
+                                                          
+            return {lang: "" for lang in languages}
+        result = {}
+        for i, lang in enumerate(languages):
+            result[lang] = value[i] if i < len(value) else value[0]
+        return result
+
+                                                            
+    if isinstance(value, str):
+                                                               
+                                           
+        if '|' in value:
+                                                         
+            parts = re.split(r'(?<!\\)\|', value)
+                             
+            parts = [p.strip().replace('\\|', '|') for p in parts]
+
+                                                            
+            if len(parts) > 1:
+                result = {}
+                for i, lang in enumerate(languages):
+                    result[lang] = parts[i] if i < len(parts) else parts[0]
+                return result
+            else:
+                                                                                
+                return {lang: parts[0] for lang in languages}
+
+                                               
+        return {lang: value for lang in languages}
+
+                                 
+    return {lang: str(value) for lang in languages}
+
+
+def normalize_multilang(
+    config: Dict[str, Any],
+    fields: Optional[List[str]] = None,
+    languages: Optional[List[str]] = None
+) -> Dict[str, Any]:
            
     if fields is None:
         fields = ["synonym", "title", "tooltip", "input_hint"]
 
+    if languages is None:
+        languages = DEFAULT_LANGUAGES
+
     result = config.copy()
 
     for field in fields:
-        if field in config and isinstance(config[field], dict):
-            nested = config[field]
-            for lang in ["ru", "uk", "en"]:
-                if lang in nested:
-                    result[f"{field}_{lang}"] = nested[lang]
+        if field not in config:
+            continue
+
+        value = config[field]
+
+                                                       
+        if any(f"{field}_{lang}" in config for lang in languages):
+            continue
+
+                                              
+        parsed = parse_multilang_value(value, languages)
+
+                                       
+        for lang, text in parsed.items():
+            result[f"{field}_{lang}"] = text
+
+                                   
+        if field in result:
             del result[field]
 
     return result

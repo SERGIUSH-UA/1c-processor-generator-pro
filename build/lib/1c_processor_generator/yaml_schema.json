@@ -7,6 +7,15 @@
     "processor"
   ],
   "properties": {
+    "languages": {
+      "type": "array",
+      "description": "Language order for compact multilang syntax (v2.69.0+). First language is primary (fallback). Example: [ru, uk] or [ru, uk, en]",
+      "items": {
+        "type": "string",
+        "enum": ["ru", "uk", "en"]
+      },
+      "default": ["ru", "uk", "en"]
+    },
     "processor": {
       "type": "object",
       "required": [
@@ -19,19 +28,8 @@
           "description": "Processor name (PascalCase, Cyrillic/Latin)"
         },
         "synonym": {
-          "type": "object",
-          "description": "Processor synonym (nested format)",
-          "properties": {
-            "ru": {
-              "type": "string"
-            },
-            "uk": {
-              "type": "string"
-            },
-            "en": {
-              "type": "string"
-            }
-          }
+          "$ref": "#/definitions/multilangValue",
+          "description": "Processor synonym. Supports: dict {ru: '', uk: ''}, array ['', ''], pipe 'ru | uk', or plain string"
         },
         "synonym_ru": {
           "type": "string",
@@ -598,19 +596,8 @@
             "pattern": "^[а-яА-ЯёЁa-zA-Z_][а-яА-ЯёЁa-zA-Z0-9_]*$"
           },
           "title": {
-            "type": "object",
-            "description": "Command title (nested format v2.13.1)",
-            "properties": {
-              "ru": {
-                "type": "string"
-              },
-              "uk": {
-                "type": "string"
-              },
-              "en": {
-                "type": "string"
-              }
-            }
+            "$ref": "#/definitions/multilangValue",
+            "description": "Command title. Supports: dict, array, pipe, or plain string (v2.69.0+)"
           },
           "title_ru": {
             "type": "string",
@@ -629,19 +616,8 @@
             "description": "Handler name (references BSL file in handlers/)"
           },
           "tooltip": {
-            "type": "object",
-            "description": "Command tooltip (nested format v2.13.1)",
-            "properties": {
-              "ru": {
-                "type": "string"
-              },
-              "uk": {
-                "type": "string"
-              },
-              "en": {
-                "type": "string"
-              }
-            }
+            "$ref": "#/definitions/multilangValue",
+            "description": "Command tooltip. Supports: dict, array, pipe, or plain string (v2.69.0+)"
           },
           "tooltip_ru": {
             "type": "string",
@@ -859,6 +835,21 @@
     }
   },
   "definitions": {
+    "multilangValue": {
+      "description": "Multilingual value (v2.69.0+). Supports: dict {ru, uk, en}, array [ru, uk, en], pipe 'ru | uk | en', or plain string",
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}},
+        {
+          "type": "object",
+          "properties": {
+            "ru": {"type": "string"},
+            "uk": {"type": "string"},
+            "en": {"type": "string"}
+          }
+        }
+      ]
+    },
     "BSPCommand": {
       "type": "object",
       "description": "BSP command definition for СведенияОВнешнейОбработке()",
@@ -923,10 +914,16 @@
       }
     },
     "LocalizedString": {
-      "description": "Multilingual string - nested object {ru, uk, en} or simple string",
+      "description": "Multilingual string (v2.69.0+). Supports: dict {ru, uk, en}, array [ru, uk, en], pipe 'ru | uk | en', or plain string",
       "oneOf": [
         {
           "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         {
           "type": "object",

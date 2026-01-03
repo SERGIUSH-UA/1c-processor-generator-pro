@@ -1,46 +1,33 @@
+languages: [ru, uk, en]
+
 processor:
   name: ПрофессиональнаяФорма
   platform_version: '2.11'
-  synonym:
-    ru: Пример профессионального UI
-    uk: Приклад професійного UI
-    en: Professional UI Example
+  synonym: "Пример профессионального UI | Приклад професійного UI | Professional UI Example"
+
 attributes:
   - name: НазваниеКомпании
     type: string
-    synonym:
-      ru: Название компании
-      uk: Назва компанії
-      en: Company Name
+    synonym: "Название компании | Назва компанії | Company Name"
   - name: ОписаниеДеятельности
     type: string
-    synonym:
-      ru: Описание деятельности
-      uk: Опис діяльності
-      en: Business Description
+    synonym: "Описание деятельности | Опис діяльності | Business Description"
   - name: Пароль
     type: string
-    synonym:
-      ru: Пароль
-      uk: Пароль
-      en: Password
+    synonym: "Пароль | Пароль | Password"
   - name: СуммаКонтракта
     type: number
     precision: 15
     scale: 2
-    synonym:
-      ru: Сумма контракта
-      uk: Сума контракту
-      en: Contract Amount
+    synonym: "Сумма контракта | Сума контракту | Contract Amount"
   - name: Подтверждено
     type: boolean
-    synonym:
-      ru: Подтверждено
-      uk: Підтверджено
-      en: Confirmed
+    synonym: "Подтверждено | Підтверджено | Confirmed"
+
 forms:
   - name: Форма
     default: true
+    synonym: "Форма | Форма | Form"
     properties:
       command_bar_location: Bottom
     elements:
@@ -49,23 +36,18 @@ forms:
         font:
           bold: true
           size: 12
-        title:
-          ru: 📊 Основная информация
-          uk: 📊 Основна інформація
-          en: 📊 Basic Information
+        title: "📊 Основная информация | 📊 Основна інформація | 📊 Basic Information"
       - type: UsualGroup
         name: ГруппаОсновныеДанные
         show_title: true
         representation: WeakSeparation
+        title: "Базовые данные | Базові дані | Basic Data"
         elements:
           - type: InputField
             name: ПолеНазваниеКомпании
             attribute: НазваниеКомпании
             auto_max_width: true
-            input_hint:
-              ru: Введите название компании
-              uk: Введіть назву компанії
-              en: Enter company name
+            input_hint: "Введите название компании | Введіть назву компанії | Enter company name"
           - type: InputField
             name: ПолеОписаниеДеятельности
             attribute: ОписаниеДеятельности
@@ -73,27 +55,17 @@ forms:
             height: 5
             title_location: Top
             auto_max_width: true
-            input_hint:
-              ru: Введите подробное описание деятельности компании
-              uk: Введіть детальний опис діяльності компанії
-              en: Enter detailed business description
+            input_hint: "Введите подробное описание деятельности компании | Введіть детальний опис діяльності компанії | Enter detailed business description"
           - type: InputField
             name: ПолеСуммаКонтракта
             attribute: СуммаКонтракта
             horizontal_align: Right
             width: 20
-        title:
-          ru: Базовые данные
-          uk: Базові дані
-          en: Basic Data
       - type: LabelDecoration
         name: ЗаголовокБезопасность
         font:
           bold: true
-        title:
-          ru: 🔒 Безопасность
-          uk: 🔒 Безпека
-          en: 🔒 Security
+        title: "🔒 Безопасность | 🔒 Безпека | 🔒 Security"
       - type: UsualGroup
         name: ГруппаБезопасность
         representation: WeakSeparation
@@ -103,41 +75,30 @@ forms:
             attribute: Пароль
             password_mode: true
             width: 30
-            input_hint:
-              ru: Введите пароль
-              uk: Введіть пароль
-              en: Enter password
+            input_hint: "Введите пароль | Введіть пароль | Enter password"
           - type: LabelDecoration
             name: СсылкаСправка
             hyperlink: true
+            title: "Как создать надежный пароль? | Як створити надійний пароль? | How to create a strong password?"
             events:
               Click: СсылкаСправкаClick
-            title:
-              ru: Как создать надежный пароль?
-              uk: Як створити надійний пароль?
-              en: How to create a strong password?
       - type: LabelDecoration
         name: ПредупреждениеВажно
         font:
           bold: true
           italic: true
-        title:
-          ru: ⚠️ Внимание! Изменения необратимы после подтверждения
-          uk: ⚠️ Увага! Зміни незворотні після підтвердження
-          en: ⚠️ Warning! Changes are irreversible after confirmation
+        title: "⚠️ Внимание! Изменения необратимы после подтверждения | ⚠️ Увага! Зміни незворотні після підтвердження | ⚠️ Warning! Changes are irreversible after confirmation"
       - type: CheckBoxField
         name: ПолеПодтверждено
         attribute: Подтверждено
         title_location: Right
-        title:
-          ru: Подтверждаю правильность данных
-          uk: Підтверджую правильність даних
-          en: I confirm data accuracy
+        title: "Подтверждаю правильность данных | Підтверджую правильність даних | I confirm data accuracy"
       - type: Pages
         name: ОсновныеСтраницы
         pages_representation: TabsOnTop
         pages:
           - name: СтраницаРезультаты
+            title: "📊 Результаты | 📊 Результати | 📊 Results"
             child_items:
               - type: Table
                 name: ТаблицаРезультаты
@@ -150,60 +111,43 @@ forms:
                     name: СтолбецОперация
                     attribute: Операция
                     width: 25
-                    title:
-                      ru: Операция
-                      uk: Операція
-                      en: Operation
+                    title: "Операция | Операція | Operation"
                   - type: ColumnGroup
                     name: ГруппаКолонокДатаВремя
                     group_layout: Horizontal
                     horizontal_align: Center
                     show_in_header: true
+                    title: "Дата и время | Дата та час | Date and Time"
                     elements:
                       - type: LabelField
                         name: СтолбецДата
                         attribute: Дата
                         width: 12
-                        title:
-                          ru: Дата
-                          uk: Дата
-                          en: Date
+                        title: "Дата | Дата | Date"
                       - type: LabelField
                         name: СтолбецВремя
                         attribute: Время
                         width: 10
-                        title:
-                          ru: Время
-                          uk: Час
-                          en: Time
-                    title:
-                      ru: Дата и время
-                      uk: Дата та час
-                      en: Date and Time
+                        title: "Время | Час | Time"
                   - type: ColumnGroup
                     name: ГруппаКолонокСуммы
                     group_layout: Horizontal
                     horizontal_align: Right
                     show_in_header: true
+                    title: "Суммы | Суми | Amounts"
                     elements:
                       - type: LabelField
                         name: СтолбецДебет
                         attribute: Дебет
                         width: 12
                         horizontal_align: Right
-                        title:
-                          ru: Дебет
-                          uk: Дебет
-                          en: Debit
+                        title: "Дебет | Дебет | Debit"
                       - type: LabelField
                         name: СтолбецКредит
                         attribute: Кредит
                         width: 12
                         horizontal_align: Right
-                        title:
-                          ru: Кредит
-                          uk: Кредит
-                          en: Credit
+                        title: "Кредит | Кредит | Credit"
                       - type: LabelField
                         name: СтолбецВсего
                         attribute: Всего
@@ -211,129 +155,69 @@ forms:
                         horizontal_align: Right
                         font:
                           bold: true
-                        title:
-                          ru: Всего
-                          uk: Всього
-                          en: Total
-                    title:
-                      ru: Суммы
-                      uk: Суми
-                      en: Amounts
-            title:
-              ru: 📊 Результаты
-              uk: 📊 Результати
-              en: 📊 Results
+                        title: "Всего | Всього | Total"
           - name: СтраницаОтчет
+            title: "📄 Отчет | 📄 Звіт | 📄 Report"
             child_items:
               - type: SpreadSheetDocumentField
                 name: ПолеОтчет
                 attribute: Отчет
                 height: 20
-            title:
-              ru: 📄 Отчет
-              uk: 📄 Звіт
-              en: 📄 Report
     form_attributes:
       - name: Отчет
         type: spreadsheet_document
-        synonym:
-          ru: Отчет
-          uk: Звіт
-          en: Report
+        synonym: "Отчет | Звіт | Report"
     value_tables:
       - name: Результаты
+        synonym: "Результаты | Результати | Results"
         columns:
           - name: Операция
             type: string
-            synonym:
-              ru: Операция
-              uk: Операція
-              en: Operation
+            synonym: "Операция | Операція | Operation"
           - name: Дата
             type: date
-            synonym:
-              ru: Дата
-              uk: Дата
-              en: Date
+            synonym: "Дата | Дата | Date"
           - name: Время
             type: string
             length: 10
-            synonym:
-              ru: Время
-              uk: Час
-              en: Time
+            synonym: "Время | Час | Time"
           - name: Дебет
             type: number
             precision: 15
             scale: 2
-            synonym:
-              ru: Дебет
-              uk: Дебет
-              en: Debit
+            synonym: "Дебет | Дебет | Debit"
           - name: Кредит
             type: number
             precision: 15
             scale: 2
-            synonym:
-              ru: Кредит
-              uk: Кредит
-              en: Credit
+            synonym: "Кредит | Кредит | Credit"
           - name: Всего
             type: number
             precision: 15
             scale: 2
-            synonym:
-              ru: Всего
-              uk: Всього
-              en: Total
-        synonym:
-          ru: Результаты
-          uk: Результати
-          en: Results
+            synonym: "Всего | Всього | Total"
     commands:
       - name: ВыполнитьОбработку
         picture: StdPicture.ExecuteTask
         handler: ВыполнитьОбработку
-        title:
-          ru: Выполнить
-          uk: Виконати
-          en: Execute
+        title: "Выполнить | Виконати | Execute"
       - name: Сохранить
         picture: StdPicture.Write
         handler: Сохранить
-        title:
-          ru: Сохранить
-          uk: Зберегти
-          en: Save
+        title: "Сохранить | Зберегти | Save"
       - name: Обновить
         picture: StdPicture.Refresh
         handler: Обновить
-        title:
-          ru: Обновить
-          uk: Оновити
-          en: Refresh
+        title: "Обновить | Оновити | Refresh"
       - name: СформироватьОтчет
         picture: StdPicture.GenerateReport
         handler: СформироватьОтчет
-        title:
-          ru: Сформировать отчет
-          uk: Сформувати звіт
-          en: Generate Report
+        title: "Сформировать отчет | Сформувати звіт | Generate Report"
       - name: ЭкспортироватьДанные
         picture: StdPicture.SaveFile
         handler: ЭкспортироватьДанные
-        title:
-          ru: Экспорт
-          uk: Експорт
-          en: Export
+        title: "Экспорт | Експорт | Export"
       - name: Удалить
         picture: StdPicture.Delete
         handler: Удалить
-        title:
-          ru: Удалить
-          uk: Видалити
-          en: Delete
-    synonym:
-      ru: Форма
-      uk: Форма
-      en: Form
+        title: "Удалить | Видалити | Delete"

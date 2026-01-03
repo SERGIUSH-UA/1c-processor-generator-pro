@@ -1,51 +1,39 @@
+languages: [ru, uk]
+
 processor:
   name: ДемоЭлементовФормы
   platform_version: '2.11'
-  synonym:
-    ru: Демо элементов формы
-    uk: Демо елементів форми
+  synonym: "Демо элементов формы | Демо елементів форми"
+
 attributes:
   - name: ТипОперации
     type: string
     length: 20
-    synonym:
-      ru: Тип операции
-      uk: Тип операції
+    synonym: "Тип операции | Тип операції"
   - name: ВыполнитьПроверку
     type: boolean
-    synonym:
-      ru: Выполнить проверку
-      uk: Виконати перевірку
+    synonym: "Выполнить проверку | Виконати перевірку"
   - name: ВыполнитьОбработку
     type: boolean
-    synonym:
-      ru: Выполнить обработку
-      uk: Виконати обробку
+    synonym: "Выполнить обработку | Виконати обробку"
   - name: РежимРаботы
     type: string
     length: 50
-    synonym:
-      ru: Режим работы
-      uk: Режим роботи
+    synonym: "Режим работы | Режим роботи"
   - name: Статус
     type: string
     length: 100
-    synonym:
-      ru: Статус
-      uk: Статус
+    synonym: "Статус | Статус"
   - name: ПоискСтроки
     type: string
     length: 150
-    synonym:
-      ru: Поиск
-      uk: Пошук
+    synonym: "Поиск | Пошук"
+
 forms:
   - name: Форма
     default: true
     properties:
-      title:
-        ru: Демонстрация новых элементов формы
-        uk: Демонстрація нових елементів форми
+      title: "Демонстрация новых элементов формы | Демонстрація нових елементів форми"
       auto_title: false
     events:
       OnOpen: ПриОткрытии
@@ -63,21 +51,9 @@ forms:
             title_location: None
             radio_button_type: Tumbler
             choice_list:
-              - value: Импорт
-                value_type: xs:string
-                presentation:
-                  ru: Импорт данных
-                  uk: Імпорт даних
-              - value: Экспорт
-                value_type: xs:string
-                presentation:
-                  ru: Экспорт данных
-                  uk: Експорт даних
-              - value: Обмен
-                value_type: xs:string
-                presentation:
-                  ru: Обмен данными
-                  uk: Обмін даними
+              - {v: Import, ru: "Импорт данных", uk: "Імпорт даних"}
+              - {v: Export, ru: "Экспорт данных", uk: "Експорт даних"}
+              - {v: Exchange, ru: "Обмен данными", uk: "Обмін даними"}
             events:
               OnChange: ТипОперацииПриИзменении
       - type: UsualGroup
@@ -113,21 +89,9 @@ forms:
             width: 40
             horizontal_stretch: false
             choice_list:
-              - value: Автоматический
-                value_type: xs:string
-                presentation:
-                  ru: Автоматический
-                  uk: Автоматичний
-              - value: Ручной
-                value_type: xs:string
-                presentation:
-                  ru: Ручной
-                  uk: Ручний
-              - value: Пошаговый
-                value_type: xs:string
-                presentation:
-                  ru: Пошаговый
-                  uk: Покроковий
+              - {v: Auto, ru: "Автоматический", uk: "Автоматичний"}
+              - {v: Manual, ru: "Ручной", uk: "Ручний"}
+              - {v: Step, ru: "Пошаговый", uk: "Покроковий"}
             events:
               OnChange: РежимРаботыПриИзменении
       - type: UsualGroup
@@ -142,11 +106,9 @@ forms:
             attribute: ПоискСтроки
             title_location: Top
             width: 50
+            input_hint: "Введите текст для поиска... | Введіть текст для пошуку..."
             events:
               OnChange: ПоискСтрокиПриИзменении
-            input_hint:
-              ru: Введите текст для поиска...
-              uk: Введіть текст для пошуку...
       - type: UsualGroup
         name: ГруппаСтатус
         title: Результаты
@@ -177,6 +139,7 @@ forms:
         name: ДополнительноМеню
         picture: StdPicture.Information
         representation: PictureAndText
+        title: "Дополнительно | Додатково"
         child_items:
           - type: Button
             name: ЭкспортКнопка
@@ -186,6 +149,7 @@ forms:
             command: Импорт
           - type: Popup
             name: НастройкиПодменю
+            title: "Настройки | Налаштування"
             child_items:
               - type: Button
                 name: НастройкиОбщиеКнопка
@@ -193,64 +157,34 @@ forms:
               - type: Button
                 name: НастройкиПользователяКнопка
                 command: НастройкиПользователя
-            title:
-              ru: Настройки
-              uk: Налаштування
-        title:
-          ru: Дополнительно
-          uk: Додатково
     commands:
       - name: Выполнить
         handler: ВыполнитьОбработку
         picture: StdPicture.ExecuteTask
-        title:
-          ru: Выполнить
-          uk: Виконати
-        tooltip:
-          ru: Выполнить обработку с выбранными параметрами
-          uk: Виконати обробку з обраними параметрами
+        title: "Выполнить | Виконати"
+        tooltip: "Выполнить обработку с выбранными параметрами | Виконати обробку з обраними параметрами"
       - name: Очистить
         handler: ОчиститьФорму
         picture: StdPicture.InputFieldClear
-        title:
-          ru: Очистить
-          uk: Очистити
-        tooltip:
-          ru: Очистить все поля формы
-          uk: Очистити всі поля форми
+        title: "Очистить | Очистити"
+        tooltip: "Очистить все поля формы | Очистити всі поля форми"
       - name: Экспорт
         handler: ЭкспортДанных
         picture: StdPicture.SaveFile
-        title:
-          ru: Экспорт
-          uk: Експорт
-        tooltip:
-          ru: Экспорт данных
-          uk: Експорт даних
+        title: "Экспорт | Експорт"
+        tooltip: "Экспорт данных | Експорт даних"
       - name: Импорт
         handler: ИмпортДанных
         picture: StdPicture.OpenFile
-        title:
-          ru: Импорт
-          uk: Імпорт
-        tooltip:
-          ru: Импорт данных
-          uk: Імпорт даних
+        title: "Импорт | Імпорт"
+        tooltip: "Импорт данных | Імпорт даних"
       - name: НастройкиОбщие
         handler: НастройкиОбщие
         picture: StdPicture.CustomizeForm
-        title:
-          ru: Общие настройки
-          uk: Загальні налаштування
-        tooltip:
-          ru: Общие настройки системы
-          uk: Загальні налаштування системи
+        title: "Общие настройки | Загальні налаштування"
+        tooltip: "Общие настройки системы | Загальні налаштування системи"
       - name: НастройкиПользователя
         handler: НастройкиПользователя
         picture: StdPicture.User
-        title:
-          ru: Настройки пользователя
-          uk: Налаштування користувача
-        tooltip:
-          ru: Настройки текущего пользователя
-          uk: Налаштування поточного користувача
+        title: "Настройки пользователя | Налаштування користувача"
+        tooltip: "Настройки текущего пользователя | Налаштування поточного користувача"

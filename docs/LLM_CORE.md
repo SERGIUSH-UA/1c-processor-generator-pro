@@ -135,7 +135,7 @@ The generator automatically chooses the compilation mode:
 | **HTMLDocumentField** | Display HTML content in forms | Use `type: HTMLDocumentField` + `form_attributes: HTMLDocument` (v2.39.0+) |
 | **Templates (Макети)** | Store HTML/MXL layouts in processor | Use `templates:` section with external files (v2.40.0+) |
 | **Template Automation** | Auto-create fields, placeholders, assets | Use `auto_field: true` + `automation:` file (v2.41.0+) |
-| **Multiple languages** | Support ru, uk, en | Use `synonym_ru`, `synonym_uk`, `synonym_en` (v2.13.0+) |
+| **Multiple languages** | Support ru, uk, en | Use Compact Multilang: `title: "RU \| UK"` or `title: [RU, UK]` (v2.69.0+). Legacy: `synonym_ru`, `synonym_uk` |
 | **ObjectModule** | Reusable logic, exported procedures, heavy calculations | Use `object_module: { file: ... }` in YAML → See reference/ADVANCED_FEATURES.md |
 | **ObjectModule Region** | Write ObjectModule code in handlers.bsl | Use `#Область МодульОбъекта` region (v2.66.0+) - auto-wrapped with `#Если Сервер...` |
 | **Module Documentation** | Add documentation region to Module.bsl | Use `documentation_file:` OR `#Область Документация` in handlers.bsl |
@@ -496,9 +496,12 @@ elements:
     name: Environment
     attribute: Environment
     choice_list:                  # ✅ Makes field a dropdown/combobox
-      - "Production"
-      - "Staging"
-      - "Development"
+      - v: "Production"           # v=value, ru=presentation
+        ru: "Production"
+      - v: "Staging"
+        ru: "Staging"
+      - v: "Development"
+        ru: "Development"
 ```
 
 **When to use:** Predefined options, validated input
@@ -634,7 +637,7 @@ elements:
 | `representation` | UsualGroup | NormalSeparation, WeakSeparation | Visual grouping |
 | `behavior` | UsualGroup | Collapsible | Optional sections |
 | `input_hint` | InputField | "text" | Placeholder guidance |
-| `choice_list` | InputField | ["opt1", "opt2"] | Dropdown selection |
+| `choice_list` | InputField | [{v, ru, uk, en, t}] | Dropdown selection |
 | `hyperlink` | LabelDecoration | true | Clickable links |
 | `radio_button_type` | RadioButtonField | Tumbler | Modern toggle style |
 | `WindowOpeningMode` | Form (properties) | LockOwnerWindow | Modal dialogs (v2.35.0+) |
@@ -1768,6 +1771,6 @@ For comprehensive UI excellence guide with:
 
 ---
 
-**Last updated:** 2026-01-02
+**Last updated:** 2026-01-03
 **Optimized for:** Claude Sonnet 4.5, GPT-4 Turbo, and other frontier LLMs
-**Generator version:** 2.68.0+ (ConditionalAppearance, Table Styling)
+**Generator version:** 2.69.0+ (Compact Multilang Syntax, ConditionalAppearance, Table Styling)

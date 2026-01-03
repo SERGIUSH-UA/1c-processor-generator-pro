@@ -12,6 +12,7 @@
 6. In **"Configure files"**, select:
    - `CLAUDE.md` (auto-included)
    - `docs/LLM_WEB_LITE.md`
+   - `docs/LLM_STYLING.md` - colors, fonts, ConditionalAppearance
    - `docs/QUICK_REFERENCE.md`
    - `examples/yaml/` (selected examples)
 
@@ -22,6 +23,7 @@
 3. Copy content from `project_instructions.md` below
 4. Upload files to project:
    - `docs/LLM_WEB_LITE.md`
+   - `styling_guide.md` (this folder) - or `docs/LLM_STYLING.md`
    - `docs/QUICK_REFERENCE.md`
 
 ---
@@ -141,6 +143,8 @@ To share with team members:
 | File | Purpose | Where to Get |
 |------|---------|--------------|
 | `LLM_WEB_LITE.md` | Core documentation | `docs/` folder |
+| `LLM_STYLING.md` | Colors, fonts, ConditionalAppearance | `docs/` folder |
+| `styling_guide.md` | Same as LLM_STYLING (local copy) | This folder |
 | `QUICK_REFERENCE.md` | Element reference | `docs/` folder |
 | `CLAUDE.md` | Project instructions | Root folder |
 | Examples | Sample configs | `examples/yaml/` |

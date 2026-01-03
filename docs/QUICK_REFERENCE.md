@@ -136,7 +136,11 @@
 | Generic Catalog | `type: CatalogRef` | Any catalog |
 | Generic Document | `type: DocumentRef` | Any document |
 
-**Multilingual (v2.13.0+):** Use nested format: `synonym: {ru: "...", uk: "...", en: "..."}` for processor, attributes, columns, commands, form elements (title/tooltip/input_hint).
+**Multilingual (v2.69.0+):** Three equivalent formats:
+- **Pipe (recommended):** `title: "RU | UK | EN"` - most compact
+- **Array:** `title: [RU, UK, EN]` - explicit list
+- **Dict:** `title: {ru: "...", uk: "...", en: "..."}` - explicit keys
+- Project-level: `languages: [ru, uk]` declares order for pipe/array formats
 
 **Read-Only (v2.13.1+):** Add `read_only: true` to InputField, Table, UsualGroup, or table columns (TabularSection/ValueTable).
 
@@ -724,7 +728,7 @@ forms:
 
 **For full documentation:** See YAML_GUIDE.md, LLM_PROMPT.md
 
-**Version:** 2.64.0 (2025-12-28)
+**Version:** 2.69.0 (2026-01-03)
 **New in 2.64.0:** ValueTree Support - hierarchical data visualization (tree representation for Table, value_trees section, tree-specific properties: representation, initial_tree_view, show_root, allow_root_choice, choice_folders_and_items)
 **New in 2.46.0:** Page Element Refactoring - eliminated technical debt, Page now uses FormElement, DRY compliance improvements
 **New in 2.43.0:** InputField Styling - colors (title_text_color, text_color, back_color, border_color) and fonts (title_font, font with faceName, scale)

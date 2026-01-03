@@ -77,50 +77,37 @@ START: What does user need to do?
 
 **config.yaml:**
 ```yaml
+languages: [ru, uk, en]
+
 processor:
   name: SimpleCalculator
-  synonym:
-    ru: Простой калькулятор
-    uk: Простий калькулятор
-    en: Simple Calculator
+  synonym: "Простой калькулятор | Простий калькулятор | Simple Calculator"
 
 attributes:
   - name: Number1
     type: number
     digits: 10
     fraction_digits: 2
-    synonym:
-      ru: Число 1
-      uk: Число 1
-      en: Number 1
+    synonym: "Число 1 | Число 1 | Number 1"
 
   - name: Number2
     type: number
     digits: 10
     fraction_digits: 2
-    synonym:
-      ru: Число 2
-      uk: Число 2
-      en: Number 2
+    synonym: "Число 2 | Число 2 | Number 2"
 
   - name: Result
     type: number
     digits: 15
     fraction_digits: 2
-    synonym:
-      ru: Результат
-      uk: Результат
-      en: Result
+    synonym: "Результат | Результат | Result"
 
 forms:
   - name: Форма
     default: true
 
     properties:
-      title:
-        ru: Калькулятор
-        uk: Калькулятор
-        en: Calculator
+      title: "Калькулятор | Калькулятор | Calculator"
 
     elements:
       - type: InputField
@@ -151,10 +138,7 @@ forms:
 
     commands:
       - name: Calculate
-        title:
-          ru: Вычислить
-          uk: Обчислити
-          en: Calculate
+        title: "Вычислить | Обчислити | Calculate"
         handler: Calculate
         picture: StdPicture.ExecuteTask
 ```
@@ -217,27 +201,20 @@ forms:
 
 **config.yaml:**
 ```yaml
+languages: [ru, uk, en]
+
 processor:
   name: SalesReport
-  synonym:
-    ru: Отчет по продажам
-    uk: Звіт з продажів
-    en: Sales Report
+  synonym: "Отчет по продажам | Звіт з продажів | Sales Report"
 
 attributes:
   - name: StartDate
     type: date
-    synonym:
-      ru: Дата начала
-      uk: Дата початку
-      en: Start Date
+    synonym: "Дата начала | Дата початку | Start Date"
 
   - name: EndDate
     type: date
-    synonym:
-      ru: Дата окончания
-      uk: Дата закінчення
-      en: End Date
+    synonym: "Дата окончания | Дата закінчення | End Date"
 
 forms:
   - name: Форма
@@ -252,37 +229,25 @@ forms:
           - name: Product
             type: string
             length: 200
-            synonym:
-              ru: Товар
-              uk: Товар
-              en: Product
+            synonym: "Товар | Товар | Product"
 
           - name: Quantity
             type: number
             digits: 10
             fraction_digits: 2
-            synonym:
-              ru: Количество
-              uk: Кількість
-              en: Quantity
+            synonym: "Количество | Кількість | Quantity"
 
           - name: Amount
             type: number
             digits: 15
             fraction_digits: 2
-            synonym:
-              ru: Сумма
-              uk: Сума
-              en: Amount
+            synonym: "Сумма | Сума | Amount"
 
     elements:
       # Filter section
       - type: UsualGroup
         name: FilterGroup
-        title:
-          ru: Фильтры
-          uk: Фільтри
-          en: Filters
+        title: "Фильтры | Фільтри | Filters"
         show_title: true
         group_direction: Vertical
         child_items:
@@ -315,10 +280,7 @@ forms:
 
     commands:
       - name: Generate
-        title:
-          ru: Сформировать
-          uk: Сформувати
-          en: Generate
+        title: "Сформировать | Сформувати | Generate"
         handler: Generate
         picture: StdPicture.GenerateReport
 ```
@@ -431,12 +393,11 @@ forms:
 
 **config.yaml:**
 ```yaml
+languages: [ru, uk, en]
+
 processor:
   name: UsersByRole
-  synonym:
-    ru: Просмотр пользователей по ролям
-    uk: Перегляд користувачів за ролями
-    en: Users by Role
+  synonym: "Просмотр пользователей по ролям | Перегляд користувачів за ролями | Users by Role"
 
 forms:
   - name: Форма
@@ -452,18 +413,12 @@ forms:
           - name: RoleName
             type: string
             length: 100
-            synonym:
-              ru: Имя роли
-              uk: Ім'я ролі
-              en: Role Name
+            synonym: "Имя роли | Ім'я ролі | Role Name"
 
           - name: Synonym
             type: string
             length: 200
-            synonym:
-              ru: Синоним
-              uk: Синонім
-              en: Synonym
+            synonym: "Синоним | Синонім | Synonym"
 
       # Detail: Users
       - name: Users
@@ -471,18 +426,12 @@ forms:
           - name: UserName
             type: string
             length: 100
-            synonym:
-              ru: Имя пользователя
-              uk: Ім'я користувача
-              en: User Name
+            synonym: "Имя пользователя | Ім'я користувача | User Name"
 
           - name: FullName
             type: string
             length: 200
-            synonym:
-              ru: Полное имя
-              uk: Повне ім'я
-              en: Full Name
+            synonym: "Полное имя | Повне ім'я | Full Name"
 
     elements:
       # Master: Roles table with OnActivateRow event
@@ -492,10 +441,7 @@ forms:
         properties:
           is_value_table: true
           height: 10
-          title:
-            ru: Роли
-            uk: Ролі
-            en: Roles
+          title: "Роли | Ролі | Roles"
         events:
           OnActivateRow: RolesTableOnActivateRow
 
@@ -507,10 +453,7 @@ forms:
         properties:
           is_value_table: true
           height: 10
-          title:
-            ru: Пользователи с выбранной ролью
-            uk: Користувачі з обраною роллю
-            en: Users with Selected Role
+          title: "Пользователи с выбранной ролью | Користувачі з обраною роллю | Users with Selected Role"
 
     commands: []  # No explicit commands needed
 ```
@@ -722,9 +665,12 @@ elements:
     attribute: APIKey
     width: 30                    # 30 characters wide (character units, NOT pixels)
     choice_list:                 # Makes it dropdown/combobox
-      - "Production"
-      - "Staging"
-      - "Development"
+      - v: "Production"          # v=value, ru=presentation
+        ru: "Production"
+      - v: "Staging"
+        ru: "Staging"
+      - v: "Development"
+        ru: "Development"
     input_hint: "Enter API key here"  # Placeholder text
 
   - type: InputField

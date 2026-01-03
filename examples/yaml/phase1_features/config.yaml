@@ -1,49 +1,37 @@
+languages: [ru, uk]
+
 processor:
   name: ДемонстрацияФаза1
   platform_version: '2.11'
-  synonym:
-    ru: Демонстрация Фаза 1
-    uk: Демонстрація Фаза 1
-    en: Phase 1 Demo
+  synonym: "Демонстрация Фаза 1 | Демонстрація Фаза 1"
+
 attributes:
   - name: Username
     type: string
-    synonym:
-      ru: Имя пользователя
-      uk: Ім'я користувача
+    synonym: "Имя пользователя | Ім'я користувача"
   - name: Password
     type: string
-    synonym:
-      ru: Пароль
-      uk: Пароль
+    synonym: "Пароль | Пароль"
   - name: Description
     type: string
-    synonym:
-      ru: Описание
-      uk: Опис
+    synonym: "Описание | Опис"
   - name: SelectedValue
     type: string
-    synonym:
-      ru: Выбранное значение
-      uk: Вибране значення
+    synonym: "Выбранное значение | Вибране значення"
+
 tabular_sections:
   - name: Items
+    synonym: "Товары | Товари"
     columns:
       - name: Product
         type: string
-        synonym:
-          ru: Товар
-          uk: Товар
+        synonym: "Товар | Товар"
       - name: Quantity
         type: number
         digits: 15
         fraction_digits: 3
-        synonym:
-          ru: Количество
-          uk: Кількість
-    synonym:
-      ru: Товары
-      uk: Товари
+        synonym: "Количество | Кількість"
+
 forms:
   - name: ГоловнаФорма
     default: true
@@ -60,42 +48,32 @@ forms:
       - type: LabelDecoration
         name: HelpLink
         hyperlink: true
+        title: "Что это такое? (Нажмите для справки) | Що це таке? (Натисніть для довідки)"
         events:
           Click: HelpLinkClickНажатие
-        title:
-          ru: Что это такое? (Нажмите для справки)
-          uk: Що це таке? (Натисніть для довідки)
       - type: InputField
         name: DescriptionField
         attribute: Description
         multi_line: true
         auto_max_width: true
-        title:
-          ru: Описание
-          uk: Опис
+        title: "Описание | Опис"
       - type: InputField
         name: PasswordField
         attribute: Password
         password_mode: true
-        title:
-          ru: Пароль
-          uk: Пароль
+        title: "Пароль | Пароль"
       - type: InputField
         name: UsernameField
         attribute: Username
         text_edit: false
-        title:
-          ru: Имя пользователя
-          uk: Ім'я користувача
+        title: "Имя пользователя | Ім'я користувача"
       - type: InputField
         name: SelectedValueField
         attribute: SelectedValue
+        title: "Выбранное значение | Вибране значення"
         events:
           ChoiceProcessing: SelectedValueFieldОбработкаВыбора
           StartChoice: SelectedValueFieldНачалоВыбора
-        title:
-          ru: Выбранное значение
-          uk: Вибране значення
       - type: Table
         name: ItemsTable
         tabular_section: Items
@@ -110,7 +88,4 @@ forms:
       - name: TestCommand
         handler: TestCommandКнопка
         picture: StdPicture.Report
-        title:
-          ru: Тестировать
-          uk: Тестувати
-          en: Test
+        title: "Тестировать | Тестувати"

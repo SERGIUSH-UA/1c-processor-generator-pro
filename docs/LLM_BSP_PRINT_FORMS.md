@@ -10,11 +10,11 @@ BSP print forms are external data processors (.epf) that integrate with 1C confi
 
 **config.yaml:**
 ```yaml
+languages: [ru, uk]
+
 processor:
-  name: ПечатьСчworда
-  synonym:
-    ru: Печать счета
-    uk: Друк рахунку
+  name: ПечатьСчeta
+  synonym: "Печать счета | Друк рахунку"
 
 bsp:
   type: print_form
@@ -23,9 +23,7 @@ bsp:
     - Документ.СчетНаОплатуПокупателю
   commands:
     - id: СчетНаОплату
-      title:
-        ru: Счет на оплату
-        uk: Рахунок на оплату
+      title: "Счет на оплату | Рахунок на оплату"
       usage: server_method
       modifier: ПечатьMXL
 ```
@@ -114,6 +112,8 @@ For tabular document (spreadsheet) output:
 
 **config.yaml:**
 ```yaml
+languages: [ru]
+
 bsp:
   type: print_form
   version: "1.0"
@@ -121,8 +121,7 @@ bsp:
     - Документ.РеализацияТоваровУслуг
   commands:
     - id: Накладная
-      title:
-        ru: Накладная
+      title: "Накладная"
       usage: server_method
       modifier: ПечатьMXL
 ```
@@ -173,6 +172,8 @@ One processor with several print forms:
 
 **config.yaml:**
 ```yaml
+languages: [ru]
+
 bsp:
   type: print_form
   version: "1.0"
@@ -180,20 +181,17 @@ bsp:
     - Документ.ЗаказКлиента
   commands:
     - id: Счет
-      title:
-        ru: Счет на оплату
+      title: "Счет на оплату"
       usage: server_method
       modifier: ПечатьMXL
 
     - id: СчетФактура
-      title:
-        ru: Счет-фактура
+      title: "Счет-фактура"
       usage: server_method
       modifier: ПечатьMXL
 
     - id: Накладная
-      title:
-        ru: Товарная накладная
+      title: "Товарная накладная"
       usage: server_method
       modifier: ПечатьMXL
 ```
@@ -222,6 +220,8 @@ Print form for several document types:
 
 **config.yaml:**
 ```yaml
+languages: [ru]
+
 bsp:
   type: print_form
   version: "1.0"
@@ -231,8 +231,7 @@ bsp:
     - Документ.ЗаказКлиента
   commands:
     - id: УниверсальныйСчет
-      title:
-        ru: Универсальный счет
+      title: "Универсальный счет"
       usage: server_method
       modifier: ПечатьMXL
 ```
@@ -268,6 +267,8 @@ For Word document output (contracts, agreements):
 
 **config.yaml:**
 ```yaml
+languages: [ru]
+
 bsp:
   type: print_form
   version: "1.0"
@@ -275,8 +276,7 @@ bsp:
     - Документ.ДоговорКонтрагента
   commands:
     - id: ДоговорWord
-      title:
-        ru: Договор (Word)
+      title: "Договор (Word)"
       usage: server_method
       # No modifier for Word output
 ```
@@ -309,6 +309,8 @@ For print forms with Excel-based templates - simplest for LLMs:
 
 **config.yaml:**
 ```yaml
+languages: [ru, uk]
+
 processor:
   name: ПечатьКарточкиНоменклатуры
 
@@ -319,9 +321,7 @@ bsp:
     - Справочник.Номенклатура
   commands:
     - id: КарточкаНоменклатуры
-      title:
-        ru: Карточка номенклатуры
-        uk: Картка номенклатури
+      title: "Карточка номенклатуры | Картка номенклатури"
       usage: server_method
       modifier: ПечатьMXL
 
@@ -363,6 +363,8 @@ For simple cards without external template - pure BSL:
 
 **config.yaml:**
 ```yaml
+languages: [ru]
+
 processor:
   name: ПечатьКарточкиПрограммно
 
@@ -373,8 +375,7 @@ bsp:
     - Справочник.Номенклатура
   commands:
     - id: КарточкаПрограммно
-      title:
-        ru: Карточка (программно)
+      title: "Карточка (программно)"
       usage: server_method
       modifier: ПечатьMXL
 # NO templates: section - everything in BSL!
@@ -505,11 +506,11 @@ commands:
 
 **config.yaml:**
 ```yaml
+languages: [ru, uk]
+
 processor:
   name: ПечатьСчетаВнешняя
-  synonym:
-    ru: Печать счета (внешняя)
-    uk: Друк рахунку (зовнішня)
+  synonym: "Печать счета (внешняя) | Друк рахунку (зовнішня)"
 
 bsp:
   type: print_form
@@ -523,9 +524,7 @@ bsp:
 
   commands:
     - id: СчетНаОплату
-      title:
-        ru: Счет на оплату
-        uk: Рахунок на оплату
+      title: "Счет на оплату | Рахунок на оплату"
       usage: server_method
       modifier: ПечатьMXL
       show_notification: false

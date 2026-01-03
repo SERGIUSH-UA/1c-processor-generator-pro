@@ -152,8 +152,10 @@ form_attributes:
   password_mode: true            # Маскування
   horizontal_stretch: true       # Розтягування
   choice_list:                   # Dropdown варіанти
-    - "Опція1"
-    - "Опція2"
+    - v: "Option1"               # v=value, ru=presentation
+      ru: "Опція1"
+    - v: "Option2"
+      ru: "Опція2"
   events:
     OnChange: ОписаниеПриИзменении
     StartChoice: ОписаниеНачалоВыбора
@@ -281,10 +283,10 @@ form_attributes:
   title_ru: "Режим роботи"
   radio_button_type: Tumbler     # RadioButton|Tumbler
   choice_list:
-    - value: 1
-      title_ru: "Режим 1"
-    - value: 2
-      title_ru: "Режим 2"
+    - v: "Mode1"
+      ru: "Режим 1"
+    - v: "Mode2"
+      ru: "Режим 2"
 ```
 
 ### PictureDecoration

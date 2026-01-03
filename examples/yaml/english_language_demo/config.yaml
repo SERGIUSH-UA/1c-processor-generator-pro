@@ -1,87 +1,45 @@
+languages: [ru, uk, en]
+
 processor:
   name: ТестАнглийскогоЯзыка
-  synonym:
-    ru: Тест английского языка
-    uk: Тест англійської мови
-    en: English Language Test
+  synonym: "Тест английского языка | Тест англійської мови | English Language Test"
   platform_version: "2.11"
 
-# Атрибути з трьома мовами (вкладений формат v2.13.1)
 attributes:
   - name: Товар
     type: string
-    synonym:
-      ru: Товар
-      uk: Товар
-      en: Product
+    synonym: "Товар | Товар | Product"
   - name: Количество
     type: number
-    synonym:
-      ru: Количество
-      uk: Кількість
-      en: Quantity
+    synonym: "Количество | Кількість | Quantity"
   - name: Цена
     type: number
-    synonym:
-      ru: Цена
-      uk: Ціна
-      en: Price
-
-# Форма з англійськими назвами (вкладений формат v2.13.1)
+    synonym: "Цена | Ціна | Price"
 
 forms:
   - name: Форма
     default: true
     commands:
-    - name: Розрахувати
-      title:
-        ru: Рассчитать
-        uk: Розрахувати
-        en: Calculate
-      tooltip:
-        ru: Рассчитать общую сумму
-        uk: Розрахувати загальну суму
-        en: Calculate total amount
-      handler: РозрахуватиВиконати
+      - name: Розрахувати
+        title: "Рассчитать | Розрахувати | Calculate"
+        tooltip: "Рассчитать общую сумму | Розрахувати загальну суму | Calculate total amount"
+        handler: РозрахуватиВиконати
     elements:
-        - type: InputField
-          name: ТоварПоле
-          attribute: Товар
-          title:
-            ru: Товар
-            uk: Товар
-            en: Product
-          input_hint:
-            ru: Введите название товара
-            uk: Введіть назву товару
-            en: Enter product name
-
-        - type: InputField
-          name: КоличествоПоле
-          attribute: Количество
-          title:
-            ru: Количество
-            uk: Кількість
-            en: Quantity
-
-        - type: InputField
-          name: ЦенаПоле
-          attribute: Цена
-          title:
-            ru: Цена
-            uk: Ціна
-            en: Price
-
-        - type: Button
-          name: Розрахувати
-          title:
-            ru: Рассчитать
-            uk: Розрахувати
-            en: Calculate
-          command: Розрахувати
-          tooltip:
-            ru: Рассчитать общую сумму
-            uk: Розрахувати загальну суму
-            en: Calculate total amount
-
-  # Команда з англійською назвою (вкладений формат v2.13.1)
+      - type: InputField
+        name: ТоварПоле
+        attribute: Товар
+        title: "Товар | Товар | Product"
+        input_hint: "Введите название товара | Введіть назву товару | Enter product name"
+      - type: InputField
+        name: КоличествоПоле
+        attribute: Количество
+        title: "Количество | Кількість | Quantity"
+      - type: InputField
+        name: ЦенаПоле
+        attribute: Цена
+        title: "Цена | Ціна | Price"
+      - type: Button
+        name: Розрахувати
+        title: "Рассчитать | Розрахувати | Calculate"
+        command: Розрахувати
+        tooltip: "Рассчитать общую сумму | Розрахувати загальну суму | Calculate total amount"

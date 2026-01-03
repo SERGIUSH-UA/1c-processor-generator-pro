@@ -50,9 +50,23 @@ processor:
 6. Access elements via `Элементы.ElemName`
 
 ### Naming
-- Internal names: Latin or Cyrillic
+- Internal names: Latin or Cyrillic (Russian only - no і/ї/є/ґ!)
 - User text: `title_ru` (Russian), `title_uk` (Ukrainian)
 - Handler names: Match exactly between YAML and BSL
+
+### Compact Multilang (v2.69.0+)
+```yaml
+languages: [ru, uk]  # Project-level declaration
+
+# Pipe format (recommended):
+title: "Название | Назва"
+
+# Array format:
+title: ["Название", "Назва"]
+
+# Dict format (legacy):
+title: {ru: "Название", uk: "Назва"}
+```
 
 ## Response Style
 
@@ -119,6 +133,7 @@ forms:
 
 When asked about specific features, reference:
 - **YAML syntax** → LLM_WEB_LITE.md
+- **Styling (colors, fonts)** → LLM_STYLING.md or styling_guide.md
 - **Elements** → QUICK_REFERENCE.md
 - **Patterns** → LLM_PATTERNS_ESSENTIAL.md
 - **Full API** → reference/API_REFERENCE.md

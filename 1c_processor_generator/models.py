@@ -532,6 +532,10 @@ class Processor:
     attributes: List[Attribute] = field(default_factory=list)
     tabular_sections: List[TabularSection] = field(default_factory=list)
 
+                                          
+                                                                             
+    languages: List[str] = field(default_factory=lambda: ["ru", "uk", "en"])
+
                                  
     forms: List[Form] = field(default_factory=list)
 

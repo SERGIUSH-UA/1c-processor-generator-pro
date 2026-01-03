@@ -1,86 +1,64 @@
+languages: [ru, uk, en]
+
 processor:
   name: ПримерГрупповКолонок
   object_type: ExternalDataProcessor
-  synonym:
-    ru: Пример групп колонок
-    uk: Приклад груп колонок
-    en: Column Groups Example
+  synonym: "Пример групп колонок | Приклад груп колонок | Column Groups Example"
+
+attributes:
+  - name: TotalDebit
+    type: number
+    synonym: "Всего дебет | Всього дебет | Total Debit"
+  - name: TotalCredit
+    type: number
+    synonym: "Всего кредит | Всього кредит | Total Credit"
+
 tabular_sections:
   - name: Operations
+    synonym: "Операции | Операції | Operations"
     columns:
       - name: Operation
         type: string
         length: 150
-        synonym:
-          ru: Операция
-          uk: Операція
-          en: Operation
+        synonym: "Операция | Операція | Operation"
       - name: Date
         type: date
-        synonym:
-          ru: Дата
-          uk: Дата
-          en: Date
+        synonym: "Дата | Дата | Date"
       - name: Time
         type: string
         length: 8
-        synonym:
-          ru: Время
-          uk: Час
-          en: Time
+        synonym: "Время | Час | Time"
       - name: Debit
         type: number
-        synonym:
-          ru: Дебет
-          uk: Дебет
-          en: Debit
+        synonym: "Дебет | Дебет | Debit"
       - name: Credit
         type: number
-        synonym:
-          ru: Кредит
-          uk: Кредит
-          en: Credit
+        synonym: "Кредит | Кредит | Credit"
       - name: Total
         type: number
-        synonym:
-          ru: Итого
-          uk: Підсумок
-          en: Total
+        synonym: "Итого | Підсумок | Total"
       - name: Status
         type: string
         length: 50
-        synonym:
-          ru: Статус
-          uk: Статус
-          en: Status
-    synonym:
-      ru: Операции
-      uk: Операції
-      en: Operations
+        synonym: "Статус | Статус | Status"
+
 forms:
   - name: Форма
     default: true
+    title: "Групування колонок таблиці | Групування колонок таблиці | Table Column Grouping"
     commands:
       - name: LoadData
         handler: LoadData
         picture: StdPicture.Refresh
-        title:
-          ru: Загрузить данные
-          uk: Завантажити дані
-          en: Load Data
+        title: "Загрузить данные | Завантажити дані | Load Data"
       - name: Calculate
         handler: Calculate
         picture: StdPicture.GenerateReport
-        title:
-          ru: Рассчитать итоги
-          uk: Розрахувати підсумки
-          en: Calculate Totals
+        title: "Рассчитать итоги | Розрахувати підсумки | Calculate Totals"
     elements:
       - type: LabelDecoration
         name: Instructions
-        title: "Пример групування колонок таблиці:\n1. \"Дата і час\" - горизонтальна
-          група з 2 колонок\n2. \"Суми\" - горизонтальна група з 3 колонок, вирівнювання
-          Right\n3. \"Статус\" - окрема колонка поза групами\n"
+        title: "Пример групування колонок таблиці:\n1. \"Дата і час\" - горизонтальна група з 2 колонок\n2. \"Суми\" - горизонтальна група з 3 колонок, вирівнювання Right\n3. \"Статус\" - окрема колонка поза групами\n"
         width: 80
       - type: Table
         name: OperationsTable
@@ -98,6 +76,8 @@ forms:
             group_layout: Horizontal
             show_in_header: true
             horizontal_align: Center
+            title: "Дата и время | Дата і час | Date and Time"
+            tooltip: "Дата и время операции | Дата і час операції | Operation date and time"
             elements:
               - type: LabelField
                 name: Date
@@ -109,19 +89,13 @@ forms:
                 attribute: Time
                 width: 10
                 title_location: None
-            title:
-              ru: Дата и время
-              uk: Дата і час
-              en: Date and Time
-            tooltip:
-              ru: Дата и время операции
-              uk: Дата і час операції
-              en: Operation date and time
           - type: ColumnGroup
             name: AmountsGroup
             group_layout: Horizontal
             show_in_header: true
             horizontal_align: Right
+            title: "Суммы | Суми | Amounts"
+            tooltip: "Дебет, Кредит и Итого | Дебет, Кредит та Підсумок | Debit, Credit and Total"
             elements:
               - type: LabelField
                 name: Debit
@@ -138,14 +112,6 @@ forms:
                 attribute: Total
                 width: 12
                 title_location: None
-            title:
-              ru: Суммы
-              uk: Суми
-              en: Amounts
-            tooltip:
-              ru: Дебет, Кредит и Итого
-              uk: Дебет, Кредит та Підсумок
-              en: Debit, Credit and Total
           - type: LabelField
             name: Status
             attribute: Status
@@ -154,6 +120,7 @@ forms:
         name: SummaryGroup
         show_title: true
         group_direction: Horizontal
+        title: "Итоги | Підсумки | Totals"
         elements:
           - type: LabelDecoration
             name: TotalDebitLabel
@@ -173,24 +140,3 @@ forms:
             attribute: TotalCredit
             read_only: true
             width: 12
-        title:
-          ru: Итоги
-          uk: Підсумки
-          en: Totals
-    title:
-      ru: Групування колонок таблиці
-      uk: Групування колонок таблиці
-      en: Table Column Grouping
-attributes:
-  - name: TotalDebit
-    type: number
-    synonym:
-      ru: Всего дебет
-      uk: Всього дебет
-      en: Total Debit
-  - name: TotalCredit
-    type: number
-    synonym:
-      ru: Всего кредит
-      uk: Всього кредит
-      en: Total Credit

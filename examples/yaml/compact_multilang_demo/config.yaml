@@ -1,0 +1,85 @@
+# Demo: Compact Multilang Syntax (v2.69.0+)
+#
+# Shows three equivalent ways to define multilingual text:
+# 1. Dict format (legacy): title: {ru: "...", uk: "..."}
+# 2. Array format: title: ["...", "..."]
+# 3. Pipe format: title: "... | ..."
+#
+# The `languages` field defines the order for array/pipe formats.
+# First language is "primary" - used as fallback when fewer values provided.
+
+# Declare languages order (first = primary/fallback)
+languages: [ru, uk]
+
+processor:
+  name: ДемоКомпактнойМультиязычности
+  # Pipe format - most compact
+  synonym: "Демо компактной мультиязычности | Демо компактної мультимовності"
+
+attributes:
+  # Array format
+  - name: Заголовок
+    type: string
+    synonym: [Заголовок, Заголовок]
+
+  # Pipe format with fallback (only RU provided, UK will use RU)
+  - name: Описание
+    type: string
+    synonym: Описание
+
+  # Legacy dict format - still works!
+  - name: ДатаНачала
+    type: date
+    synonym:
+      ru: Дата начала
+      uk: Дата початку
+
+  # Pipe with pipe character in text (escaped with \\|)
+  - name: СтрокаСРазделителем
+    type: string
+    synonym: 'Строка A \| B | Рядок А \| Б'
+
+forms:
+  - name: Форма
+    properties:
+      # Pipe format for form title
+      title: "Демонстрация нового синтаксиса | Демонстрація нового синтаксису"
+
+    elements:
+      - type: UsualGroup
+        name: ГлавнаяГруппа
+        # Note: Form element titles still use dict in schema v2.69.0
+        # Full schema update for compact syntax is planned
+        title:
+          ru: Главная группа
+          uk: Головна група
+        show_title: true
+        elements:
+          - type: InputField
+            name: ЗаголовокПоле
+            attribute: Заголовок
+            title:
+              ru: Заголовок
+              uk: Заголовок
+
+          - type: InputField
+            name: ОписаниеПоле
+            attribute: Описание
+            title:
+              ru: Описание
+              uk: Опис
+
+          - type: InputField
+            name: ДатаНачалаПоле
+            attribute: ДатаНачала
+            title:
+              ru: Дата начала
+              uk: Дата початку
+
+commands:
+  - name: Сформировать
+    # Array format for command titles
+    title: [Сформировать, Сформувати]
+    # Pipe format for tooltip
+    tooltip: "Сформировать отчет | Сформувати звіт"
+    handler: СформироватьКоманда

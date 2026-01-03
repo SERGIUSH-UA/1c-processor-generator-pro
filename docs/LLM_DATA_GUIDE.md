@@ -331,20 +331,18 @@ forms:
 ### ValueTree YAML Example
 
 ```yaml
-# YAML
+languages: [ru, uk]
+
 forms:
   - name: Форма
 
     value_trees:
       - name: DataTree
-        title:
-          ru: Дерево данных
-          uk: Дерево даних
+        title: "Дерево данных | Дерево даних"
         columns:
           - name: Name
             type: string
-            synonym:
-              ru: Наименование
+            synonym: "Наименование | Найменування"
           - name: Value
             type: string
           - name: Type

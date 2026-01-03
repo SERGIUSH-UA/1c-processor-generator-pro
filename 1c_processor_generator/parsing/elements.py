@@ -9,8 +9,12 @@ from .extractors import normalize_multilang, extract_props
 class ElementParser:
            
 
-    def __init__(self):
-                                                         
+                                                  
+    DEFAULT_LANGUAGES = ["ru", "uk", "en"]
+
+    def __init__(self, languages: Optional[List[str]] = None):
+                   
+        self.languages = languages if languages is not None else self.DEFAULT_LANGUAGES
         self._custom_parsers: Dict[str, Callable[[Dict[str, Any]], Optional[FormElement]]] = {
             "Pages": self._parse_pages,
             "ColumnGroup": self._parse_column_group,
@@ -18,8 +22,8 @@ class ElementParser:
 
     def parse(self, config: Dict[str, Any]) -> Optional[FormElement]:
                    
-                                     
-        config = normalize_multilang(config)
+                                                                            
+        config = normalize_multilang(config, languages=self.languages)
         elem_type = config.get("type")
 
         if not elem_type:
@@ -108,7 +112,7 @@ class ElementParser:
                           
         pages_config = config.get("pages", [])
         for page_config in pages_config:
-            page_config = normalize_multilang(page_config)
+            page_config = normalize_multilang(page_config, languages=self.languages)
             title = page_config.get("title", page_config["name"])
 
                                                 

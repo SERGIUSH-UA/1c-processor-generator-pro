@@ -1,32 +1,28 @@
+languages: [ru, uk]
+
 processor:
   name: Калькулятор
   platform_version: '2.11'
   tests_file: tests/calculator_tests.yaml
-  synonym:
-    ru: Калькулятор
-    uk: Калькулятор
+  synonym: "Калькулятор | Калькулятор"
+
 attributes:
   - name: Число1
     type: number
     digits: 15
     fraction_digits: 2
-    synonym:
-      ru: Число 1
-      uk: Число 1
+    synonym: "Число 1 | Число 1"
   - name: Число2
     type: number
     digits: 15
     fraction_digits: 2
-    synonym:
-      ru: Число 2
-      uk: Число 2
+    synonym: "Число 2 | Число 2"
   - name: Результат
     type: number
     digits: 15
     fraction_digits: 2
-    synonym:
-      ru: Результат
-      uk: Результат
+    synonym: "Результат | Результат"
+
 forms:
   - name: Форма
     default: true
@@ -43,16 +39,10 @@ forms:
     commands:
       - name: Добавить
         handler: Добавить
-        title:
-          ru: Сложить
-          uk: Додати
+        title: "Сложить | Додати"
       - name: Вычесть
         handler: Вычесть
-        title:
-          ru: Вычесть
-          uk: Відняти
+        title: "Вычесть | Відняти"
       - name: Умножить
         handler: Умножить
-        title:
-          ru: Умножить
-          uk: Помножити
+        title: "Умножить | Помножити"

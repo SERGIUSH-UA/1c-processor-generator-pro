@@ -10,12 +10,11 @@
 #
 # PRO License Required!
 
+languages: [ru, uk, en]
+
 processor:
   name: ПечатьСчетНаОплату
-  synonym:
-    ru: Печатная форма счета на оплату
-    uk: Друкована форма рахунку на оплату
-    en: Invoice Print Form
+  synonym: "Печатная форма счета на оплату | Друкована форма рахунку на оплату | Invoice Print Form"
 
 # BSP Integration Configuration
 bsp:
@@ -32,20 +31,14 @@ bsp:
   # Print commands
   commands:
     - id: СчетНаОплату
-      title:
-        ru: Счет на оплату
-        uk: Рахунок на оплату
-        en: Invoice
+      title: "Счет на оплату | Рахунок на оплату | Invoice"
       usage: server_method
       modifier: ПечатьMXL
       show_notification: false
       template_name: ПФ_MXL_СчетНаОплату
 
     - id: СчетНаОплатуWord
-      title:
-        ru: Счет на оплату (Word)
-        uk: Рахунок на оплату (Word)
-        en: Invoice (Word)
+      title: "Счет на оплату (Word) | Рахунок на оплату (Word) | Invoice (Word)"
       usage: server_method
       show_notification: false
       template_name: ПФ_DOC_СчетНаОплату

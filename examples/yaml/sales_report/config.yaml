@@ -1,26 +1,22 @@
+languages: [ru, uk]
+
 processor:
   name: ОтчетПоПродажам
   explanation_ru: Формирует отчет по продажам за период с разбивкой по месяцам
   explanation_uk: Формує звіт по продажах за період з розбивкою по місяцях
-  synonym:
-    ru: Отчет по продажам
-    uk: Звіт по продажах
+  synonym: "Отчет по продажам | Звіт по продажах"
+
 attributes:
   - name: ДатаНачала
     type: date
-    title:
-      ru: Дата начала
-      uk: Дата початку
+    title: "Дата начала | Дата початку"
   - name: ДатаОкончания
     type: date
-    title:
-      ru: Дата окончания
-      uk: Дата закінчення
+    title: "Дата окончания | Дата закінчення"
   - name: Организация
     type: CatalogRef.Организации
-    title:
-      ru: Организация
-      uk: Організація
+    title: "Организация | Організація"
+
 forms:
   - name: Форма
     default: true
@@ -29,36 +25,26 @@ forms:
         columns:
           - name: Период
             type: date
-            title:
-              ru: Период
-              uk: Період
+            title: "Период | Період"
           - name: МесяцСтрокой
             type: string
             length: 50
-            title:
-              ru: Месяц
-              uk: Місяць
+            title: "Месяц | Місяць"
           - name: Количество
             type: number
             digits: 15
             fraction_digits: 3
-            title:
-              ru: Количество
-              uk: Кількість
+            title: "Количество | Кількість"
           - name: Сумма
             type: number
             digits: 15
             fraction_digits: 2
-            title:
-              ru: Сумма
-              uk: Сума
+            title: "Сумма | Сума"
           - name: СуммаСоСкидкой
             type: number
             digits: 15
             fraction_digits: 2
-            title:
-              ru: Сумма со скидкой
-              uk: Сума зі знижкою
+            title: "Сумма со скидкой | Сума зі знижкою"
     events:
       OnOpen: ПриОткрытии
     elements:
@@ -94,9 +80,5 @@ forms:
       - name: Сформировать
         shortcut: F5
         handler: Сформировать
-        title:
-          ru: Сформировать
-          uk: Сформувати
-        tooltip:
-          ru: Сформировать отчет по продажам за выбранный период
-          uk: Сформувати звіт по продажах за вибраний період
+        title: "Сформировать | Сформувати"
+        tooltip: "Сформировать отчет по продажам за выбранный период | Сформувати звіт по продажах за вибраний період"

@@ -28,9 +28,10 @@ Copy the content from `instructions.md` into the **Instructions** field.
 ### Step 4: Upload Knowledge Files
 
 Upload these files to **Knowledge**:
-1. `knowledge_base.md` (this folder)
-2. `../../docs/LLM_WEB_LITE.md`
-3. `../../docs/VALID_PICTURES.md` (optional - for StdPicture reference)
+1. `knowledge_base.md` (this folder) - YAML/BSL reference
+2. `styling_guide.md` (this folder) - Colors, fonts, ConditionalAppearance
+3. `../../docs/LLM_WEB_LITE.md` - Core documentation
+4. `../../docs/VALID_PICTURES.md` (optional - for StdPicture reference)
 
 ### Step 5: Configure Capabilities
 
@@ -62,6 +63,7 @@ Add these:
 |------|---------|
 | `instructions.md` | System instructions for GPT |
 | `knowledge_base.md` | YAML/BSL reference for knowledge upload |
+| `styling_guide.md` | UI styling: colors, fonts, ConditionalAppearance |
 | `README.md` | This setup guide |
 
 ---
