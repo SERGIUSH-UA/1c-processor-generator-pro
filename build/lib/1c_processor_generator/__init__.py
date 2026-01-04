@@ -1,6 +1,6 @@
    
 
-__version__ = "2.69.2"
+__version__ = "2.69.3"
 __author__ = "SERGIUSH"
 __license__ = "MIT (Open Source) + Proprietary (PRO Module)"
 __copyright__ = "Copyright (c) 2024-2025 ITDEO. All rights reserved."

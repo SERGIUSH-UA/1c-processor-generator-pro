@@ -886,7 +886,63 @@ class ProcessorValidator:
         if not has_any_elements:
             self.warnings.append("Форма не має жодного елемента")
 
+                                                                  
+        ref_errors = self._validate_form_element_references()
+        self.errors.extend(ref_errors)
+
         return len(self.errors) == 0, self.errors, self.warnings
+
+    def _validate_form_element_references(self) -> List[str]:
+                   
+        errors = []
+        processor_attrs = {a.name for a in self.processor.attributes}
+
+        for form in self.processor.forms:
+                                           
+            form_attrs = set()
+            if hasattr(form, 'form_attributes') and form.form_attributes:
+                form_attrs = {a.name for a in form.form_attributes}
+
+                                                       
+            valid_attrs = processor_attrs | form_attrs
+
+            errors.extend(self._check_element_attribute_refs(
+                form.elements,
+                form.name,
+                valid_attrs
+            ))
+
+        return errors
+
+    def _check_element_attribute_refs(
+        self,
+        elements,
+        form_name: str,
+        valid_attrs: set
+    ) -> List[str]:
+                   
+        errors = []
+        if not elements:
+            return errors
+
+        for elem in elements:
+                                             
+            if hasattr(elem, 'attribute') and elem.attribute:
+                if elem.attribute not in valid_attrs:
+                    errors.append(
+                        f"Form '{form_name}', {elem.element_type} '{elem.name}': "
+                        f"attribute '{elem.attribute}' not found in processor.attributes"
+                    )
+
+                                                
+            if hasattr(elem, 'child_items') and elem.child_items:
+                errors.extend(self._check_element_attribute_refs(
+                    elem.child_items,
+                    form_name,
+                    valid_attrs
+                ))
+
+        return errors
 
     def _validate_bsl_code(self, code: str, module_name: str) -> Tuple[List[str], List[str]]:
                    

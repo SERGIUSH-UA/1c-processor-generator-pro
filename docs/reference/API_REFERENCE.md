@@ -1598,6 +1598,15 @@ Visual container for grouping related buttons.
 - **ButtonGroup**: Simple visual grouping of buttons (lightweight)
 - **UsualGroup**: Advanced grouping with styling, collapse, nested elements
 
+**⚠️ ВАЖЛИВО для ValueTable:**
+- `tabular_section` повинен посилатися на `value_tables.name`
+- DataPath автоматично буде прямим (без префікса `Объект.`) - це form-level атрибут
+
+**⚠️ ВАЖЛИВО для ValueTree (v2.64.0+):**
+- `tabular_section` повинен посилатися на `value_trees.name`
+- DataPath автоматично буде прямим (без префікса `Объект.`) - це form-level атрибут
+- Рекомендується додавати `representation: tree` для ієрархічного відображення
+
 **⚠️ ВАЖЛИВО для DynamicList:**
 - `tabular_section` повинен посилатися на `dynamic_lists.name`
 - DataPath автоматично буде прямим (без префікса `Объект.`)

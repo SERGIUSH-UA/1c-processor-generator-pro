@@ -370,7 +370,7 @@ class YAMLParser:
                         errors.append(
                             f"Form '{form_name}', Table '{elem_name}': "
                             f"tabular_section '{ts_name}' not found. "
-                            f"Define it in form's value_tables: or root tabular_sections:"
+                            f"Define it in form's value_tables:, value_trees: or root tabular_sections:"
                         )
 
                                               

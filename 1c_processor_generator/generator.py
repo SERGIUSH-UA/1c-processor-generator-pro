@@ -89,7 +89,13 @@ class ProcessorGenerator:
                                                                       
         ts_name = table_elem.tabular_section
         if ts_name and form.value_table_attributes:
-            return any(vt.name == ts_name for vt in form.value_table_attributes)
+            if any(vt.name == ts_name for vt in form.value_table_attributes):
+                return True
+
+                                                                                      
+        if ts_name and form.value_tree_attributes:
+            if any(vt.name == ts_name for vt in form.value_tree_attributes):
+                return True
 
         return False
 
