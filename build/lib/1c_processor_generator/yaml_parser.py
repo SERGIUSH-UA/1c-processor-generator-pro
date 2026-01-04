@@ -407,11 +407,19 @@ class YAMLParser:
             if not handlers_dir_path.is_absolute():
                 handlers_dir_value = str(self.yaml_path.parent / handlers_dir_value)
 
+                                            
+        handlers_file_value = config.get("handlers_file")
+        if handlers_file_value:
+            handlers_file_path = Path(handlers_file_value)
+            if not handlers_file_path.is_absolute():
+                handlers_file_value = str(self.yaml_path.parent / handlers_file_value)
+
         form = Form(
             name=config["name"],
             default=config.get("default", False),
             include=config.get("include"),
             handlers_dir=handlers_dir_value,
+            handlers_file=handlers_file_value,
         )
 
                             
@@ -1184,7 +1192,7 @@ def parse_yaml_config(
         has_global_handlers = handlers_dir or handlers_file
         has_form_handlers = (
             hasattr(processor, "forms") and processor.forms and
-            any(form.handlers_dir for form in processor.forms)
+            any(form.handlers_dir or form.handlers_file for form in processor.forms)
         )
         needs_injection = has_global_handlers or has_form_handlers
 

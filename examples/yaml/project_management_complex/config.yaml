@@ -239,6 +239,7 @@ object_module:
 
 forms:
   - name: Форма
+    handlers_file: handlers_Форма.bsl
     default: true
     width: 120
     height: 40
@@ -644,11 +645,17 @@ forms:
             title: "Версия данных: | Версія даних: | Data version:"
 
   - name: КарточкаПроекта
+    handlers_file: handlers_КарточкаПроекта.bsl
     default: false
     width: 80
     height: 35
     window_opening_mode: LockOwnerWindow
     synonym: "Карточка проекта | Картка проекту | Project Card"
+    form_attributes:
+      - name: РежимСоздания
+        type: boolean
+      - name: ИмяОсновнойФормы
+        type: string
     value_tables:
       - name: УчастникиПроекта
         synonym: "Участники проекта | Учасники проекту | Project Members"
@@ -711,8 +718,8 @@ forms:
         representation: Text
         title: "Экспорт проекта | Експорт проекту | Export Project"
     events:
-      OnOpen: КарточкаПроектаПриОткрытии
-      OnCreateAtServer: КарточкаПроектаПриСозданииНаСервере
+      OnOpen: ПриОткрытии
+      OnCreateAtServer: ПриСозданииНаСервере
     elements:
       - type: LabelDecoration
         name: ЗаголовокКарточки
@@ -908,11 +915,17 @@ forms:
             width: 15
 
   - name: КарточкаЗадачи
+    handlers_file: handlers_КарточкаЗадачи.bsl
     default: false
     width: 75
     height: 30
     window_opening_mode: LockOwnerWindow
     synonym: "Карточка задачи | Картка задачі | Task Card"
+    form_attributes:
+      - name: РежимСоздания
+        type: boolean
+      - name: ИмяОсновнойФормы
+        type: string
     value_tables:
       - name: КомментарииЗадачи
         synonym: "Комментарии задачи | Коментарі задачі | Task Comments"
@@ -964,8 +977,8 @@ forms:
         representation: PictureAndText
         title: "Назначить исполнителя | Призначити виконавця | Assign To"
     events:
-      OnOpen: КарточкаЗадачиПриОткрытии
-      OnCreateAtServer: КарточкаЗадачиПриСозданииНаСервере
+      OnOpen: ПриОткрытии
+      OnCreateAtServer: ПриСозданииНаСервере
     elements:
       - type: LabelDecoration
         name: ЗаголовокКарточкиЗадачи
@@ -1146,10 +1159,14 @@ forms:
             width: 15
 
   - name: ФормаОтчетов
+    handlers_file: handlers_ФормаОтчетов.bsl
     default: false
     width: 100
     height: 40
     synonym: "Отчеты | Звіти | Reports"
+    form_attributes:
+      - name: ИмяОсновнойФормы
+        type: string
     value_tables:
       - name: ОтчетПоПроектам
         synonym: "Отчет по проектам | Звіт по проектах | Project Report"
@@ -1294,8 +1311,8 @@ forms:
         representation: PictureAndText
         title: "Печать отчета | Друк звіту | Print Report"
     events:
-      OnOpen: ФормаОтчетовПриОткрытии
-      OnCreateAtServer: ФормаОтчетовПриСозданииНаСервере
+      OnOpen: ПриОткрытии
+      OnCreateAtServer: ПриСозданииНаСервере
     elements:
       - type: LabelDecoration
         name: ЗаголовокОтчетов
@@ -1496,11 +1513,15 @@ forms:
             width: 18
 
   - name: ФормаНастроек
+    handlers_file: handlers_ФормаНастроек.bsl
     default: false
     width: 70
     height: 35
     window_opening_mode: LockOwnerWindow
     synonym: "Настройки | Налаштування | Settings"
+    form_attributes:
+      - name: ИмяОсновнойФормы
+        type: string
     commands:
       - name: СохранитьНастройки
         handler: СохранитьНастройки
@@ -1520,8 +1541,8 @@ forms:
         representation: PictureAndText
         title: "Сбросить по умолчанию | Скинути за замовчуванням | Reset to Default"
     events:
-      OnOpen: ФормаНастроекПриОткрытии
-      OnCreateAtServer: ФормаНастроекПриСозданииНаСервере
+      OnOpen: ПриОткрытии
+      OnCreateAtServer: ПриСозданииНаСервере
     elements:
       - type: LabelDecoration
         name: ЗаголовокНастроек

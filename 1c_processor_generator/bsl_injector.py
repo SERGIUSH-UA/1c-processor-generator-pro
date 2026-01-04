@@ -45,6 +45,7 @@ class BSLInjector:
         self.handlers_dir = None
         self._loaded_handlers: Dict[str, str] = {}
         self._helper_procedures_cache: Dict[str, str] = {}                    
+        self._form_handlers_cache: Dict[str, Dict[str, str]] = {}                                    
         self._documentation_from_handlers: Optional[str] = None                                                           
         self._object_module_from_handlers: Optional[str] = None                                                                    
 
@@ -94,9 +95,41 @@ class BSLInjector:
             import traceback
             traceback.print_exc()
 
-    def load_handler(self, handler_name: str, handlers_dir: Optional[Path] = None) -> Optional[str]:
+    def load_form_handlers_file(self, form_name: str, handlers_file: Path) -> Dict[str, str]:
                    
-                                                              
+        from .bsl_splitter import BSLSplitter
+
+                         
+        if form_name in self._form_handlers_cache:
+            return self._form_handlers_cache[form_name]
+
+        handlers_file = Path(handlers_file)
+        if not handlers_file.exists():
+            print(f"❌ BSL файл для форми '{form_name}' не знайдено: {handlers_file}")
+            return {}
+
+        try:
+            splitter = BSLSplitter(handlers_file)
+            procedures = splitter.extract_procedures()
+            self._form_handlers_cache[form_name] = procedures
+            print(f"  📦 Завантажено {len(procedures)} handlers з {handlers_file.name} для форми '{form_name}'")
+            return procedures
+        except Exception as e:
+            print(f"❌ Помилка завантаження handlers для форми '{form_name}': {e}")
+            return {}
+
+    def load_handler(
+        self,
+        handler_name: str,
+        handlers_dir: Optional[Path] = None,
+        form_handlers: Optional[Dict[str, str]] = None,
+    ) -> Optional[str]:
+                   
+                                                      
+        if form_handlers and handler_name in form_handlers:
+            return form_handlers[handler_name]
+
+                                                                   
         if handler_name in self._loaded_handlers:
             return self._loaded_handlers[handler_name]
 
@@ -232,10 +265,11 @@ class BSLInjector:
         suffix: str,
         handlers_dir: Optional[Path],
         used_handlers: set,
+        form_handlers: Optional[Dict[str, str]] = None,
     ) -> Optional[str]:
                    
         server_handler = f"{handler_name}{suffix}"
-        server_code = self.load_handler(server_handler, handlers_dir)
+        server_code = self.load_handler(server_handler, handlers_dir, form_handlers)
         if server_code:
             used_handlers.add(server_handler)
         return server_code
@@ -258,14 +292,19 @@ class BSLInjector:
             body=self._indent_code(code),
         )
 
-    def inject_form_handlers(self, form, handlers_dir: Optional[Path] = None) -> set:
+    def inject_form_handlers(
+        self,
+        form,
+        handlers_dir: Optional[Path] = None,
+        form_handlers: Optional[Dict[str, str]] = None,
+    ) -> set:
                    
         used_handlers = set()
 
                                              
         for event_name, handler_name in list(form.events.items()):
-                                                                         
-            code = self.load_handler(handler_name, handlers_dir)
+                                                                     
+            code = self.load_handler(handler_name, handlers_dir, form_handlers)
 
             if code:
                 used_handlers.add(handler_name)
@@ -282,7 +321,7 @@ class BSLInjector:
                                                           
                 if "server_call" in event_sig:
                     server_handler = event_sig["server_call"]
-                    server_code = self.load_handler(server_handler, handlers_dir)
+                    server_code = self.load_handler(server_handler, handlers_dir, form_handlers)
                     if server_code:
                         used_handlers.add(server_handler)
 
@@ -307,7 +346,7 @@ class BSLInjector:
                                               
         for cmd in form.commands:
                                             
-            code = self.load_handler(cmd.action, handlers_dir)
+            code = self.load_handler(cmd.action, handlers_dir, form_handlers)
 
             if code:
                 used_handlers.add(cmd.action)
@@ -322,7 +361,7 @@ class BSLInjector:
                 cmd.bsl_code = wrapped
 
                                                                       
-                server_code = self._load_server_handler(cmd.action, "НаСервере", handlers_dir, used_handlers)
+                server_code = self._load_server_handler(cmd.action, "НаСервере", handlers_dir, used_handlers, form_handlers)
 
                 if server_code:
                                                                               
@@ -340,7 +379,7 @@ class BSLInjector:
                 continue
 
             for event_name, handler_name in elem.event_handlers.items():
-                code = self.load_handler(handler_name, handlers_dir)
+                code = self.load_handler(handler_name, handlers_dir, form_handlers)
 
                 if code:
                     used_handlers.add(handler_name)
@@ -353,7 +392,7 @@ class BSLInjector:
                                                               
                     if "server_call_suffix" in event_sig:
                         server_handler = f"{handler_name}{event_sig['server_call_suffix']}"
-                        server_code = self._load_server_handler(handler_name, event_sig['server_call_suffix'], handlers_dir, used_handlers)
+                        server_code = self._load_server_handler(handler_name, event_sig['server_call_suffix'], handlers_dir, used_handlers, form_handlers)
 
                                                                              
                         main_client_code = self._extract_and_store_helpers(code, handler_name, form)
@@ -396,15 +435,16 @@ class BSLInjector:
         if not processor.forms:
             return set()
 
-                                                                     
+                                                                                                  
         has_any_handlers = (self.handlers_dir or self._loaded_handlers or
-                           any(form.handlers_dir for form in processor.forms))
+                           any(form.handlers_dir or form.handlers_file for form in processor.forms))
 
         if not has_any_handlers:
                                               
             return set()
 
         total_used_handlers = set()
+        forms_with_own_handlers = []                                 
 
         for form in processor.forms:
                                                     
@@ -416,9 +456,20 @@ class BSLInjector:
                 if not form_handlers_dir.is_absolute() and self.handlers_dir:
                     form_handlers_dir = self.handlers_dir / form.handlers_dir
 
+                                                            
+            form_handlers = None
+            if form.handlers_file:
+                form_handlers = self.load_form_handlers_file(form.name, Path(form.handlers_file))
+                if form_handlers:
+                    forms_with_own_handlers.append(form)
+
                                                 
-            used_handlers = self.inject_form_handlers(form, form_handlers_dir)
+            used_handlers = self.inject_form_handlers(form, form_handlers_dir, form_handlers)
             total_used_handlers.update(used_handlers)
+
+                                                                             
+            if form_handlers:
+                self._inject_standalone_helpers_for_form(form, used_handlers, form_handlers)
 
         if total_used_handlers:
             print(f"✅ BSL handlers інжектовано для {len(processor.forms)} форм: {len(total_used_handlers)} обробників")
@@ -437,6 +488,24 @@ class BSLInjector:
                                                   
             form.helper_procedures.update(standalone_helpers)
             print(f"✅ Додано {len(standalone_helpers)} standalone helpers: {', '.join(list(standalone_helpers.keys())[:5])}{'...' if len(standalone_helpers) > 5 else ''}")
+
+    def _inject_standalone_helpers_for_form(
+        self,
+        form,
+        used_handlers: set,
+        form_handlers: Dict[str, str],
+    ) -> None:
+                   
+                                                                                 
+        standalone_helpers = {}
+        for proc_name, proc_code in form_handlers.items():
+            if proc_name not in used_handlers:
+                standalone_helpers[proc_name] = proc_code
+
+        if standalone_helpers:
+                                                  
+            form.helper_procedures.update(standalone_helpers)
+            print(f"  ✅ Додано {len(standalone_helpers)} standalone helpers для '{form.name}'")
 
     def inject_long_operation_handlers(self, processor) -> set:
                    
@@ -614,9 +683,9 @@ class BSLInjector:
             print("⚠️  Немає форм для інжекції BSL handlers")
             return
 
-                                                    
+                                                                                                
         has_any_handlers = (self.handlers_dir or self._loaded_handlers or
-                           any(form.handlers_dir for form in processor.forms))
+                           any(form.handlers_dir or form.handlers_file for form in processor.forms))
 
         if not has_any_handlers:
             print("⚠️  Немає BSL handlers для інжекції")
@@ -627,8 +696,11 @@ class BSLInjector:
             print(f"📦 Використання попередньо завантажених BSL handlers...")
         elif self.handlers_dir:
             print(f"📦 Завантаження BSL handlers з {self.handlers_dir}...")
+        elif any(form.handlers_file for form in processor.forms):
+                                                 
+            print(f"📦 Завантаження BSL handlers з per-form файлів...")
         else:
-                                 
+                                     
             print(f"📦 Завантаження BSL handlers з form-specific директорій...")
 
                                                      
@@ -638,9 +710,12 @@ class BSLInjector:
         long_op_used_handlers = self.inject_long_operation_handlers(processor)
         total_used_handlers.update(long_op_used_handlers)
 
+                                                                                           
                                                                
         if self._loaded_handlers and processor.forms:
-            self._inject_standalone_helpers(processor.forms[0], total_used_handlers)
+            forms_without_own_handlers = [f for f in processor.forms if not f.handlers_file]
+            if forms_without_own_handlers:
+                self._inject_standalone_helpers(forms_without_own_handlers[0], total_used_handlers)
 
     def _split_procedures(self, code: str) -> Tuple[str, Dict[str, str]]:
                    

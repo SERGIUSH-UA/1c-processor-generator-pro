@@ -830,6 +830,19 @@ class ProcessorValidator:
                         f"Форма '{form.name}': handlers_dir не є директорією: {form.handlers_dir}"
                     )
 
+                                                            
+        for form in self.processor.forms:
+            if form.handlers_file:
+                handlers_file_path = Path(form.handlers_file)
+                if not handlers_file_path.exists():
+                    self.errors.append(
+                        f"Форма '{form.name}': handlers_file не існує: {form.handlers_file}"
+                    )
+                elif not handlers_file_path.is_file():
+                    self.errors.append(
+                        f"Форма '{form.name}': handlers_file не є файлом: {form.handlers_file}"
+                    )
+
         for form in self.processor.forms:
                                     
             for cmd in form.commands:

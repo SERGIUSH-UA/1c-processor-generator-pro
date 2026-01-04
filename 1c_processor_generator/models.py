@@ -388,6 +388,7 @@ class Form:
     default: bool = False                                
     include: Optional[str] = None                                           
     handlers_dir: Optional[str] = None                                        
+    handlers_file: Optional[str] = None                                                                      
 
                     
     elements: List[FormElement] = field(default_factory=list)

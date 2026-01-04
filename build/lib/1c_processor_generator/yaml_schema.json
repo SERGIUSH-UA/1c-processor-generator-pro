@@ -2251,6 +2251,10 @@
           "type": "string",
           "description": "Directory with BSL handlers specific to this form"
         },
+        "handlers_file": {
+          "type": "string",
+          "description": "Path to single BSL file with all handlers for this form (v2.69.0+)"
+        },
         "documentation_file": {
           "type": "string",
           "description": "Path to documentation file (.bsl format with // comments) relative to config.yaml. Content will be placed in #Область Документация region in Module.bsl"
