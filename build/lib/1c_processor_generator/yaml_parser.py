@@ -34,6 +34,262 @@ from .test_parser import parse_tests_yaml
 from .parsing import ElementParser, normalize_multilang
 
 
+                                                                               
+                               
+                                                                               
+                                                 
+ 
+                                                                          
+                                                                    
+ 
+                                                                     
+                                                                                        
+                                                                                               
+ 
+                  
+                                                                                          
+                                                                                    
+ 
+                                                                             
+                                                                               
+
+                                                       
+FORM_ATTRIBUTE_TYPE_ALIASES = {
+                                  
+    "SpreadsheetDocument": "spreadsheet_document",
+    "SpreadSheetDocument": "spreadsheet_document",
+    "spreadsheetDocument": "spreadsheet_document",
+    "Spreadsheet": "spreadsheet_document",
+    "MXL": "spreadsheet_document",
+
+                         
+    "BinaryData": "binary_data",
+    "binaryData": "binary_data",
+    "Binary": "binary_data",
+    "Blob": "binary_data",
+
+                    
+    "String": "string",
+    "Text": "string",
+    "Строка": "string",
+
+                    
+    "Number": "number",
+    "Numeric": "number",
+    "Integer": "number",
+    "Decimal": "number",
+    "Число": "number",
+
+                  
+    "Date": "date",
+    "DateTime": "date",
+    "Дата": "date",
+
+                     
+    "Boolean": "boolean",
+    "Bool": "boolean",
+    "Булево": "boolean",
+
+                     
+    "Planner": "planner",
+    "Планировщик": "planner",
+}
+
+                                                
+ELEMENT_TYPE_ALIASES = {
+                                                             
+    "SpreadsheetDocumentField": "SpreadSheetDocumentField",
+    "spreadsheetdocumentfield": "SpreadSheetDocumentField",
+    "Spreadsheetdocumentfield": "SpreadSheetDocumentField",
+    "spreadSheetDocumentField": "SpreadSheetDocumentField",
+    "SpreadsheetField": "SpreadSheetDocumentField",
+    "SpreadSheet": "SpreadSheetDocumentField",
+
+                               
+    "HtmlDocumentField": "HTMLDocumentField",
+    "htmldocumentfield": "HTMLDocumentField",
+    "HTMLField": "HTMLDocumentField",
+    "HtmlField": "HTMLDocumentField",
+
+                        
+    "Inputfield": "InputField",
+    "inputfield": "InputField",
+    "inputField": "InputField",
+    "Input": "InputField",
+    "TextField": "InputField",
+    "TextInput": "InputField",
+
+                        
+    "Labelfield": "LabelField",
+    "labelfield": "LabelField",
+    "labelField": "LabelField",
+
+                             
+    "Labeldecoration": "LabelDecoration",
+    "labeldecoration": "LabelDecoration",
+    "labelDecoration": "LabelDecoration",
+    "Label": "LabelDecoration",
+    "StaticText": "LabelDecoration",
+
+                               
+    "Picturedecoration": "PictureDecoration",
+    "picturedecoration": "PictureDecoration",
+    "pictureDecoration": "PictureDecoration",
+    "Picture": "PictureDecoration",
+    "Image": "PictureDecoration",
+    "ImageDecoration": "PictureDecoration",
+
+                          
+    "Picturefield": "PictureField",
+    "picturefield": "PictureField",
+    "pictureField": "PictureField",
+    "ImageField": "PictureField",
+
+                   
+    "table": "Table",
+    "DataTable": "Table",
+    "Grid": "Table",
+    "DataGrid": "Table",
+
+                    
+    "button": "Button",
+    "CommandButton": "Button",
+    "Btn": "Button",
+
+                              
+    "Radiobuttonfield": "RadioButtonField",
+    "radiobuttonfield": "RadioButtonField",
+    "radioButtonField": "RadioButtonField",
+    "RadioButton": "RadioButtonField",
+    "Radio": "RadioButtonField",
+
+                           
+    "Checkboxfield": "CheckBoxField",
+    "checkboxfield": "CheckBoxField",
+    "checkBoxField": "CheckBoxField",
+    "CheckBox": "CheckBoxField",
+    "Checkbox": "CheckBoxField",
+
+                           
+    "Calendarfield": "CalendarField",
+    "calendarfield": "CalendarField",
+    "calendarField": "CalendarField",
+    "Calendar": "CalendarField",
+    "DatePicker": "CalendarField",
+
+                        
+    "Chartfield": "ChartField",
+    "chartfield": "ChartField",
+    "chartField": "ChartField",
+    "Chart": "ChartField",
+    "Diagram": "ChartField",
+
+                          
+    "Plannerfield": "PlannerField",
+    "plannerfield": "PlannerField",
+    "plannerField": "PlannerField",
+    "Scheduler": "PlannerField",
+    "Kanban": "PlannerField",
+
+                        
+    "Usualgroup": "UsualGroup",
+    "usualgroup": "UsualGroup",
+    "usualGroup": "UsualGroup",
+    "Group": "UsualGroup",
+    "FormGroup": "UsualGroup",
+    "Panel": "UsualGroup",
+
+                         
+    "Buttongroup": "ButtonGroup",
+    "buttongroup": "ButtonGroup",
+    "buttonGroup": "ButtonGroup",
+
+                         
+    "Columngroup": "ColumnGroup",
+    "columngroup": "ColumnGroup",
+    "columnGroup": "ColumnGroup",
+
+                   
+    "popup": "Popup",
+    "PopupMenu": "Popup",
+    "Menu": "Popup",
+    "DropDown": "Popup",
+
+                   
+    "pages": "Pages",
+    "TabControl": "Pages",
+    "Tabs": "Pages",
+    "TabPages": "Pages",
+
+                  
+    "page": "Page",
+    "Tab": "Page",
+    "TabPage": "Page",
+}
+
+
+def _normalize_form_attribute_types(config: Dict) -> tuple:
+           
+    warnings = []
+    if "forms" not in config:
+        return config, warnings
+
+    for form in config["forms"]:
+        form_name = form.get("name", "Unknown")
+        if "form_attributes" not in form:
+            continue
+        for attr in form["form_attributes"]:
+            if "type" in attr:
+                original = attr["type"]
+                normalized = FORM_ATTRIBUTE_TYPE_ALIASES.get(original, original)
+                if normalized != original:
+                    attr["type"] = normalized
+                    warnings.append(
+                        f"form_attribute '{attr.get('name', '?')}' in form '{form_name}': "
+                        f"type '{original}' → '{normalized}'"
+                    )
+
+    return config, warnings
+
+
+def _normalize_element_types_recursive(elements: List[Dict], form_name: str, warnings: List[str]) -> None:
+                                                                   
+    for elem in elements:
+        if "type" in elem:
+            original = elem["type"]
+            normalized = ELEMENT_TYPE_ALIASES.get(original, original)
+            if normalized != original:
+                elem["type"] = normalized
+                warnings.append(
+                    f"element '{elem.get('name', '?')}' in form '{form_name}': "
+                    f"type '{original}' → '{normalized}'"
+                )
+
+                                      
+        if "elements" in elem:
+            _normalize_element_types_recursive(elem["elements"], form_name, warnings)
+
+                                                
+        if "pages" in elem:
+            for page in elem["pages"]:
+                if "elements" in page:
+                    _normalize_element_types_recursive(page["elements"], form_name, warnings)
+
+
+def _normalize_element_types(config: Dict) -> tuple:
+           
+    warnings = []
+    if "forms" not in config:
+        return config, warnings
+
+    for form in config["forms"]:
+        form_name = form.get("name", "Unknown")
+        if "elements" in form:
+            _normalize_element_types_recursive(form["elements"], form_name, warnings)
+
+    return config, warnings
+
+
 class YAMLParser:
                                                       
 
@@ -75,8 +331,22 @@ class YAMLParser:
                 )
 
             try:
+                                                              
+                                                              
+                self.config, attr_warnings = _normalize_form_attribute_types(self.config)
+                self.config, elem_warnings = _normalize_element_types(self.config)
+
                 jsonschema.validate(instance=self.config, schema=schema)
                 print("✅ YAML структура валідна")
+
+                                                       
+                all_warnings = attr_warnings + elem_warnings
+                if all_warnings:
+                    print(f"⚠️  Виправлено {len(all_warnings)} тип(ів) - використовуйте канонічні формати:")
+                    for warning in all_warnings:
+                        print(f"   • {warning}")
+                    print("   📖 Канонічні формати: form_attributes → snake_case, elements → PascalCase")
+
                 return True
             except jsonschema.ValidationError as e:
                 print(f"❌ YAML структура не валідна: {e.message}")

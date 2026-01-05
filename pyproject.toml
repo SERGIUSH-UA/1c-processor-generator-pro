@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "1c-processor-generator"
-version = "2.71.4"
+version = "2.71.5"
 description = "Automatic generation of external data processors for 1C:Enterprise 8.3"
 readme = "README.md"
 requires-python = ">=3.10"

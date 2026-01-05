@@ -10,7 +10,7 @@ long_description = (this_directory / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="1c-processor-generator",
-    version="2.71.4",
+    version="2.71.5",
     author="ITDEO",
     author_email="itdeo.tech@gmail.com",
     description="Automatic generation of external data processors for 1C:Enterprise 8.3",
