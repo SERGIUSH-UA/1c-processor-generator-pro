@@ -1,0 +1,1439 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcssch="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:mxl="http://v8.1c.ru/8.2/data/spreadsheet" xmlns:pl="http://v8.1c.ru/8.3/data/planner" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.11">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<LabelDecoration name="ЗаголовокОтчетов" id="1">
+			<Title formatted="false">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отчеты и аналитика - Комплексный анализ проектов, задач и ресурсов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Звіти та аналітика - Комплексний аналіз проектів, задач та ресурсів</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Reports and Analytics - Comprehensive analysis of projects, tasks and resources</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ЗаголовокОтчетовКонтекстноеМеню" id="2"/>
+			<ExtendedTooltip name="ЗаголовокОтчетовРасширеннаяПодсказка" id="3"/>
+
+		</LabelDecoration>
+		<UsualGroup name="ГруппаПараметровОтчета" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Параметры отчета</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Параметри звіту</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Report Parameters</v8:content>
+				</v8:item>
+			</Title>
+			<Behavior>Collapsible</Behavior>
+			<Group>Vertical</Group>
+			<Representation>WeakSeparation</Representation>
+			<ShowTitle>true</ShowTitle>
+
+			<ExtendedTooltip name="ГруппаПараметровОтчетаРасширеннаяПодсказка" id="5"/>
+			<ChildItems>
+				<UsualGroup name="ГруппаДатОтчета" id="6">
+					<Group>Horizontal</Group>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+
+					<ExtendedTooltip name="ГруппаДатОтчетаРасширеннаяПодсказка" id="7"/>
+					<ChildItems>
+						<InputField name="ПолеДатаНачалаОтчета" id="8">
+							<DataPath>Объект.ФильтрДатаНачала</DataPath>
+							<Width>20</Width>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Дата начала</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Дата початку</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Start Date</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ПолеДатаНачалаОтчетаКонтекстноеМеню" id="9"/>
+							<ExtendedTooltip name="ПолеДатаНачалаОтчетаРасширеннаяПодсказка" id="10"/>
+
+						</InputField>
+						<InputField name="ПолеДатаОкончанияОтчета" id="11">
+							<DataPath>Объект.ФильтрДатаОкончания</DataPath>
+							<Width>20</Width>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Дата окончания</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Дата закінчення</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>End Date</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ПолеДатаОкончанияОтчетаКонтекстноеМеню" id="12"/>
+							<ExtendedTooltip name="ПолеДатаОкончанияОтчетаРасширеннаяПодсказка" id="13"/>
+
+						</InputField>
+						<InputField name="ПолеПроектДляОтчета" id="14">
+							<DataPath>Объект.ФильтрПроект</DataPath>
+							<Width>25</Width>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Проект</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Проект</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Project</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<InputHint>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Все проекты</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Все проекты</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Все проекты</v8:content>
+								</v8:item>
+							</InputHint>
+
+							<ContextMenu name="ПолеПроектДляОтчетаКонтекстноеМеню" id="15"/>
+							<ExtendedTooltip name="ПолеПроектДляОтчетаРасширеннаяПодсказка" id="16"/>
+
+						</InputField>
+						<InputField name="ПолеИсполнительДляОтчета" id="17">
+							<DataPath>Объект.ФильтрИсполнитель</DataPath>
+							<Width>25</Width>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Исполнитель</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Виконавець</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Assignee</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<InputHint>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Все исполнители</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Все исполнители</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Все исполнители</v8:content>
+								</v8:item>
+							</InputHint>
+
+							<ContextMenu name="ПолеИсполнительДляОтчетаКонтекстноеМеню" id="18"/>
+							<ExtendedTooltip name="ПолеИсполнительДляОтчетаРасширеннаяПодсказка" id="19"/>
+
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="ГруппаОпцийОтчета" id="20">
+					<Group>Horizontal</Group>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+
+					<ExtendedTooltip name="ГруппаОпцийОтчетаРасширеннаяПодсказка" id="21"/>
+					<ChildItems>
+						<CheckBoxField name="ФлажокПоказыватьЗакрытыеОтчет" id="22">
+							<DataPath>Объект.ПоказыватьЗакрытые</DataPath>
+
+							<TitleLocation>Right</TitleLocation>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="ФлажокПоказыватьЗакрытыеОтчетКонтекстноеМеню" id="23"/>
+							<ExtendedTooltip name="ФлажокПоказыватьЗакрытыеОтчетРасширеннаяПодсказка" id="24"/>
+
+						</CheckBoxField>
+						<CheckBoxField name="ФлажокПоказыватьАрхивныеОтчет" id="25">
+							<DataPath>Объект.ПоказыватьАрхивные</DataPath>
+
+							<TitleLocation>Right</TitleLocation>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="ФлажокПоказыватьАрхивныеОтчетКонтекстноеМеню" id="26"/>
+							<ExtendedTooltip name="ФлажокПоказыватьАрхивныеОтчетРасширеннаяПодсказка" id="27"/>
+
+						</CheckBoxField>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<Pages name="СтраницыОтчетов" id="28">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>СтраницыОтчетов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>СтраницыОтчетов</v8:content>
+				</v8:item>
+			</Title>
+			<PagesRepresentation>TabsOnTop</PagesRepresentation>
+			<ExtendedTooltip name="СтраницыОтчетовРасширеннаяПодсказка" id="29"/>
+			<ChildItems>
+				<Page name="СтраницаОтчетПроектов" id="30">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>По проектам</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>По проектах</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаОтчетПроектовРасширеннаяПодсказка" id="31"/>
+					<ChildItems>
+					<Table name="ТаблицаОтчетПроектов" id="32">
+						<Representation>List</Representation>
+						<AutoInsertNewRow>true</AutoInsertNewRow>
+						<EnableStartDrag>true</EnableStartDrag>
+						<EnableDrag>true</EnableDrag>
+						<Height>20</Height>
+						<HorizontalStretch>true</HorizontalStretch>
+						<DataPath>ОтчетПоПроектам</DataPath>
+						<RowFilter xsi:nil="true"/>
+						<ContextMenu name="ТаблицаОтчетПроектовКонтекстноеМеню" id="33"/>
+						<AutoCommandBar name="ТаблицаОтчетПроектовКоманднаяПанель" id="34"/>
+						<ExtendedTooltip name="ТаблицаОтчетПроектовРасширеннаяПодсказка" id="35"/>
+
+						<ChildItems>
+							<InputField name="ТаблицаОтчетПроектовПроект" id="36">
+								<DataPath>ОтчетПоПроектам.Проект</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетПроектовПроектКонтекстноеМеню" id="37"/>
+								<ExtendedTooltip name="ТаблицаОтчетПроектовПроектРасширеннаяПодсказка" id="38"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетПроектовСтатус" id="39">
+								<DataPath>ОтчетПоПроектам.Статус</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетПроектовСтатусКонтекстноеМеню" id="40"/>
+								<ExtendedTooltip name="ТаблицаОтчетПроектовСтатусРасширеннаяПодсказка" id="41"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетПроектовВсегоЗадач" id="42">
+								<DataPath>ОтчетПоПроектам.ВсегоЗадач</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетПроектовВсегоЗадачКонтекстноеМеню" id="43"/>
+								<ExtendedTooltip name="ТаблицаОтчетПроектовВсегоЗадачРасширеннаяПодсказка" id="44"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетПроектовВыполнено" id="45">
+								<DataPath>ОтчетПоПроектам.Выполнено</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетПроектовВыполненоКонтекстноеМеню" id="46"/>
+								<ExtendedTooltip name="ТаблицаОтчетПроектовВыполненоРасширеннаяПодсказка" id="47"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетПроектовВРаботе" id="48">
+								<DataPath>ОтчетПоПроектам.ВРаботе</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетПроектовВРаботеКонтекстноеМеню" id="49"/>
+								<ExtendedTooltip name="ТаблицаОтчетПроектовВРаботеРасширеннаяПодсказка" id="50"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетПроектовПросрочено" id="51">
+								<DataPath>ОтчетПоПроектам.Просрочено</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетПроектовПросроченоКонтекстноеМеню" id="52"/>
+								<ExtendedTooltip name="ТаблицаОтчетПроектовПросроченоРасширеннаяПодсказка" id="53"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетПроектовПрогресс" id="54">
+								<DataPath>ОтчетПоПроектам.Прогресс</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетПроектовПрогрессКонтекстноеМеню" id="55"/>
+								<ExtendedTooltip name="ТаблицаОтчетПроектовПрогрессРасширеннаяПодсказка" id="56"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетПроектовБюджет" id="57">
+								<DataPath>ОтчетПоПроектам.Бюджет</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетПроектовБюджетКонтекстноеМеню" id="58"/>
+								<ExtendedTooltip name="ТаблицаОтчетПроектовБюджетРасширеннаяПодсказка" id="59"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетПроектовЗатраты" id="60">
+								<DataPath>ОтчетПоПроектам.Затраты</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетПроектовЗатратыКонтекстноеМеню" id="61"/>
+								<ExtendedTooltip name="ТаблицаОтчетПроектовЗатратыРасширеннаяПодсказка" id="62"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетПроектовОтклонение" id="63">
+								<DataPath>ОтчетПоПроектам.Отклонение</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетПроектовОтклонениеКонтекстноеМеню" id="64"/>
+								<ExtendedTooltip name="ТаблицаОтчетПроектовОтклонениеРасширеннаяПодсказка" id="65"/>
+							</InputField>
+						</ChildItems>
+					</Table>
+					<Button name="КнопкаСформироватьОтчетПроектов" id="66">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.СформироватьОтчетПроектов</CommandName>
+						<Width>20</Width>
+						<Picture>
+							<xr:Ref>StdPicture.Report</xr:Ref>
+							<xr:LoadTransparent>true</xr:LoadTransparent>
+						</Picture>
+						<Representation>PictureAndText</Representation>
+
+						<ExtendedTooltip name="КнопкаСформироватьОтчетПроектовExtendedTooltip" id="67"/>
+					</Button>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаОтчетЗадач" id="68">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>По задачам</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>По задачах</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаОтчетЗадачРасширеннаяПодсказка" id="69"/>
+					<ChildItems>
+					<Table name="ТаблицаОтчетЗадач" id="70">
+						<Representation>List</Representation>
+						<AutoInsertNewRow>true</AutoInsertNewRow>
+						<EnableStartDrag>true</EnableStartDrag>
+						<EnableDrag>true</EnableDrag>
+						<Height>20</Height>
+						<HorizontalStretch>true</HorizontalStretch>
+						<DataPath>ОтчетПоЗадачам</DataPath>
+						<RowFilter xsi:nil="true"/>
+						<ContextMenu name="ТаблицаОтчетЗадачКонтекстноеМеню" id="71"/>
+						<AutoCommandBar name="ТаблицаОтчетЗадачКоманднаяПанель" id="72"/>
+						<ExtendedTooltip name="ТаблицаОтчетЗадачРасширеннаяПодсказка" id="73"/>
+
+						<ChildItems>
+							<InputField name="ТаблицаОтчетЗадачПроект" id="74">
+								<DataPath>ОтчетПоЗадачам.Проект</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетЗадачПроектКонтекстноеМеню" id="75"/>
+								<ExtendedTooltip name="ТаблицаОтчетЗадачПроектРасширеннаяПодсказка" id="76"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетЗадачЗадача" id="77">
+								<DataPath>ОтчетПоЗадачам.Задача</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетЗадачЗадачаКонтекстноеМеню" id="78"/>
+								<ExtendedTooltip name="ТаблицаОтчетЗадачЗадачаРасширеннаяПодсказка" id="79"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетЗадачИсполнитель" id="80">
+								<DataPath>ОтчетПоЗадачам.Исполнитель</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетЗадачИсполнительКонтекстноеМеню" id="81"/>
+								<ExtendedTooltip name="ТаблицаОтчетЗадачИсполнительРасширеннаяПодсказка" id="82"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетЗадачСтатус" id="83">
+								<DataPath>ОтчетПоЗадачам.Статус</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетЗадачСтатусКонтекстноеМеню" id="84"/>
+								<ExtendedTooltip name="ТаблицаОтчетЗадачСтатусРасширеннаяПодсказка" id="85"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетЗадачПриоритет" id="86">
+								<DataPath>ОтчетПоЗадачам.Приоритет</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетЗадачПриоритетКонтекстноеМеню" id="87"/>
+								<ExtendedTooltip name="ТаблицаОтчетЗадачПриоритетРасширеннаяПодсказка" id="88"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетЗадачДатаНачала" id="89">
+								<DataPath>ОтчетПоЗадачам.ДатаНачала</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетЗадачДатаНачалаКонтекстноеМеню" id="90"/>
+								<ExtendedTooltip name="ТаблицаОтчетЗадачДатаНачалаРасширеннаяПодсказка" id="91"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетЗадачДатаОкончания" id="92">
+								<DataPath>ОтчетПоЗадачам.ДатаОкончания</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетЗадачДатаОкончанияКонтекстноеМеню" id="93"/>
+								<ExtendedTooltip name="ТаблицаОтчетЗадачДатаОкончанияРасширеннаяПодсказка" id="94"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетЗадачПрогресс" id="95">
+								<DataPath>ОтчетПоЗадачам.Прогресс</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетЗадачПрогрессКонтекстноеМеню" id="96"/>
+								<ExtendedTooltip name="ТаблицаОтчетЗадачПрогрессРасширеннаяПодсказка" id="97"/>
+							</InputField>
+						</ChildItems>
+					</Table>
+					<Button name="КнопкаСформироватьОтчетЗадач" id="98">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.СформироватьОтчетЗадач</CommandName>
+						<Width>20</Width>
+						<Picture>
+							<xr:Ref>StdPicture.Report</xr:Ref>
+							<xr:LoadTransparent>true</xr:LoadTransparent>
+						</Picture>
+						<Representation>PictureAndText</Representation>
+
+						<ExtendedTooltip name="КнопкаСформироватьОтчетЗадачExtendedTooltip" id="99"/>
+					</Button>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаОтчетРесурсов" id="100">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>По ресурсам</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>По ресурсах</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаОтчетРесурсовРасширеннаяПодсказка" id="101"/>
+					<ChildItems>
+					<Table name="ТаблицаОтчетРесурсов" id="102">
+						<Representation>List</Representation>
+						<AutoInsertNewRow>true</AutoInsertNewRow>
+						<EnableStartDrag>true</EnableStartDrag>
+						<EnableDrag>true</EnableDrag>
+						<Height>20</Height>
+						<HorizontalStretch>true</HorizontalStretch>
+						<DataPath>ОтчетПоРесурсам</DataPath>
+						<RowFilter xsi:nil="true"/>
+						<ContextMenu name="ТаблицаОтчетРесурсовКонтекстноеМеню" id="103"/>
+						<AutoCommandBar name="ТаблицаОтчетРесурсовКоманднаяПанель" id="104"/>
+						<ExtendedTooltip name="ТаблицаОтчетРесурсовРасширеннаяПодсказка" id="105"/>
+
+						<ChildItems>
+							<InputField name="ТаблицаОтчетРесурсовРесурс" id="106">
+								<DataPath>ОтчетПоРесурсам.Ресурс</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетРесурсовРесурсКонтекстноеМеню" id="107"/>
+								<ExtendedTooltip name="ТаблицаОтчетРесурсовРесурсРасширеннаяПодсказка" id="108"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетРесурсовТип" id="109">
+								<DataPath>ОтчетПоРесурсам.Тип</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетРесурсовТипКонтекстноеМеню" id="110"/>
+								<ExtendedTooltip name="ТаблицаОтчетРесурсовТипРасширеннаяПодсказка" id="111"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетРесурсовКоличествоПроектов" id="112">
+								<DataPath>ОтчетПоРесурсам.КоличествоПроектов</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетРесурсовКоличествоПроектовКонтекстноеМеню" id="113"/>
+								<ExtendedTooltip name="ТаблицаОтчетРесурсовКоличествоПроектовРасширеннаяПодсказка" id="114"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетРесурсовКоличествоЗадач" id="115">
+								<DataPath>ОтчетПоРесурсам.КоличествоЗадач</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетРесурсовКоличествоЗадачКонтекстноеМеню" id="116"/>
+								<ExtendedTooltip name="ТаблицаОтчетРесурсовКоличествоЗадачРасширеннаяПодсказка" id="117"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетРесурсовЗагрузкаЧасов" id="118">
+								<DataPath>ОтчетПоРесурсам.ЗагрузкаЧасов</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетРесурсовЗагрузкаЧасовКонтекстноеМеню" id="119"/>
+								<ExtendedTooltip name="ТаблицаОтчетРесурсовЗагрузкаЧасовРасширеннаяПодсказка" id="120"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетРесурсовДоступность" id="121">
+								<DataPath>ОтчетПоРесурсам.Доступность</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетРесурсовДоступностьКонтекстноеМеню" id="122"/>
+								<ExtendedTooltip name="ТаблицаОтчетРесурсовДоступностьРасширеннаяПодсказка" id="123"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетРесурсовСтоимость" id="124">
+								<DataPath>ОтчетПоРесурсам.Стоимость</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетРесурсовСтоимостьКонтекстноеМеню" id="125"/>
+								<ExtendedTooltip name="ТаблицаОтчетРесурсовСтоимостьРасширеннаяПодсказка" id="126"/>
+							</InputField>
+						</ChildItems>
+					</Table>
+					<Button name="КнопкаСформироватьОтчетРесурсов" id="127">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.СформироватьОтчетРесурсов</CommandName>
+						<Width>20</Width>
+						<Picture>
+							<xr:Ref>StdPicture.Report</xr:Ref>
+							<xr:LoadTransparent>true</xr:LoadTransparent>
+						</Picture>
+						<Representation>PictureAndText</Representation>
+
+						<ExtendedTooltip name="КнопкаСформироватьОтчетРесурсовExtendedTooltip" id="128"/>
+					</Button>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаОтчетВремени" id="129">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>По времени</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>По часу</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаОтчетВремениРасширеннаяПодсказка" id="130"/>
+					<ChildItems>
+					<Table name="ТаблицаОтчетВремени" id="131">
+						<Representation>List</Representation>
+						<AutoInsertNewRow>true</AutoInsertNewRow>
+						<EnableStartDrag>true</EnableStartDrag>
+						<EnableDrag>true</EnableDrag>
+						<Height>20</Height>
+						<HorizontalStretch>true</HorizontalStretch>
+						<DataPath>ОтчетПоВремени</DataPath>
+						<RowFilter xsi:nil="true"/>
+						<ContextMenu name="ТаблицаОтчетВремениКонтекстноеМеню" id="132"/>
+						<AutoCommandBar name="ТаблицаОтчетВремениКоманднаяПанель" id="133"/>
+						<ExtendedTooltip name="ТаблицаОтчетВремениРасширеннаяПодсказка" id="134"/>
+
+						<ChildItems>
+							<InputField name="ТаблицаОтчетВремениПериод" id="135">
+								<DataPath>ОтчетПоВремени.Период</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетВремениПериодКонтекстноеМеню" id="136"/>
+								<ExtendedTooltip name="ТаблицаОтчетВремениПериодРасширеннаяПодсказка" id="137"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетВремениПроект" id="138">
+								<DataPath>ОтчетПоВремени.Проект</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетВремениПроектКонтекстноеМеню" id="139"/>
+								<ExtendedTooltip name="ТаблицаОтчетВремениПроектРасширеннаяПодсказка" id="140"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетВремениИсполнитель" id="141">
+								<DataPath>ОтчетПоВремени.Исполнитель</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетВремениИсполнительКонтекстноеМеню" id="142"/>
+								<ExtendedTooltip name="ТаблицаОтчетВремениИсполнительРасширеннаяПодсказка" id="143"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетВремениПлановоеВремя" id="144">
+								<DataPath>ОтчетПоВремени.ПлановоеВремя</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетВремениПлановоеВремяКонтекстноеМеню" id="145"/>
+								<ExtendedTooltip name="ТаблицаОтчетВремениПлановоеВремяРасширеннаяПодсказка" id="146"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетВремениФактическоеВремя" id="147">
+								<DataPath>ОтчетПоВремени.ФактическоеВремя</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетВремениФактическоеВремяКонтекстноеМеню" id="148"/>
+								<ExtendedTooltip name="ТаблицаОтчетВремениФактическоеВремяРасширеннаяПодсказка" id="149"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетВремениОтклонение" id="150">
+								<DataPath>ОтчетПоВремени.Отклонение</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетВремениОтклонениеКонтекстноеМеню" id="151"/>
+								<ExtendedTooltip name="ТаблицаОтчетВремениОтклонениеРасширеннаяПодсказка" id="152"/>
+							</InputField>
+							<InputField name="ТаблицаОтчетВремениОтклонениеПроцент" id="153">
+								<DataPath>ОтчетПоВремени.ОтклонениеПроцент</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаОтчетВремениОтклонениеПроцентКонтекстноеМеню" id="154"/>
+								<ExtendedTooltip name="ТаблицаОтчетВремениОтклонениеПроцентРасширеннаяПодсказка" id="155"/>
+							</InputField>
+						</ChildItems>
+					</Table>
+					<Button name="КнопкаСформироватьОтчетВремени" id="156">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.СформироватьОтчетВремени</CommandName>
+						<Width>20</Width>
+						<Picture>
+							<xr:Ref>StdPicture.Report</xr:Ref>
+							<xr:LoadTransparent>true</xr:LoadTransparent>
+						</Picture>
+						<Representation>PictureAndText</Representation>
+
+						<ExtendedTooltip name="КнопкаСформироватьОтчетВремениExtendedTooltip" id="157"/>
+					</Button>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаТабличныйДокумент" id="158">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Табличный документ</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Табличний документ</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаТабличныйДокументРасширеннаяПодсказка" id="159"/>
+					<ChildItems>
+					<SpreadSheetDocumentField name="ПолеДокументаОтчета" id="160">
+						<ContextMenu name="ПолеДокументаОтчетаКонтекстноеМеню" id="161"/>
+						<ExtendedTooltip name="ПолеДокументаОтчетаРасширеннаяПодсказка" id="162"/>
+						<Events>
+							<Event name="DetailProcessing">ДокументОтчетаОбработкаРасшифровки</Event>
+						</Events>
+					</SpreadSheetDocumentField>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
+		<UsualGroup name="ГруппаКнопокОтчетов" id="163">
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+
+			<ExtendedTooltip name="ГруппаКнопокОтчетовРасширеннаяПодсказка" id="164"/>
+			<ChildItems>
+				<Button name="КнопкаЭкспортироватьОтчет" id="165">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ЭкспортироватьОтчет</CommandName>
+					<Width>18</Width>
+
+					<ExtendedTooltip name="КнопкаЭкспортироватьОтчетExtendedTooltip" id="166"/>
+				</Button>
+				<Button name="КнопкаПечатьОтчета" id="167">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ПечатьОтчета</CommandName>
+					<Width>18</Width>
+					<Picture>
+						<xr:Ref>StdPicture.Print</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="КнопкаПечатьОтчетаExtendedTooltip" id="168"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>ExternalDataProcessorObject.УправлениеПроектами</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+		<Attribute name="ДокументОтчета" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ДокументОтчета</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ДокументОтчета</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>ДокументОтчета</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type xmlns:mxl="http://v8.1c.ru/8.2/data/spreadsheet">mxl:SpreadsheetDocument</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ОтчетПоПроектам" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ОтчетПоПроектам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ОтчетПоПроектам</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Проект" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Проект</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Проект</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Статус" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="ВсегоЗадач" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Всего задач</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Всього задач</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Выполнено" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Выполнено</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Виконано</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ВРаботе" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>В работе</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>У роботі</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Просрочено" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Просрочено</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Прострочено</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Прогресс" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прогресс (%)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Прогрес (%)</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Бюджет" id="8">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Бюджет</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Бюджет</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Затраты" id="9">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Затраты</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Витрати</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Отклонение" id="10">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отклонение</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відхилення</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="ОтчетПоЗадачам" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ОтчетПоЗадачам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ОтчетПоЗадачам</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Проект" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Проект</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Проект</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Задача" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Задача</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Задача</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Исполнитель" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Исполнитель</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Виконавець</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Статус" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Приоритет" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Приоритет</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Пріоритет</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="ДатаНачала" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата начала</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Дата початку</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>DateTime</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="ДатаОкончания" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Срок</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Термін</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>DateTime</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="Прогресс" id="8">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прогресс (%)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Прогрес (%)</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="ОтчетПоРесурсам" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ОтчетПоРесурсам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ОтчетПоРесурсам</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Ресурс" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Ресурс</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Ресурс</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Тип" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Тип</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="КоличествоПроектов" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Количество проектов</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Кількість проектів</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="КоличествоЗадач" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Количество задач</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Кількість задач</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ЗагрузкаЧасов" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Загрузка (часов)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Завантаження (годин)</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Доступность" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Доступность (%)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Доступність (%)</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Стоимость" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Стоимость</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Вартість</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="ОтчетПоВремени" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ОтчетПоВремени</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ОтчетПоВремени</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Период" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Период</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Період</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Проект" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Проект</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Проект</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Исполнитель" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Исполнитель</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Виконавець</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="ПлановоеВремя" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Плановое время</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Плановий час</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ФактическоеВремя" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Фактическое время</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Фактичний час</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Отклонение" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отклонение</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відхилення</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ОтклонениеПроцент" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отклонение (%)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відхилення (%)</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="СформироватьОтчетПроектов" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отчет по проектам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Звіт по проектах</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Report</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>СформироватьОтчетПроектов</Action>
+		</Command>
+		<Command name="СформироватьОтчетЗадач" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отчет по задачам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Звіт по задачах</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Report</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>СформироватьОтчетЗадач</Action>
+		</Command>
+		<Command name="СформироватьОтчетРесурсов" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отчет по ресурсам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Звіт по ресурсах</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Report</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>СформироватьОтчетРесурсов</Action>
+		</Command>
+		<Command name="СформироватьОтчетВремени" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отчет по времени</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Звіт по часу</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Report</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>СформироватьОтчетВремени</Action>
+		</Command>
+		<Command name="ЭкспортироватьОтчет" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Экспортировать отчет</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Експортувати звіт</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ЭкспортироватьОтчет</Action>
+		</Command>
+		<Command name="ПечатьОтчета" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Печать отчета</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Друк звіту</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Print</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>ПечатьОтчета</Action>
+		</Command>
+	</Commands>
+</Form>

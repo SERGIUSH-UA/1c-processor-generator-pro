@@ -1293,6 +1293,13 @@ class HandlerValidator:
             for vt in form.value_table_attributes:
                 self._value_table_names.add(vt.name)
 
+                                                                                        
+        self._form_attribute_names: Set[str] = set()
+        for form in processor.forms:
+            if hasattr(form, 'form_attributes') and form.form_attributes:
+                for attr in form.form_attributes:
+                    self._form_attribute_names.add(attr.name)
+
     def _load_handlers(self, handlers_file: Path) -> Dict[str, str]:
                                              
         from .bsl_splitter import BSLSplitter
@@ -1436,12 +1443,12 @@ class HandlerValidator:
 
         return errors, warnings
 
-    def validate_valuetable_access(self) -> Tuple[List[str], List[str]]:
+    def validate_form_level_access(self) -> Tuple[List[str], List[str]]:
                    
         errors = []
         warnings = []
 
-        if not self._value_table_names:
+        if not self._value_table_names and not self._form_attribute_names:
             return errors, warnings
 
         for handler_name, handler_code in self._loaded_handlers.items():
@@ -1456,7 +1463,19 @@ class HandlerValidator:
                         f"Доступ напряму: {accessed_name} (без Объект.)"
                     )
 
+                if accessed_name in self._form_attribute_names:
+                    warnings.append(
+                        f"Handler '{handler_name}': використано Объект.{accessed_name}, "
+                        f"але '{accessed_name}' - це form_attribute (SpreadsheetDocument/BinaryData/HTMLDocument). "
+                        f"Доступ напряму: {accessed_name} (без Объект.)"
+                    )
+
         return errors, warnings
+
+                                  
+    def validate_valuetable_access(self) -> Tuple[List[str], List[str]]:
+                                                                
+        return self.validate_form_level_access()
 
     def validate(self) -> Tuple[bool, List[str], List[str]]:
                    
@@ -1473,9 +1492,9 @@ class HandlerValidator:
         self.errors.extend(sig_errors)
         self.warnings.extend(sig_warnings)
 
-                                            
-        vt_errors, vt_warnings = self.validate_valuetable_access()
-        self.errors.extend(vt_errors)
-        self.warnings.extend(vt_warnings)
+                                                                                    
+        fl_errors, fl_warnings = self.validate_form_level_access()
+        self.errors.extend(fl_errors)
+        self.warnings.extend(fl_warnings)
 
         return len(self.errors) == 0, self.errors, self.warnings

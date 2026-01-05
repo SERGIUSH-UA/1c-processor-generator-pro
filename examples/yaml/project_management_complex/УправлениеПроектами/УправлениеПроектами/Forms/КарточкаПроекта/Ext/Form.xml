@@ -1,0 +1,1321 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcssch="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:mxl="http://v8.1c.ru/8.2/data/spreadsheet" xmlns:pl="http://v8.1c.ru/8.3/data/planner" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.11">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<LabelDecoration name="ЗаголовокКарточки" id="1">
+			<Title formatted="false">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Карточка проекта - Детальная информация</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Картка проекту - Детальна інформація</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Project Card - Detailed Information</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ЗаголовокКарточкиКонтекстноеМеню" id="2"/>
+			<ExtendedTooltip name="ЗаголовокКарточкиРасширеннаяПодсказка" id="3"/>
+
+		</LabelDecoration>
+		<Pages name="СекцииПроекта" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>СекцииПроекта</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>СекцииПроекта</v8:content>
+				</v8:item>
+			</Title>
+			<PagesRepresentation>TabsOnTop</PagesRepresentation>
+			<ExtendedTooltip name="СекцииПроектаРасширеннаяПодсказка" id="5"/>
+			<ChildItems>
+				<Page name="СтраницаОсновнаяИнформация" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Основная информация</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Основна інформація</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаОсновнаяИнформацияРасширеннаяПодсказка" id="7"/>
+					<ChildItems>
+					<UsualGroup name="ГруппаОсновныхПолей" id="8">
+						<Group>Vertical</Group>
+						<Representation>WeakSeparation</Representation>
+						<ShowTitle>false</ShowTitle>
+
+						<ExtendedTooltip name="ГруппаОсновныхПолейРасширеннаяПодсказка" id="9"/>
+						<ChildItems>
+							<UsualGroup name="ГруппаИдентификация" id="10">
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Идентификация</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Ідентифікація</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Identification</v8:content>
+									</v8:item>
+								</Title>
+								<Group>Horizontal</Group>
+								<Representation>None</Representation>
+								<ShowTitle>true</ShowTitle>
+
+								<ExtendedTooltip name="ГруппаИдентификацияРасширеннаяПодсказка" id="11"/>
+								<ChildItems>
+									<InputField name="ПолеПроектКод" id="12">
+										<DataPath>Код</DataPath>
+										<Width>15</Width>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Код проекта</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Код проекту</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>Project Code</v8:content>
+											</v8:item>
+										</Title>
+										<EditMode>EnterOnInput</EditMode>
+										<ContextMenu name="ПолеПроектКодКонтекстноеМеню" id="13"/>
+										<ExtendedTooltip name="ПолеПроектКодРасширеннаяПодсказка" id="14"/>
+
+									</InputField>
+									<InputField name="ПолеПроектНазвание" id="15">
+										<DataPath>Название</DataPath>
+										<Width>40</Width>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Название проекта</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Назва проекту</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>Project Name</v8:content>
+											</v8:item>
+										</Title>
+										<EditMode>EnterOnInput</EditMode>
+										<ContextMenu name="ПолеПроектНазваниеКонтекстноеМеню" id="16"/>
+										<ExtendedTooltip name="ПолеПроектНазваниеРасширеннаяПодсказка" id="17"/>
+
+									</InputField>
+								</ChildItems>
+							</UsualGroup>
+							<UsualGroup name="ГруппаОписание" id="18">
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Описание</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Опис</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Description</v8:content>
+									</v8:item>
+								</Title>
+								<Group>Vertical</Group>
+								<Representation>None</Representation>
+								<ShowTitle>true</ShowTitle>
+
+								<ExtendedTooltip name="ГруппаОписаниеРасширеннаяПодсказка" id="19"/>
+								<ChildItems>
+									<InputField name="ПолеПроектОписание" id="20">
+										<DataPath>Описание</DataPath>
+										<MultiLine>true</MultiLine>
+										<Width>60</Width>
+										<Height>5</Height>
+
+										<TitleLocation>Top</TitleLocation>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Описание</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Опис</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>Description</v8:content>
+											</v8:item>
+										</Title>
+										<EditMode>EnterOnInput</EditMode>
+										<ContextMenu name="ПолеПроектОписаниеКонтекстноеМеню" id="21"/>
+										<ExtendedTooltip name="ПолеПроектОписаниеРасширеннаяПодсказка" id="22"/>
+
+									</InputField>
+								</ChildItems>
+							</UsualGroup>
+							<UsualGroup name="ГруппаСтатусИПриоритет" id="23">
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Статус и приоритет</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Статус і пріоритет</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Status and Priority</v8:content>
+									</v8:item>
+								</Title>
+								<Group>Horizontal</Group>
+								<Representation>None</Representation>
+								<ShowTitle>true</ShowTitle>
+
+								<ExtendedTooltip name="ГруппаСтатусИПриоритетРасширеннаяПодсказка" id="24"/>
+								<ChildItems>
+									<InputField name="ПолеПроектСтатус" id="25">
+										<DataPath>Статус</DataPath>
+										<Width>20</Width>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Статус</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Статус</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>Status</v8:content>
+											</v8:item>
+										</Title>
+										<EditMode>EnterOnInput</EditMode>
+										<ChoiceList>
+											<xr:Item>
+												<xr:Presentation/>
+												<xr:CheckState>0</xr:CheckState>
+												<xr:Value xsi:type="FormChoiceListDesTimeValue">
+													<Presentation>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Планирование</v8:content>
+														</v8:item>
+													</Presentation>
+													<Value xsi:type="xs:string">Planning</Value>
+												</xr:Value>
+											</xr:Item>
+											<xr:Item>
+												<xr:Presentation/>
+												<xr:CheckState>0</xr:CheckState>
+												<xr:Value xsi:type="FormChoiceListDesTimeValue">
+													<Presentation>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Активный</v8:content>
+														</v8:item>
+													</Presentation>
+													<Value xsi:type="xs:string">Active</Value>
+												</xr:Value>
+											</xr:Item>
+											<xr:Item>
+												<xr:Presentation/>
+												<xr:CheckState>0</xr:CheckState>
+												<xr:Value xsi:type="FormChoiceListDesTimeValue">
+													<Presentation>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Приостановлен</v8:content>
+														</v8:item>
+													</Presentation>
+													<Value xsi:type="xs:string">Paused</Value>
+												</xr:Value>
+											</xr:Item>
+											<xr:Item>
+												<xr:Presentation/>
+												<xr:CheckState>0</xr:CheckState>
+												<xr:Value xsi:type="FormChoiceListDesTimeValue">
+													<Presentation>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Завершен</v8:content>
+														</v8:item>
+													</Presentation>
+													<Value xsi:type="xs:string">Done</Value>
+												</xr:Value>
+											</xr:Item>
+											<xr:Item>
+												<xr:Presentation/>
+												<xr:CheckState>0</xr:CheckState>
+												<xr:Value xsi:type="FormChoiceListDesTimeValue">
+													<Presentation>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Отменен</v8:content>
+														</v8:item>
+													</Presentation>
+													<Value xsi:type="xs:string">Cancelled</Value>
+												</xr:Value>
+											</xr:Item>
+										</ChoiceList>
+										<ListChoiceMode>true</ListChoiceMode>
+										<ContextMenu name="ПолеПроектСтатусКонтекстноеМеню" id="26"/>
+										<ExtendedTooltip name="ПолеПроектСтатусРасширеннаяПодсказка" id="27"/>
+
+									</InputField>
+									<InputField name="ПолеПроектПриоритет" id="28">
+										<DataPath>Приоритет</DataPath>
+										<Width>15</Width>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Приоритет</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Пріоритет</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>Priority</v8:content>
+											</v8:item>
+										</Title>
+										<EditMode>EnterOnInput</EditMode>
+										<ChoiceList>
+											<xr:Item>
+												<xr:Presentation/>
+												<xr:CheckState>0</xr:CheckState>
+												<xr:Value xsi:type="FormChoiceListDesTimeValue">
+													<Presentation>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Низкий</v8:content>
+														</v8:item>
+													</Presentation>
+													<Value xsi:type="xs:string">Low</Value>
+												</xr:Value>
+											</xr:Item>
+											<xr:Item>
+												<xr:Presentation/>
+												<xr:CheckState>0</xr:CheckState>
+												<xr:Value xsi:type="FormChoiceListDesTimeValue">
+													<Presentation>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Средний</v8:content>
+														</v8:item>
+													</Presentation>
+													<Value xsi:type="xs:string">Medium</Value>
+												</xr:Value>
+											</xr:Item>
+											<xr:Item>
+												<xr:Presentation/>
+												<xr:CheckState>0</xr:CheckState>
+												<xr:Value xsi:type="FormChoiceListDesTimeValue">
+													<Presentation>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Высокий</v8:content>
+														</v8:item>
+													</Presentation>
+													<Value xsi:type="xs:string">High</Value>
+												</xr:Value>
+											</xr:Item>
+											<xr:Item>
+												<xr:Presentation/>
+												<xr:CheckState>0</xr:CheckState>
+												<xr:Value xsi:type="FormChoiceListDesTimeValue">
+													<Presentation>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Критический</v8:content>
+														</v8:item>
+													</Presentation>
+													<Value xsi:type="xs:string">Critical</Value>
+												</xr:Value>
+											</xr:Item>
+										</ChoiceList>
+										<ListChoiceMode>true</ListChoiceMode>
+										<ContextMenu name="ПолеПроектПриоритетКонтекстноеМеню" id="29"/>
+										<ExtendedTooltip name="ПолеПроектПриоритетРасширеннаяПодсказка" id="30"/>
+
+									</InputField>
+									<InputField name="ПолеПроектПрогресс" id="31">
+										<DataPath>Прогресс</DataPath>
+										<Width>10</Width>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Прогресс (%)</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Прогрес (%)</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>Progress (%)</v8:content>
+											</v8:item>
+										</Title>
+										<EditMode>EnterOnInput</EditMode>
+										<ContextMenu name="ПолеПроектПрогрессКонтекстноеМеню" id="32"/>
+										<ExtendedTooltip name="ПолеПроектПрогрессРасширеннаяПодсказка" id="33"/>
+
+									</InputField>
+								</ChildItems>
+							</UsualGroup>
+						</ChildItems>
+					</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаДатыИБюджет" id="34">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Даты и бюджет</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Дати та бюджет</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаДатыИБюджетРасширеннаяПодсказка" id="35"/>
+					<ChildItems>
+					<UsualGroup name="ГруппаДат" id="36">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Сроки проекта</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Терміни проекту</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Project Timeline</v8:content>
+							</v8:item>
+						</Title>
+						<Group>Horizontal</Group>
+						<Representation>None</Representation>
+						<ShowTitle>true</ShowTitle>
+
+						<ExtendedTooltip name="ГруппаДатРасширеннаяПодсказка" id="37"/>
+						<ChildItems>
+							<InputField name="ПолеПроектДатаНачала" id="38">
+								<DataPath>ДатаНачала</DataPath>
+								<Width>20</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Дата начала</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Дата початку</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Start Date</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ПолеПроектДатаНачалаКонтекстноеМеню" id="39"/>
+								<ExtendedTooltip name="ПолеПроектДатаНачалаРасширеннаяПодсказка" id="40"/>
+
+							</InputField>
+							<InputField name="ПолеПроектДатаОкончания" id="41">
+								<DataPath>ДатаОкончания</DataPath>
+								<Width>20</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Дата окончания</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Дата закінчення</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>End Date</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ПолеПроектДатаОкончанияКонтекстноеМеню" id="42"/>
+								<ExtendedTooltip name="ПолеПроектДатаОкончанияРасширеннаяПодсказка" id="43"/>
+
+							</InputField>
+						</ChildItems>
+					</UsualGroup>
+					<UsualGroup name="ГруппаБюджета" id="44">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Финансы</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Фінанси</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Finances</v8:content>
+							</v8:item>
+						</Title>
+						<Group>Horizontal</Group>
+						<Representation>None</Representation>
+						<ShowTitle>true</ShowTitle>
+
+						<ExtendedTooltip name="ГруппаБюджетаРасширеннаяПодсказка" id="45"/>
+						<ChildItems>
+							<InputField name="ПолеПроектБюджет" id="46">
+								<DataPath>Бюджет</DataPath>
+								<Width>20</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Бюджет</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Бюджет</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Budget</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ПолеПроектБюджетКонтекстноеМеню" id="47"/>
+								<ExtendedTooltip name="ПолеПроектБюджетРасширеннаяПодсказка" id="48"/>
+
+							</InputField>
+							<InputField name="ПолеПроектФактическиеЗатраты" id="49">
+								<DataPath>ФактическиеЗатраты</DataPath>
+								<ReadOnly>true</ReadOnly>
+								<Width>20</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Фактические затраты</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Фактичні витрати</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Actual Cost</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ПолеПроектФактическиеЗатратыКонтекстноеМеню" id="50"/>
+								<ExtendedTooltip name="ПолеПроектФактическиеЗатратыРасширеннаяПодсказка" id="51"/>
+
+							</InputField>
+							<Button name="КнопкаРассчитатьБюджет" id="52">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.РассчитатьБюджет</CommandName>
+								<Width>20</Width>
+								<Picture>
+									<xr:Ref>StdPicture.ExecuteTask</xr:Ref>
+									<xr:LoadTransparent>true</xr:LoadTransparent>
+								</Picture>
+								<Representation>PictureAndText</Representation>
+
+								<ExtendedTooltip name="КнопкаРассчитатьБюджетExtendedTooltip" id="53"/>
+							</Button>
+						</ChildItems>
+					</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаЛюди" id="54">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Люди</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Люди</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаЛюдиРасширеннаяПодсказка" id="55"/>
+					<ChildItems>
+					<UsualGroup name="ГруппаОтветственных" id="56">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Ответственные лица</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Відповідальні особи</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Responsible Persons</v8:content>
+							</v8:item>
+						</Title>
+						<Group>Horizontal</Group>
+						<Representation>None</Representation>
+						<ShowTitle>true</ShowTitle>
+
+						<ExtendedTooltip name="ГруппаОтветственныхРасширеннаяПодсказка" id="57"/>
+						<ChildItems>
+							<InputField name="ПолеПроектРуководитель" id="58">
+								<DataPath>РуководительПроекта</DataPath>
+								<Width>25</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Руководитель проекта</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Керівник проекту</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Project Manager</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ПолеПроектРуководительКонтекстноеМеню" id="59"/>
+								<ExtendedTooltip name="ПолеПроектРуководительРасширеннаяПодсказка" id="60"/>
+
+							</InputField>
+							<InputField name="ПолеПроектЗаказчик" id="61">
+								<DataPath>Заказчик</DataPath>
+								<Width>25</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Заказчик</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Замовник</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Customer</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ПолеПроектЗаказчикКонтекстноеМеню" id="62"/>
+								<ExtendedTooltip name="ПолеПроектЗаказчикРасширеннаяПодсказка" id="63"/>
+
+							</InputField>
+						</ChildItems>
+					</UsualGroup>
+					<Table name="ТаблицаУчастниковПроекта" id="64">
+						<Representation>List</Representation>
+						<AutoInsertNewRow>true</AutoInsertNewRow>
+						<EnableStartDrag>true</EnableStartDrag>
+						<EnableDrag>true</EnableDrag>
+						<Height>10</Height>
+						<HorizontalStretch>true</HorizontalStretch>
+						<DataPath>УчастникиПроекта</DataPath>
+						<RowFilter xsi:nil="true"/>
+						<ContextMenu name="ТаблицаУчастниковПроектаКонтекстноеМеню" id="65"/>
+						<AutoCommandBar name="ТаблицаУчастниковПроектаКоманднаяПанель" id="66"/>
+						<ExtendedTooltip name="ТаблицаУчастниковПроектаРасширеннаяПодсказка" id="67"/>
+
+						<ChildItems>
+							<InputField name="ТаблицаУчастниковПроектаИмя" id="68">
+								<DataPath>УчастникиПроекта.Имя</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаУчастниковПроектаИмяКонтекстноеМеню" id="69"/>
+								<ExtendedTooltip name="ТаблицаУчастниковПроектаИмяРасширеннаяПодсказка" id="70"/>
+							</InputField>
+							<InputField name="ТаблицаУчастниковПроектаРоль" id="71">
+								<DataPath>УчастникиПроекта.Роль</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаУчастниковПроектаРольКонтекстноеМеню" id="72"/>
+								<ExtendedTooltip name="ТаблицаУчастниковПроектаРольРасширеннаяПодсказка" id="73"/>
+							</InputField>
+							<InputField name="ТаблицаУчастниковПроектаEmail" id="74">
+								<DataPath>УчастникиПроекта.Email</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаУчастниковПроектаEmailКонтекстноеМеню" id="75"/>
+								<ExtendedTooltip name="ТаблицаУчастниковПроектаEmailРасширеннаяПодсказка" id="76"/>
+							</InputField>
+							<InputField name="ТаблицаУчастниковПроектаДатаНачала" id="77">
+								<DataPath>УчастникиПроекта.ДатаНачала</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаУчастниковПроектаДатаНачалаКонтекстноеМеню" id="78"/>
+								<ExtendedTooltip name="ТаблицаУчастниковПроектаДатаНачалаРасширеннаяПодсказка" id="79"/>
+							</InputField>
+							<InputField name="ТаблицаУчастниковПроектаДатаОкончания" id="80">
+								<DataPath>УчастникиПроекта.ДатаОкончания</DataPath>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ТаблицаУчастниковПроектаДатаОкончанияКонтекстноеМеню" id="81"/>
+								<ExtendedTooltip name="ТаблицаУчастниковПроектаДатаОкончанияРасширеннаяПодсказка" id="82"/>
+							</InputField>
+						</ChildItems>
+					</Table>
+					<ButtonGroup name="ГруппаКнопокУчастников" id="83">
+						<Group>Horizontal</Group>
+						<ExtendedTooltip name="ГруппаКнопокУчастниковРасширеннаяПодсказка" id="84"/>
+						<ChildItems>
+							<Button name="КнопкаДобавитьУчастника" id="85">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.ДобавитьУчастника</CommandName>
+								<Width>20</Width>
+								<Picture>
+									<xr:Ref>StdPicture.User</xr:Ref>
+									<xr:LoadTransparent>true</xr:LoadTransparent>
+								</Picture>
+								<Representation>PictureAndText</Representation>
+
+								<ExtendedTooltip name="КнопкаДобавитьУчастникаExtendedTooltip" id="86"/>
+							</Button>
+							<Button name="КнопкаУдалитьУчастника" id="87">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.УдалитьУчастника</CommandName>
+								<Width>20</Width>
+								<Picture>
+									<xr:Ref>StdPicture.MarkToDelete</xr:Ref>
+									<xr:LoadTransparent>true</xr:LoadTransparent>
+								</Picture>
+								<Representation>PictureAndText</Representation>
+
+								<ExtendedTooltip name="КнопкаУдалитьУчастникаExtendedTooltip" id="88"/>
+							</Button>
+						</ChildItems>
+					</ButtonGroup>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
+		<UsualGroup name="ГруппаКнопокСохранения" id="89">
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+
+			<ExtendedTooltip name="ГруппаКнопокСохраненияРасширеннаяПодсказка" id="90"/>
+			<ChildItems>
+				<Button name="КнопкаСохранитьПроект" id="91">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.СохранитьПроект</CommandName>
+					<Width>15</Width>
+					<Picture>
+						<xr:Ref>StdPicture.WriteAndClose</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="КнопкаСохранитьПроектExtendedTooltip" id="92"/>
+				</Button>
+				<Button name="КнопкаОтменитьПроект" id="93">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ОтменитьПроект</CommandName>
+					<Width>15</Width>
+					<Picture>
+						<xr:Ref>StdPicture.Close</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="КнопкаОтменитьПроектExtendedTooltip" id="94"/>
+				</Button>
+				<Button name="КнопкаПросмотрЗадач" id="95">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ПросмотрЗадач</CommandName>
+					<Width>15</Width>
+					<Picture>
+						<xr:Ref>StdPicture.Report</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="КнопкаПросмотрЗадачExtendedTooltip" id="96"/>
+				</Button>
+				<Button name="КнопкаИсторияИзменений" id="97">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ИсторияИзменений</CommandName>
+					<Width>15</Width>
+					<Picture>
+						<xr:Ref>StdPicture.Information</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="КнопкаИсторияИзмененийExtendedTooltip" id="98"/>
+				</Button>
+				<Button name="КнопкаЭкспортПроекта" id="99">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ЭкспортПроекта</CommandName>
+					<Width>15</Width>
+
+					<ExtendedTooltip name="КнопкаЭкспортПроектаExtendedTooltip" id="100"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>ExternalDataProcessorObject.УправлениеПроектами</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+		<Attribute name="РежимСоздания" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>РежимСоздания</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>РежимСоздания</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>РежимСоздания</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИмяОсновнойФормы" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ИмяОсновнойФормы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ИмяОсновнойФормы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>ИмяОсновнойФормы</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ПроектИД" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ПроектИД</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ПроектИД</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>ПроектИД</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Код" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Код</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Код</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Код</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Название" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Название</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Название</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Название</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Описание" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Описание</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Описание</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Описание</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Статус" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Статус</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Статус</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Статус</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Приоритет" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Приоритет</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Приоритет</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Приоритет</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Прогресс" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Прогресс</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Прогресс</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Прогресс</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ДатаНачала" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ДатаНачала</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ДатаНачала</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>ДатаНачала</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ДатаОкончания" id="13">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ДатаОкончания</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ДатаОкончания</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>ДатаОкончания</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Бюджет" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Бюджет</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Бюджет</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Бюджет</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ФактическиеЗатраты" id="15">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ФактическиеЗатраты</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ФактическиеЗатраты</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>ФактическиеЗатраты</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="РуководительПроекта" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>РуководительПроекта</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>РуководительПроекта</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>РуководительПроекта</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Заказчик" id="17">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заказчик</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заказчик</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Заказчик</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="УчастникиПроекта" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>УчастникиПроекта</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>УчастникиПроекта</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Имя" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Имя</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Ім'я</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Роль" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Роль</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Роль</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Email" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Email</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Email</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="ДатаНачала" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата начала</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Дата початку</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>DateTime</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="ДатаОкончания" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата окончания</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Дата закінчення</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>DateTime</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="СохранитьПроект" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранить</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Зберегти</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.WriteAndClose</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Shortcut>Ctrl+S</Shortcut>
+			<Action>СохранитьПроект</Action>
+		</Command>
+		<Command name="ОтменитьПроект" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відміна</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Close</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Shortcut>Escape</Shortcut>
+			<Action>ОтменитьПроект</Action>
+		</Command>
+		<Command name="ДобавитьУчастника" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Добавить участника</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Додати учасника</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.User</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>ДобавитьУчастника</Action>
+		</Command>
+		<Command name="УдалитьУчастника" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Удалить участника</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Видалити учасника</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.MarkToDelete</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>УдалитьУчастника</Action>
+		</Command>
+		<Command name="РассчитатьБюджет" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Рассчитать бюджет</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Розрахувати бюджет</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.ExecuteTask</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>РассчитатьБюджет</Action>
+		</Command>
+		<Command name="ПросмотрЗадач" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Просмотр задач</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перегляд задач</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Report</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>ПросмотрЗадач</Action>
+		</Command>
+		<Command name="ИсторияИзменений" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>История изменений</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Історія змін</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Information</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>ИсторияИзменений</Action>
+		</Command>
+		<Command name="ЭкспортПроекта" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Экспорт проекта</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Експорт проекту</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ЭкспортПроекта</Action>
+		</Command>
+	</Commands>
+</Form>

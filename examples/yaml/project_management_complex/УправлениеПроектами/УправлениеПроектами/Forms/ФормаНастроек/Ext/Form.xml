@@ -1,0 +1,831 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcssch="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:mxl="http://v8.1c.ru/8.2/data/spreadsheet" xmlns:pl="http://v8.1c.ru/8.3/data/planner" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.11">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<LabelDecoration name="ЗаголовокНастроек" id="1">
+			<Title formatted="false">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки системы управления проектами</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Налаштування системи управління проектами</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Project Management System Settings</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ЗаголовокНастроекКонтекстноеМеню" id="2"/>
+			<ExtendedTooltip name="ЗаголовокНастроекРасширеннаяПодсказка" id="3"/>
+
+		</LabelDecoration>
+		<Pages name="СекцииНастроек" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>СекцииНастроек</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>СекцииНастроек</v8:content>
+				</v8:item>
+			</Title>
+			<PagesRepresentation>TabsOnTop</PagesRepresentation>
+			<ExtendedTooltip name="СекцииНастроекРасширеннаяПодсказка" id="5"/>
+			<ChildItems>
+				<Page name="СтраницаОбщиеНастройки" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Общие</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Загальні</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаОбщиеНастройкиРасширеннаяПодсказка" id="7"/>
+					<ChildItems>
+					<UsualGroup name="ГруппаОтображения" id="8">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Отображение</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Відображення</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Display</v8:content>
+							</v8:item>
+						</Title>
+						<Group>Vertical</Group>
+						<Representation>WeakSeparation</Representation>
+						<ShowTitle>true</ShowTitle>
+
+						<ExtendedTooltip name="ГруппаОтображенияРасширеннаяПодсказка" id="9"/>
+						<ChildItems>
+							<InputField name="ПолеРежимОтображения" id="10">
+								<DataPath>Объект.РежимОтображения</DataPath>
+								<Width>25</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Режим отображения</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Режим відображення</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Display Mode</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ChoiceList>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Таблица</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">Table</Value>
+										</xr:Value>
+									</xr:Item>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Карточки</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">Cards</Value>
+										</xr:Value>
+									</xr:Item>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Канбан-доска</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">Kanban</Value>
+										</xr:Value>
+									</xr:Item>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Диаграмма Ганта</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">Gantt</Value>
+										</xr:Value>
+									</xr:Item>
+								</ChoiceList>
+								<ListChoiceMode>true</ListChoiceMode>
+								<ContextMenu name="ПолеРежимОтображенияКонтекстноеМеню" id="11"/>
+								<ExtendedTooltip name="ПолеРежимОтображенияРасширеннаяПодсказка" id="12"/>
+
+							</InputField>
+							<InputField name="ПолеЦветовойРежим" id="13">
+								<DataPath>Объект.ЦветовойРежим</DataPath>
+								<Width>25</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Цветовой режим</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Кольоровий режим</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Color Mode</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ChoiceList>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Светлая тема</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">Light</Value>
+										</xr:Value>
+									</xr:Item>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Темная тема</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">Dark</Value>
+										</xr:Value>
+									</xr:Item>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Синяя тема</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">Blue</Value>
+										</xr:Value>
+									</xr:Item>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Зеленая тема</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">Green</Value>
+										</xr:Value>
+									</xr:Item>
+								</ChoiceList>
+								<ListChoiceMode>true</ListChoiceMode>
+								<ContextMenu name="ПолеЦветовойРежимКонтекстноеМеню" id="14"/>
+								<ExtendedTooltip name="ПолеЦветовойРежимРасширеннаяПодсказка" id="15"/>
+
+							</InputField>
+							<InputField name="ПолеРазмерШрифта" id="16">
+								<DataPath>Объект.РазмерШрифта</DataPath>
+								<Width>15</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Размер шрифта</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Розмір шрифту</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Font Size</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ПолеРазмерШрифтаКонтекстноеМеню" id="17"/>
+								<ExtendedTooltip name="ПолеРазмерШрифтаРасширеннаяПодсказка" id="18"/>
+
+							</InputField>
+						</ChildItems>
+					</UsualGroup>
+					<UsualGroup name="ГруппаАвтообновления" id="19">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Автообновление</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Автооновлення</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Auto-refresh</v8:content>
+							</v8:item>
+						</Title>
+						<Group>Vertical</Group>
+						<Representation>WeakSeparation</Representation>
+						<ShowTitle>true</ShowTitle>
+
+						<ExtendedTooltip name="ГруппаАвтообновленияРасширеннаяПодсказка" id="20"/>
+						<ChildItems>
+							<InputField name="ПолеАвтообновлениеСекунд" id="21">
+								<DataPath>Объект.АвтообновлениеСекунд</DataPath>
+								<Width>20</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Интервал обновления (сек)</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Інтервал оновлення (сек)</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Refresh Interval (sec)</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ПолеАвтообновлениеСекундКонтекстноеМеню" id="22"/>
+								<ExtendedTooltip name="ПолеАвтообновлениеСекундРасширеннаяПодсказка" id="23"/>
+
+							</InputField>
+							<LabelDecoration name="ПодсказкаАвтообновление" id="24">
+								<Title formatted="false">
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Рекомендуемое значение: 30-60 секунд. 0 - отключить автообновление</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Рекомендоване значення: 30-60 секунд. 0 - вимкнути автооновлення</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Recommended value: 30-60 seconds. 0 - disable auto-refresh</v8:content>
+									</v8:item>
+								</Title>
+								<ContextMenu name="ПодсказкаАвтообновлениеКонтекстноеМеню" id="25"/>
+								<ExtendedTooltip name="ПодсказкаАвтообновлениеРасширеннаяПодсказка" id="26"/>
+
+							</LabelDecoration>
+						</ChildItems>
+					</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаФильтрыПоУмолчанию" id="27">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Фильтры по умолчанию</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Фільтри за замовчуванням</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаФильтрыПоУмолчаниюРасширеннаяПодсказка" id="28"/>
+					<ChildItems>
+					<UsualGroup name="ГруппаФильтровПоУмолчанию" id="29">
+						<Group>Vertical</Group>
+						<Representation>None</Representation>
+						<ShowTitle>false</ShowTitle>
+
+						<ExtendedTooltip name="ГруппаФильтровПоУмолчаниюРасширеннаяПодсказка" id="30"/>
+						<ChildItems>
+							<CheckBoxField name="ФлажокПоказыватьЗакрытыеНастройка" id="31">
+								<DataPath>Объект.ПоказыватьЗакрытые</DataPath>
+
+								<TitleLocation>Right</TitleLocation>
+								<CheckBoxType>Auto</CheckBoxType>
+								<ContextMenu name="ФлажокПоказыватьЗакрытыеНастройкаКонтекстноеМеню" id="32"/>
+								<ExtendedTooltip name="ФлажокПоказыватьЗакрытыеНастройкаРасширеннаяПодсказка" id="33"/>
+
+							</CheckBoxField>
+							<CheckBoxField name="ФлажокПоказыватьАрхивныеНастройка" id="34">
+								<DataPath>Объект.ПоказыватьАрхивные</DataPath>
+
+								<TitleLocation>Right</TitleLocation>
+								<CheckBoxType>Auto</CheckBoxType>
+								<ContextMenu name="ФлажокПоказыватьАрхивныеНастройкаКонтекстноеМеню" id="35"/>
+								<ExtendedTooltip name="ФлажокПоказыватьАрхивныеНастройкаРасширеннаяПодсказка" id="36"/>
+
+							</CheckBoxField>
+							<CheckBoxField name="ФлажокГруппировкаПоПроектамНастройка" id="37">
+								<DataPath>Объект.ГруппировкаПоПроектам</DataPath>
+
+								<TitleLocation>Right</TitleLocation>
+								<CheckBoxType>Auto</CheckBoxType>
+								<ContextMenu name="ФлажокГруппировкаПоПроектамНастройкаКонтекстноеМеню" id="38"/>
+								<ExtendedTooltip name="ФлажокГруппировкаПоПроектамНастройкаРасширеннаяПодсказка" id="39"/>
+
+							</CheckBoxField>
+						</ChildItems>
+					</UsualGroup>
+					<LabelDecoration name="РазделительФильтров" id="40">
+						<Title formatted="false">
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>――――――――――――――――――――――――――――――――</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>――――――――――――――――――――――――――――――――</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>――――――――――――――――――――――――――――――――</v8:content>
+							</v8:item>
+						</Title>
+						<ContextMenu name="РазделительФильтровКонтекстноеМеню" id="41"/>
+						<ExtendedTooltip name="РазделительФильтровРасширеннаяПодсказка" id="42"/>
+
+					</LabelDecoration>
+					<InputField name="ПолеФильтрСтатусПоУмолчанию" id="43">
+						<DataPath>Объект.ФильтрСтатус</DataPath>
+						<Width>25</Width>
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Статус по умолчанию</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Статус за замовчуванням</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Default Status</v8:content>
+							</v8:item>
+						</Title>
+						<EditMode>EnterOnInput</EditMode>
+						<ChoiceList>
+							<xr:Item>
+								<xr:Presentation/>
+								<xr:CheckState>0</xr:CheckState>
+								<xr:Value xsi:type="FormChoiceListDesTimeValue">
+									<Presentation>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>&lt;Все&gt;</v8:content>
+										</v8:item>
+									</Presentation>
+									<Value xsi:type="xs:string">All</Value>
+								</xr:Value>
+							</xr:Item>
+							<xr:Item>
+								<xr:Presentation/>
+								<xr:CheckState>0</xr:CheckState>
+								<xr:Value xsi:type="FormChoiceListDesTimeValue">
+									<Presentation>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Новая</v8:content>
+										</v8:item>
+									</Presentation>
+									<Value xsi:type="xs:string">New</Value>
+								</xr:Value>
+							</xr:Item>
+							<xr:Item>
+								<xr:Presentation/>
+								<xr:CheckState>0</xr:CheckState>
+								<xr:Value xsi:type="FormChoiceListDesTimeValue">
+									<Presentation>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>В работе</v8:content>
+										</v8:item>
+									</Presentation>
+									<Value xsi:type="xs:string">InProgress</Value>
+								</xr:Value>
+							</xr:Item>
+							<xr:Item>
+								<xr:Presentation/>
+								<xr:CheckState>0</xr:CheckState>
+								<xr:Value xsi:type="FormChoiceListDesTimeValue">
+									<Presentation>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Выполнена</v8:content>
+										</v8:item>
+									</Presentation>
+									<Value xsi:type="xs:string">Done</Value>
+								</xr:Value>
+							</xr:Item>
+						</ChoiceList>
+						<ListChoiceMode>true</ListChoiceMode>
+						<ContextMenu name="ПолеФильтрСтатусПоУмолчаниюКонтекстноеМеню" id="44"/>
+						<ExtendedTooltip name="ПолеФильтрСтатусПоУмолчаниюРасширеннаяПодсказка" id="45"/>
+
+					</InputField>
+					<InputField name="ПолеФильтрПриоритетПоУмолчанию" id="46">
+						<DataPath>Объект.ФильтрПриоритет</DataPath>
+						<Width>25</Width>
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Приоритет по умолчанию</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Пріоритет за замовчуванням</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Default Priority</v8:content>
+							</v8:item>
+						</Title>
+						<EditMode>EnterOnInput</EditMode>
+						<ChoiceList>
+							<xr:Item>
+								<xr:Presentation/>
+								<xr:CheckState>0</xr:CheckState>
+								<xr:Value xsi:type="FormChoiceListDesTimeValue">
+									<Presentation>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>&lt;Все&gt;</v8:content>
+										</v8:item>
+									</Presentation>
+									<Value xsi:type="xs:string">All</Value>
+								</xr:Value>
+							</xr:Item>
+							<xr:Item>
+								<xr:Presentation/>
+								<xr:CheckState>0</xr:CheckState>
+								<xr:Value xsi:type="FormChoiceListDesTimeValue">
+									<Presentation>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Низкий</v8:content>
+										</v8:item>
+									</Presentation>
+									<Value xsi:type="xs:string">Low</Value>
+								</xr:Value>
+							</xr:Item>
+							<xr:Item>
+								<xr:Presentation/>
+								<xr:CheckState>0</xr:CheckState>
+								<xr:Value xsi:type="FormChoiceListDesTimeValue">
+									<Presentation>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Средний</v8:content>
+										</v8:item>
+									</Presentation>
+									<Value xsi:type="xs:string">Medium</Value>
+								</xr:Value>
+							</xr:Item>
+							<xr:Item>
+								<xr:Presentation/>
+								<xr:CheckState>0</xr:CheckState>
+								<xr:Value xsi:type="FormChoiceListDesTimeValue">
+									<Presentation>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Высокий</v8:content>
+										</v8:item>
+									</Presentation>
+									<Value xsi:type="xs:string">High</Value>
+								</xr:Value>
+							</xr:Item>
+						</ChoiceList>
+						<ListChoiceMode>true</ListChoiceMode>
+						<ContextMenu name="ПолеФильтрПриоритетПоУмолчаниюКонтекстноеМеню" id="47"/>
+						<ExtendedTooltip name="ПолеФильтрПриоритетПоУмолчаниюРасширеннаяПодсказка" id="48"/>
+
+					</InputField>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаЭкспортИмпорт" id="49">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Экспорт/Импорт</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Експорт/Імпорт</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаЭкспортИмпортРасширеннаяПодсказка" id="50"/>
+					<ChildItems>
+					<UsualGroup name="ГруппаНастроекЭкспорта" id="51">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Настройки экспорта</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Налаштування експорту</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Export Settings</v8:content>
+							</v8:item>
+						</Title>
+						<Group>Vertical</Group>
+						<Representation>WeakSeparation</Representation>
+						<ShowTitle>true</ShowTitle>
+
+						<ExtendedTooltip name="ГруппаНастроекЭкспортаРасширеннаяПодсказка" id="52"/>
+						<ChildItems>
+							<InputField name="ПолеПутьЭкспорта" id="53">
+								<DataPath>Объект.ПутьЭкспорта</DataPath>
+								<Width>50</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Путь экспорта по умолчанию</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Шлях експорту за замовчуванням</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Default Export Path</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ContextMenu name="ПолеПутьЭкспортаКонтекстноеМеню" id="54"/>
+								<ExtendedTooltip name="ПолеПутьЭкспортаРасширеннаяПодсказка" id="55"/>
+
+							</InputField>
+							<InputField name="ПолеФорматЭкспорта" id="56">
+								<DataPath>Объект.ФорматЭкспорта</DataPath>
+								<Width>20</Width>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Формат экспорта</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Формат експорту</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>Export Format</v8:content>
+									</v8:item>
+								</Title>
+								<EditMode>EnterOnInput</EditMode>
+								<ChoiceList>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>XML</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">XML</Value>
+										</xr:Value>
+									</xr:Item>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>JSON</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">JSON</Value>
+										</xr:Value>
+									</xr:Item>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>CSV</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">CSV</Value>
+										</xr:Value>
+									</xr:Item>
+									<xr:Item>
+										<xr:Presentation/>
+										<xr:CheckState>0</xr:CheckState>
+										<xr:Value xsi:type="FormChoiceListDesTimeValue">
+											<Presentation>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Excel</v8:content>
+												</v8:item>
+											</Presentation>
+											<Value xsi:type="xs:string">Excel</Value>
+										</xr:Value>
+									</xr:Item>
+								</ChoiceList>
+								<ListChoiceMode>true</ListChoiceMode>
+								<ContextMenu name="ПолеФорматЭкспортаКонтекстноеМеню" id="57"/>
+								<ExtendedTooltip name="ПолеФорматЭкспортаРасширеннаяПодсказка" id="58"/>
+
+							</InputField>
+						</ChildItems>
+					</UsualGroup>
+					<LabelDecoration name="ИнформацияОбЭкспорте" id="59">
+						<Title formatted="false">
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Экспорт позволяет выгружать данные проектов, задач и ресурсов в различные форматы для обработки в других системах</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Експорт дозволяє вивантажувати дані проектів, задач та ресурсів у різні формати для обробки в інших системах</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Export allows you to unload project, task and resource data to various formats for processing in other systems</v8:content>
+							</v8:item>
+						</Title>
+						<ContextMenu name="ИнформацияОбЭкспортеКонтекстноеМеню" id="60"/>
+						<ExtendedTooltip name="ИнформацияОбЭкспортеРасширеннаяПодсказка" id="61"/>
+
+					</LabelDecoration>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
+		<UsualGroup name="ГруппаКнопокНастроек" id="62">
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+
+			<ExtendedTooltip name="ГруппаКнопокНастроекРасширеннаяПодсказка" id="63"/>
+			<ChildItems>
+				<Button name="КнопкаСохранитьНастройки" id="64">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.СохранитьНастройки</CommandName>
+					<Width>18</Width>
+					<Picture>
+						<xr:Ref>StdPicture.WriteAndClose</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="КнопкаСохранитьНастройкиExtendedTooltip" id="65"/>
+				</Button>
+				<Button name="КнопкаОтменитьНастройки" id="66">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ОтменитьНастройки</CommandName>
+					<Width>18</Width>
+					<Picture>
+						<xr:Ref>StdPicture.Close</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="КнопкаОтменитьНастройкиExtendedTooltip" id="67"/>
+				</Button>
+				<Button name="КнопкаСброситьПоУмолчанию" id="68">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.СброситьПоУмолчанию</CommandName>
+					<Width>18</Width>
+					<Picture>
+						<xr:Ref>StdPicture.Refresh</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="КнопкаСброситьПоУмолчаниюExtendedTooltip" id="69"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>ExternalDataProcessorObject.УправлениеПроектами</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+		<Attribute name="ИмяОсновнойФормы" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ИмяОсновнойФормы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ИмяОсновнойФормы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>ИмяОсновнойФормы</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="СохранитьНастройки" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранить</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Зберегти</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.WriteAndClose</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Shortcut>Ctrl+S</Shortcut>
+			<Action>СохранитьНастройки</Action>
+		</Command>
+		<Command name="ОтменитьНастройки" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відміна</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Close</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Shortcut>Escape</Shortcut>
+			<Action>ОтменитьНастройки</Action>
+		</Command>
+		<Command name="СброситьПоУмолчанию" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сбросить по умолчанию</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Скинути за замовчуванням</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Refresh</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>СброситьПоУмолчанию</Action>
+		</Command>
+	</Commands>
+</Form>

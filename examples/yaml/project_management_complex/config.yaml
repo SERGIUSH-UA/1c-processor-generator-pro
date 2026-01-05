@@ -656,6 +656,50 @@ forms:
         type: boolean
       - name: ИмяОсновнойФормы
         type: string
+      # Атрибуты для редактирования данных проекта
+      - name: ПроектИД
+        type: string
+        length: 36
+        synonym: "ID проекта | ID проекту | Project ID"
+      - name: Код
+        type: string
+        length: 20
+        synonym: "Код | Код | Code"
+      - name: Название
+        type: string
+        synonym: "Название | Назва | Name"
+      - name: Описание
+        type: string
+        synonym: "Описание | Опис | Description"
+      - name: Статус
+        type: string
+        length: 50
+        synonym: "Статус | Статус | Status"
+      - name: Приоритет
+        type: string
+        length: 20
+        synonym: "Приоритет | Пріоритет | Priority"
+      - name: Прогресс
+        type: number
+        synonym: "Прогресс (%) | Прогрес (%) | Progress (%)"
+      - name: ДатаНачала
+        type: date
+        synonym: "Дата начала | Дата початку | Start Date"
+      - name: ДатаОкончания
+        type: date
+        synonym: "Дата окончания | Дата закінчення | End Date"
+      - name: Бюджет
+        type: number
+        synonym: "Бюджет | Бюджет | Budget"
+      - name: ФактическиеЗатраты
+        type: number
+        synonym: "Фактические затраты | Фактичні витрати | Actual Cost"
+      - name: РуководительПроекта
+        type: string
+        synonym: "Руководитель проекта | Керівник проекту | Project Manager"
+      - name: Заказчик
+        type: string
+        synonym: "Заказчик | Замовник | Customer"
     value_tables:
       - name: УчастникиПроекта
         synonym: "Участники проекта | Учасники проекту | Project Members"
@@ -748,12 +792,12 @@ forms:
                     elements:
                       - type: InputField
                         name: ПолеПроектКод
-                        attribute: Проекты.Код
+                        attribute: Код
                         width: 15
                         title: "Код проекта | Код проекту | Project Code"
                       - type: InputField
                         name: ПолеПроектНазвание
-                        attribute: Проекты.Название
+                        attribute: Название
                         width: 40
                         title: "Название проекта | Назва проекту | Project Name"
                   - type: UsualGroup
@@ -763,7 +807,7 @@ forms:
                     elements:
                       - type: InputField
                         name: ПолеПроектОписание
-                        attribute: Проекты.Описание
+                        attribute: Описание
                         title_location: Top
                         width: 60
                         height: 5
@@ -777,7 +821,7 @@ forms:
                     elements:
                       - type: InputField
                         name: ПолеПроектСтатус
-                        attribute: Проекты.Статус
+                        attribute: Статус
                         width: 20
                         title: "Статус | Статус | Status"
                         choice_list:
@@ -788,7 +832,7 @@ forms:
                           - {v: Cancelled, ru: Отменен}
                       - type: InputField
                         name: ПолеПроектПриоритет
-                        attribute: Проекты.Приоритет
+                        attribute: Приоритет
                         width: 15
                         title: "Приоритет | Пріоритет | Priority"
                         choice_list:
@@ -798,7 +842,7 @@ forms:
                           - {v: Critical, ru: Критический}
                       - type: InputField
                         name: ПолеПроектПрогресс
-                        attribute: Проекты.Прогресс
+                        attribute: Прогресс
                         width: 10
                         title: "Прогресс (%) | Прогрес (%) | Progress (%)"
           - name: СтраницаДатыИБюджет
@@ -812,12 +856,12 @@ forms:
                 elements:
                   - type: InputField
                     name: ПолеПроектДатаНачала
-                    attribute: Проекты.ДатаНачала
+                    attribute: ДатаНачала
                     width: 20
                     title: "Дата начала | Дата початку | Start Date"
                   - type: InputField
                     name: ПолеПроектДатаОкончания
-                    attribute: Проекты.ДатаОкончания
+                    attribute: ДатаОкончания
                     width: 20
                     title: "Дата окончания | Дата закінчення | End Date"
               - type: UsualGroup
@@ -828,12 +872,12 @@ forms:
                 elements:
                   - type: InputField
                     name: ПолеПроектБюджет
-                    attribute: Проекты.Бюджет
+                    attribute: Бюджет
                     width: 20
                     title: "Бюджет | Бюджет | Budget"
                   - type: InputField
                     name: ПолеПроектФактическиеЗатраты
-                    attribute: Проекты.ФактическиеЗатраты
+                    attribute: ФактическиеЗатраты
                     width: 20
                     read_only: true
                     title: "Фактические затраты | Фактичні витрати | Actual Cost"
@@ -852,12 +896,12 @@ forms:
                 elements:
                   - type: InputField
                     name: ПолеПроектРуководитель
-                    attribute: Проекты.РуководительПроекта
+                    attribute: РуководительПроекта
                     width: 25
                     title: "Руководитель проекта | Керівник проекту | Project Manager"
                   - type: InputField
                     name: ПолеПроектЗаказчик
-                    attribute: Проекты.Заказчик
+                    attribute: Заказчик
                     width: 25
                     title: "Заказчик | Замовник | Customer"
               - type: Table
@@ -926,6 +970,60 @@ forms:
         type: boolean
       - name: ИмяОсновнойФормы
         type: string
+      # Атрибуты для редактирования данных задачи
+      - name: ЗадачаИД
+        type: string
+        length: 36
+        synonym: "ID задачи | ID задачі | Task ID"
+      - name: ПроектИД
+        type: string
+        length: 36
+        synonym: "ID проекта | ID проекту | Project ID"
+      - name: Название
+        type: string
+        synonym: "Название | Назва | Name"
+      - name: Описание
+        type: string
+        synonym: "Описание | Опис | Description"
+      - name: Статус
+        type: string
+        length: 50
+        synonym: "Статус | Статус | Status"
+      - name: Приоритет
+        type: string
+        length: 20
+        synonym: "Приоритет | Пріоритет | Priority"
+      - name: Тип
+        type: string
+        length: 50
+        synonym: "Тип | Тип | Type"
+      - name: Исполнитель
+        type: string
+        synonym: "Исполнитель | Виконавець | Assignee"
+      - name: Автор
+        type: string
+        synonym: "Автор | Автор | Author"
+      - name: ДатаСоздания
+        type: date
+        synonym: "Дата создания | Дата створення | Created Date"
+      - name: ДатаНачала
+        type: date
+        synonym: "Дата начала | Дата початку | Start Date"
+      - name: ДатаОкончания
+        type: date
+        synonym: "Дата окончания | Дата закінчення | Due Date"
+      - name: ФактическоеВремя
+        type: number
+        synonym: "Фактическое время (ч) | Фактичний час (год) | Actual Time (h)"
+      - name: ПлановоеВремя
+        type: number
+        synonym: "Плановое время (ч) | Плановий час (год) | Estimated Time (h)"
+      - name: ЗавершеноПроцентов
+        type: number
+        synonym: "Завершено (%) | Завершено (%) | Completed (%)"
+      - name: Теги
+        type: string
+        synonym: "Теги | Теги | Tags"
     value_tables:
       - name: КомментарииЗадачи
         synonym: "Комментарии задачи | Коментарі задачі | Task Comments"
@@ -996,12 +1094,12 @@ forms:
             elements:
               - type: InputField
                 name: ПолеЗадачаНазвание
-                attribute: ЗадачиПроекта.Название
+                attribute: Название
                 width: 60
                 title: "Название задачи | Назва задачі | Task Name"
               - type: InputField
                 name: ПолеЗадачаОписание
-                attribute: ЗадачиПроекта.Описание
+                attribute: Описание
                 title_location: Top
                 width: 60
                 height: 6
@@ -1014,7 +1112,7 @@ forms:
                 elements:
                   - type: InputField
                     name: ПолеЗадачаСтатус
-                    attribute: ЗадачиПроекта.Статус
+                    attribute: Статус
                     width: 20
                     title: "Статус | Статус | Status"
                     choice_list:
@@ -1025,7 +1123,7 @@ forms:
                       - {v: Closed, ru: Закрыта}
                   - type: InputField
                     name: ПолеЗадачаПриоритет
-                    attribute: ЗадачиПроекта.Приоритет
+                    attribute: Приоритет
                     width: 15
                     title: "Приоритет | Пріоритет | Priority"
                     choice_list:
@@ -1035,7 +1133,7 @@ forms:
                       - {v: Critical, ru: Критический}
                   - type: InputField
                     name: ПолеЗадачаТип
-                    attribute: ЗадачиПроекта.Тип
+                    attribute: Тип
                     width: 20
                     title: "Тип задачи | Тип задачі | Task Type"
                     choice_list:
@@ -1050,12 +1148,12 @@ forms:
                 elements:
                   - type: InputField
                     name: ПолеЗадачаИсполнитель
-                    attribute: ЗадачиПроекта.Исполнитель
+                    attribute: Исполнитель
                     width: 25
                     title: "Исполнитель | Виконавець | Assignee"
                   - type: InputField
                     name: ПолеЗадачаАвтор
-                    attribute: ЗадачиПроекта.Автор
+                    attribute: Автор
                     width: 25
                     read_only: true
                     title: "Автор | Автор | Author"
@@ -1065,18 +1163,18 @@ forms:
                 elements:
                   - type: InputField
                     name: ПолеЗадачаДатаСоздания
-                    attribute: ЗадачиПроекта.ДатаСоздания
+                    attribute: ДатаСоздания
                     width: 18
                     read_only: true
                     title: "Дата создания | Дата створення | Created Date"
                   - type: InputField
                     name: ПолеЗадачаДатаНачала
-                    attribute: ЗадачиПроекта.ДатаНачала
+                    attribute: ДатаНачала
                     width: 18
                     title: "Дата начала | Дата початку | Start Date"
                   - type: InputField
                     name: ПолеЗадачаДатаОкончания
-                    attribute: ЗадачиПроекта.ДатаОкончания
+                    attribute: ДатаОкончания
                     width: 18
                     title: "Срок выполнения | Термін виконання | Due Date"
               - type: UsualGroup
@@ -1085,23 +1183,23 @@ forms:
                 elements:
                   - type: InputField
                     name: ПолеЗадачаПлановоеВремя
-                    attribute: ЗадачиПроекта.ПлановоеВремя
+                    attribute: ПлановоеВремя
                     width: 18
                     title: "Плановое время (ч) | Плановий час (год) | Estimated Time (h)"
                   - type: InputField
                     name: ПолеЗадачаФактическоеВремя
-                    attribute: ЗадачиПроекта.ФактическоеВремя
+                    attribute: ФактическоеВремя
                     width: 18
                     read_only: true
                     title: "Фактическое время (ч) | Фактичний час (год) | Actual Time (h)"
                   - type: InputField
                     name: ПолеЗадачаЗавершеноПроцентов
-                    attribute: ЗадачиПроекта.ЗавершеноПроцентов
+                    attribute: ЗавершеноПроцентов
                     width: 18
                     title: "Завершено (%) | Завершено (%) | Completed (%)"
               - type: InputField
                 name: ПолеЗадачаТеги
-                attribute: ЗадачиПроекта.Теги
+                attribute: Теги
                 width: 60
                 input_hint: Введите теги через запятую
                 title: "Теги | Теги | Tags"
