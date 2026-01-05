@@ -5,7 +5,7 @@
 ### Генерація обробок 1С за допомогою AI — від ідеї до .epf за 30 секунд
 
 [![GitHub stars](https://img.shields.io/github/stars/SERGIUSH-UA/1c-processor-generator-pro?style=social)](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/stargazers)
-[![Version](https://img.shields.io/badge/version-2.60.1-blue.svg)](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/releases)
+[![Version](https://img.shields.io/badge/version-2.71.6-blue.svg)](https://github.com/SERGIUSH-UA/1c-processor-generator-pro/releases)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10--3.14-3776ab.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
@@ -236,6 +236,6 @@ pip install -r requirements.txt
 
 Made with ❤️ by [SERGIUSH](https://github.com/SERGIUSH-UA)
 
-**v2.60.1** · 1C:Enterprise 8.3.25+
+**v2.71.6** · 1C:Enterprise 8.3.15+
 
 </div>
