@@ -287,10 +287,25 @@ VALID_TITLE_LOCATION = {"None", "Left", "Right", "Top", "Bottom", "Auto"}
 VALID_GROUP_DIRECTION = {"Horizontal", "Vertical"}
 VALID_REPRESENTATION = {"None", "NormalSeparation", "WeakSeparation", "StrongSeparation"}             
 VALID_TABLE_REPRESENTATION = {"list", "tree"}                        
+VALID_BUTTON_REPRESENTATION = {"Text", "Picture", "PictureAndText", "TextPicture"}            
+VALID_POPUP_REPRESENTATION = {"Picture", "Text", "PictureAndText", "TextPicture", "Auto"}            
 VALID_BEHAVIOR = {"Usual", "Collapsible"}
 VALID_RADIO_BUTTON_TYPE = {"RadioButton", "Tumbler"}
 VALID_PICTURE_SIZE = {"Proportionally", "Stretch", "AutoSize", "Tile", "RealSize"}
 VALID_CHART_TYPE = {"Line", "Area", "StackedArea", "Bar", "Bar3D", "Pie", "Pie3D", "Doughnut", "Radar", "Stock", "Funnel"}
+
+                                        
+VALID_INITIAL_TREE_VIEW = {"no_expand", "expand_top_level", "expand_all_levels"}                     
+VALID_CHOICE_MODE = {"QuickChoice", "Parameters", "BothWays"}              
+VALID_CHOICE_FOLDERS_AND_ITEMS = {"Folders", "Items", "FoldersAndItems", "folders", "items", "folders_and_items"}                           
+VALID_CHOICE_HISTORY_ON_INPUT = {"Auto", "DontUse", "UseAlways"}              
+VALID_PAGES_REPRESENTATION = {"TabsOnTop", "TabsOnBottom", "None"}         
+VALID_STRETCH = {"No", "Horizontally", "Vertically", "HorizontalAndVertically"}                            
+VALID_PLANNER_PERIOD = {"Day", "Week", "Month", "Year"}                
+VALID_GROUP_LAYOUT = {"Horizontal", "Vertical"}               
+VALID_WINDOW_OPENING_MODE = {"LockOwnerWindow", "LockWholeInterface"}        
+VALID_COMMAND_BAR_LOCATION = {"None", "Top", "Bottom"}        
+VALID_TIME_SCALE = {"Hour", "Day", "Week", "Month"}                
 
                                  
 ENUM_ALIASES = {
@@ -816,6 +831,28 @@ class ProcessorValidator:
                 f"Тільки одна форма може бути default."
             )
 
+                                                           
+        for form in self.processor.forms:
+            context = f"Форма '{form.name}'"
+
+                                          
+            if hasattr(form, 'window_opening_mode') and form.window_opening_mode:
+                is_valid, error = validate_enum(
+                    form.window_opening_mode, VALID_WINDOW_OPENING_MODE,
+                    'window_opening_mode', context
+                )
+                if not is_valid:
+                    self.errors.append(error)
+
+                                           
+            if hasattr(form, 'command_bar_location') and form.command_bar_location:
+                is_valid, error = validate_enum(
+                    form.command_bar_location, VALID_COMMAND_BAR_LOCATION,
+                    'command_bar_location', context
+                )
+                if not is_valid:
+                    self.errors.append(error)
+
                                                       
         from pathlib import Path
         for form in self.processor.forms:
@@ -1074,6 +1111,15 @@ class ProcessorValidator:
                 ('behavior', VALID_BEHAVIOR),
                 ('radio_button_type', VALID_RADIO_BUTTON_TYPE),
                 ('picture_size', VALID_PICTURE_SIZE),
+                                                        
+                ('initial_tree_view', VALID_INITIAL_TREE_VIEW),
+                ('choice_mode', VALID_CHOICE_MODE),
+                ('choice_folders_and_items', VALID_CHOICE_FOLDERS_AND_ITEMS),
+                ('choice_history_on_input', VALID_CHOICE_HISTORY_ON_INPUT),
+                ('stretch', VALID_STRETCH),
+                ('period', VALID_PLANNER_PERIOD),
+                ('group_layout', VALID_GROUP_LAYOUT),
+                ('time_scale', VALID_TIME_SCALE),
             ]
             for prop_name, valid_values in enum_checks:
                 if prop_name in props:
@@ -1083,14 +1129,31 @@ class ProcessorValidator:
                     if not is_valid:
                         self.errors.append(error)
 
-                                                                              
+                                                                       
             if 'representation' in props:
                 if elem.element_type == 'Table':
                     valid_repr = VALID_TABLE_REPRESENTATION
-                else:
+                elif elem.element_type == 'Button':
+                    valid_repr = VALID_BUTTON_REPRESENTATION
+                elif elem.element_type == 'Popup':
+                    valid_repr = VALID_POPUP_REPRESENTATION
+                elif elem.element_type == 'UsualGroup':
                     valid_repr = VALID_REPRESENTATION
+                else:
+                                                                       
+                    valid_repr = None
+
+                if valid_repr is not None:
+                    is_valid, error = validate_enum(
+                        props['representation'], valid_repr, 'representation', context
+                    )
+                    if not is_valid:
+                        self.errors.append(error)
+
+                                               
+            if 'pages_representation' in props:
                 is_valid, error = validate_enum(
-                    props['representation'], valid_repr, 'representation', context
+                    props['pages_representation'], VALID_PAGES_REPRESENTATION, 'pages_representation', context
                 )
                 if not is_valid:
                     self.errors.append(error)

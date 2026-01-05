@@ -162,8 +162,8 @@ Control form window behavior and appearance:
 
 | Property | Values | Description | Example |
 |----------|--------|-------------|---------|
-| `window_opening_mode` | `LockOwnerWindow`, `Independent`, `LockWholeInterface` | How form window opens | `LockOwnerWindow` for modal dialogs |
-| `command_bar_location` | `Top`, `Bottom`, `None`, `Auto` | Command bar position | `Bottom` for settings dialogs |
+| `window_opening_mode` | `LockOwnerWindow`, `LockWholeInterface` | How form window opens | `LockOwnerWindow` for modal dialogs |
+| `command_bar_location` | `None`, `Top`, `Bottom` | Command bar position | `Bottom` for settings dialogs |
 | `auto_title` | `true`, `false` | Auto-generate form title | `false` for custom titles |
 
 **YAML:**

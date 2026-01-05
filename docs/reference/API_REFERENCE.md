@@ -1132,8 +1132,8 @@ forms:
   hyperlink: boolean  # Make label clickable (v2.35.0+)
   formatted: boolean  # Enable HTML tags in title (v2.45.0+)
                       # Supports: <b>, <i>, <u>, <font color="...">
-  horizontal_align: string  # Left, Center, Right (v2.36.0+)
-  vertical_align: string    # Top, Center, Bottom (v2.36.0+)
+  horizontal_align: string  # Left, Center, Right, Auto (v2.36.0+)
+  vertical_align: string    # Top, Center, Bottom, Auto (v2.36.0+)
 
   # Font styling (v2.35.1+, fixed in v2.43.0)
   font:
@@ -1264,7 +1264,8 @@ forms:
   attribute: string  # Посилання на form_attribute (SpreadsheetDocument)
 
   # Optional properties
-  title_location: string          # None, Top, Left, Right, Bottom
+  title_location: string          # None, Top, Left, Right, Bottom, Auto
+  stretch: string                 # No, Horizontally, Vertically, HorizontalAndVertically
   vertical_scrollbar: boolean     # Show vertical scrollbar (default: true)
   horizontal_scrollbar: boolean   # Show horizontal scrollbar (default: true)
   show_grid: boolean              # Show cell grid (default: true)
@@ -1453,8 +1454,8 @@ Container for grouping form elements with visual styling, collapse support, and 
   show_in_header: boolean  # Default: true
 
   # Alignment (v2.36.0+ Phase 2)
-  horizontal_align: Left|Center|Right
-  vertical_align: Top|Center|Bottom
+  horizontal_align: Left|Center|Right|Auto
+  vertical_align: Top|Center|Bottom|Auto
 
   # Child columns (ONLY field types: LabelField, InputField, CheckBoxField, PictureField)
   elements:

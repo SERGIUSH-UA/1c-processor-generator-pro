@@ -260,13 +260,13 @@ conditional_appearances:
 
 ```yaml
 # Horizontal alignment
-horizontal_align: Right    # Left, Center, Right
+horizontal_align: Right    # Left, Center, Right, Auto
 
 # Vertical alignment
-vertical_align: Center     # Top, Center, Bottom
+vertical_align: Center     # Top, Center, Bottom, Auto
 
 # Label position
-title_location: Left       # Left, Top, Right, None
+title_location: Left       # None, Left, Right, Top, Bottom, Auto
 ```
 
 **Common patterns:**

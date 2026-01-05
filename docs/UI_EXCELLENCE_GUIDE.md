@@ -350,7 +350,7 @@ elements:
   - type: PictureField
     name: PhotoField
     attribute: EmployeePhoto
-    picture_size: Proportionally    # Proportionally | Stretch | AutoSize
+    picture_size: Proportionally    # Proportionally | Stretch | AutoSize | Tile | RealSize
     zoomable: true                  # Allow click-to-zoom
     width: 20                       # Width in form units
     height: 15                      # Height in form units
@@ -710,7 +710,7 @@ elements:
 - type: Table
   name: ItemsTable
   tabular_section: Items
-  command_bar_location: Bottom       # None | Top | Bottom | Auto
+  command_bar_location: Bottom       # None | Top | Bottom
   height: 10
 ```
 

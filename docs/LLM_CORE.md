@@ -359,10 +359,10 @@ commands:
 ```
 
 **Values:**
-- `Auto` - Platform decides (default)
+- `Text` - Text only (default)
 - `Picture` - Icon only
-- `Text` - Text only
-- `PictureAndText` - Both icon and text
+- `PictureAndText` - Icon left, text right
+- `TextPicture` - Text left, icon right
 
 ### Custom Pictures from SVG (v2.23.0+)
 
@@ -626,9 +626,9 @@ elements:
 | `height` | InputField (multiline) | **row units** | 3-10 | Visible text lines |
 | `svg_source` | PictureDecoration | "logo.svg" | Custom SVG → PNG (v2.23.0+) |
 | `picture` | PictureDecoration | StdPicture.Information | Built-in platform icons |
-| `picture_size` | PictureDecoration | Proportionally, RealSize | Image scaling mode |
+| `picture_size` | PictureDecoration | Proportionally, Stretch, AutoSize, Tile, RealSize | Image scaling mode |
 | `horizontal_stretch` | Any | true/false | Prevent excessive expansion |
-| `title_location` | InputField, CheckBox, etc. | Left, Top, Right, None | Label positioning |
+| `title_location` | InputField, CheckBox, etc. | None, Left, Right, Top, Bottom, Auto | Label positioning |
 | `multiline` | InputField | true | Multi-line text areas |
 | `password_mode` | InputField | true | Mask password input (v2.35.0+) |
 | `text_edit` | InputField | true/false | Text editing mode (v2.35.0+) |
