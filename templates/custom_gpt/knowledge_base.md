@@ -246,7 +246,7 @@ form_attributes:
     bold: true
     italic: false
     size: 12                     # Розмір шрифту
-    color: "#FF0000"             # Колір (опційно)
+    face_name: Arial             # Шрифт (опційно)
   horizontal_align: Center       # Left|Center|Right
   hyperlink: true                # Як посилання
   events:

@@ -566,6 +566,56 @@ Results.Clear();
 
 ---
 
+## 💬 Tooltip Representation (v2.70.2+)
+
+Controls how element tooltips are displayed. Available for all form elements.
+
+### When to use each value:
+
+| Value | Best for | Example |
+|-------|----------|---------|
+| `Button` | Complex fields needing documentation | Date picker with format rules, reference fields |
+| `ShowBottom` | Compact forms, inline hints | Amount fields, status explanations |
+| `ShowTop` | Elements at bottom of form | Fields near page footer |
+| `Balloon` | Long explanatory text | Multi-line help, step-by-step instructions |
+| `None` | Self-explanatory fields | Simple checkboxes, obvious buttons |
+| `ShowAuto` | Default (platform decides) | When unsure |
+
+### Usage examples:
+
+```yaml
+# Complex reference field - button for help
+- type: InputField
+  name: ContractorField
+  attribute: Contractor
+  tooltip_ru: "Выберите контрагента из справочника..."
+  tooltip_uk: "Виберіть контрагента зі довідника..."
+  tooltip_representation: Button
+
+# Amount with inline hint
+- type: InputField
+  name: AmountField
+  attribute: Amount
+  tooltip_ru: "Сумма в валюте документа"
+  tooltip_representation: ShowBottom
+
+# Self-explanatory checkbox - no tooltip needed
+- type: CheckBoxField
+  name: IsActiveField
+  attribute: IsActive
+  tooltip_representation: None
+```
+
+### Recommendations:
+
+- **Use `Button`** for fields with long documentation or non-obvious behavior
+- **Use `ShowBottom`** for short inline hints (1-2 sentences)
+- **Use `Balloon`** when tooltip has 3+ lines of text
+- **Use `None`** when label text is self-explanatory
+- **Default to `ShowAuto`** when unsure
+
+---
+
 ## 📋 Quick Reference: Common Patterns
 
 | Task | Pattern | File |
@@ -583,5 +633,5 @@ Results.Clear();
 
 ---
 
-**Last updated:** 2025-11-16
-**Generator version:** 2.22.0+
+**Last updated:** 2026-01-05
+**Generator version:** 2.70.2+

@@ -8,15 +8,15 @@
 
 | Element | YAML | Required | Optional |
 |---------|------|----------|----------|
-| **InputField** | `type: InputField`<br>`attribute: AttrName`<br>`read_only: true` | name, attribute | events, choice_list, input_hint_ru/uk/en, width, height, multiline, horizontal_stretch, title_location, read_only, **title_text_color, text_color, back_color, border_color, title_font, font** (v2.43.0+) |
+| **InputField** | `type: InputField`<br>`attribute: AttrName`<br>`read_only: true` | name, attribute | events, choice_list, input_hint_ru/uk/en, width, height, multiline, horizontal_stretch, title_location, read_only, tooltip_representation, choice_button_representation, **title_text_color, text_color, back_color, border_color, title_font, font** (v2.43.0+), **mark_negatives, open_button, clear_button, drop_list_button, spin_button, create_button** (v2.71.0+) |
 | **RadioButtonField** (v2.2) | `type: RadioButtonField`<br>`attribute: AttrName`<br>`choice_list: []`<br>`radio_button_type: Tumbler` | name, attribute, choice_list | radio_button_type, title_location, events |
 | **CheckBoxField** (v2.2) | `type: CheckBoxField`<br>`attribute: AttrName` | name, attribute | width, title_location, events |
 | **LabelField** | `type: LabelField`<br>`attribute: AttrName` | name | attribute, data_path, hyperlink, events |
-| **LabelDecoration** | `type: LabelDecoration`<br>`title: "Text"`<br>`font: { bold: true }` | name, title | font, hyperlink, horizontal_align, vertical_align, events |
-| **Table** | `type: Table`<br>`tabular_section: TableName`<br>`read_only: true` | name, tabular_section | is_value_table, is_dynamic_list (under properties!), events, read_only, height, horizontal_stretch, **representation** (list/tree), **initial_tree_view**, **show_root**, **allow_root_choice** (v2.64.0+) |
+| **LabelDecoration** | `type: LabelDecoration`<br>`title: "Text"`<br>`font: { bold: true }` | name, title | font, hyperlink, horizontal_align, vertical_align, tooltip_representation, events |
+| **Table** | `type: Table`<br>`tabular_section: TableName`<br>`read_only: true` | name, tabular_section | is_value_table, is_dynamic_list (under properties!), events, read_only, height, horizontal_stretch, tooltip_representation, **representation** (list/tree), **initial_tree_view**, **show_root**, **allow_root_choice** (v2.64.0+), **search_string_location, row_picture_data_path, selection_mode** (v2.71.2+) |
 | **SpreadSheetDocumentField** (v2.15.0) | `type: SpreadSheetDocumentField`<br>`attribute: ReportField` | name, attribute | title_location, vertical_scrollbar, horizontal_scrollbar, show_grid, show_headers, edit, protection, events (DetailProcessing) |
-| **Button** | `type: Button`<br>`command: CommandName` | name, command | width, representation |
-| **UsualGroup** | `type: UsualGroup`<br>`child_items: []`<br>`read_only: true` | name, child_items | title, show_title, group_direction, behavior, read_only |
+| **Button** | `type: Button`<br>`command: CommandName` | name, command | width, representation, tooltip_representation, **default_button** (v2.71.1+), **shape_representation** (v2.71.3+) |
+| **UsualGroup** | `type: UsualGroup`<br>`child_items: []`<br>`read_only: true` | name, child_items | title, show_title, group_direction, behavior, read_only, tooltip_representation |
 | **ColumnGroup** (v2.37.0) | `type: ColumnGroup`<br>`elements: []`<br>`group_layout: Horizontal` | name, elements | title_ru/uk/en, tooltip_ru/uk/en, group_layout, show_in_header, horizontal_align, vertical_align |
 | **Pages** | `type: Pages`<br>`pages: []` | name, pages | pages_representation |
 
@@ -119,6 +119,148 @@
 - `height` - Font height in points
 - `scale` - Scale percentage (100 = normal)
 - `bold`, `italic`, `underline`, `strikethrough` - Style flags
+
+---
+
+## Tooltip Representation (v2.70.2+)
+
+Controls how element tooltips are displayed:
+
+| Value | Description | When to use |
+|-------|-------------|-------------|
+| `None` | No tooltip | Self-explanatory fields |
+| `Button` | "?" button next to element | Complex fields with help documentation |
+| `ShowTop` | Tooltip appears above | Standard position |
+| `ShowBottom` | Tooltip appears below | When no space above |
+| `ShowLeft` | Tooltip appears left | For right-aligned elements |
+| `ShowRight` | Tooltip appears right | For left-aligned elements |
+| `Balloon` | Balloon-style popup | Long explanatory text |
+| `ShowAuto` | Automatic positioning | Default (platform decides) |
+
+**Example:**
+```yaml
+- type: InputField
+  name: DateField
+  attribute: StartDate
+  tooltip_ru: "Виберіть дату початку періоду"
+  tooltip_representation: Button  # "?" button for help
+
+- type: InputField
+  name: Amount
+  attribute: Amount
+  tooltip_ru: "Сума в валюті документа"
+  tooltip_representation: ShowBottom  # Tooltip below field
+```
+
+---
+
+## Choice Button Representation (v2.70.3+)
+
+Controls where the choice button ("...") appears in InputField:
+
+| Value | Description | When to use |
+|-------|-------------|-------------|
+| `Auto` | Platform decides | Default behavior |
+| `ShowInInputField` | Button inside field | Most common, compact layout |
+| `ShowInDropList` | Button in dropdown only | When field space is limited |
+| `ShowInDropListAndInInputField` | Both places | Maximum accessibility |
+
+**Example:**
+```yaml
+- type: InputField
+  name: ContractorField
+  attribute: Contractor
+  choice_button_representation: ShowInInputField
+```
+
+---
+
+## InputField Button Controls (v2.71.0+)
+
+Control visibility of various buttons in InputField elements:
+
+| Property | Description | Use case |
+|----------|-------------|----------|
+| `mark_negatives` | Highlight negative numbers in red | Financial fields (Amount, Balance) |
+| `open_button` | Show/hide open (choice) button | Reference fields |
+| `clear_button` | Show/hide clear button | Optional fields |
+| `drop_list_button` | Show/hide dropdown list button | Enum/selection fields |
+| `spin_button` | Show/hide spin ± buttons | Numeric fields (Quantity) |
+| `create_button` | Show/hide create new item button | Reference fields |
+| `auto_mark_incomplete` | Mark field when empty (v2.71.1+) | Required fields |
+
+**Example:**
+```yaml
+- type: InputField
+  name: Amount
+  attribute: Amount
+  mark_negatives: true      # Negative values shown in red
+
+- type: InputField
+  name: Contractor
+  attribute: Contractor
+  open_button: true         # Choice button
+  create_button: true       # Create new item button
+  clear_button: true        # Clear button
+
+- type: InputField
+  name: Quantity
+  attribute: Quantity
+  spin_button: true         # ± buttons for quick input
+
+- type: InputField
+  name: RequiredField
+  attribute: RequiredField
+  auto_mark_incomplete: true  # Highlight when empty
+```
+
+---
+
+## Button Properties (v2.71.1+)
+
+| Property | Values | Description |
+|----------|--------|-------------|
+| `default_button` | boolean | Mark as default (activated on Enter) |
+| `shape_representation` | Auto, None, WhenActive, Always | Button visual style (v2.71.3+) |
+
+**Shape representation values:**
+- `Auto` - Platform default
+- `None` - Flat button (no border)
+- `WhenActive` - Show border on hover
+- `Always` - Always show border
+
+**Example:**
+```yaml
+- type: Button
+  name: OKButton
+  command: OK
+  default_button: true           # Activated on Enter
+
+- type: Button
+  name: FlatButton
+  command: Action
+  shape_representation: None     # Flat style (no border)
+```
+
+---
+
+## Table Properties (v2.71.2+)
+
+| Property | Values | Description |
+|----------|--------|-------------|
+| `search_string_location` | None, CommandBar | Search bar position |
+| `row_picture_data_path` | string (DataPath) | Path to column with row icons |
+| `selection_mode` | SingleRow, MultiRow | Row selection mode |
+
+**Example:**
+```yaml
+- type: Table
+  name: Items
+  tabular_section: Items
+  search_string_location: CommandBar  # Show search in toolbar
+  selection_mode: MultiRow            # Allow multiple selection
+  row_picture_data_path: Items.Icon   # Icon column
+```
 
 ---
 
@@ -628,7 +770,7 @@ Visual container for grouping related buttons.
 
 | Property | Values | Default |
 |----------|--------|---------|
-| pages_representation | TabsOnTop, TabsOnBottom, None | TabsOnTop |
+| pages_representation | TabsOnTop, TabsOnBottom, TabsOnLeftHorizontal, None | TabsOnTop |
 
 ---
 
@@ -728,7 +870,7 @@ forms:
 
 **For full documentation:** See YAML_GUIDE.md, LLM_PROMPT.md
 
-**Version:** 2.69.0 (2026-01-03)
+**Version:** 2.70.4 (2026-01-05)
 **New in 2.64.0:** ValueTree Support - hierarchical data visualization (tree representation for Table, value_trees section, tree-specific properties: representation, initial_tree_view, show_root, allow_root_choice, choice_folders_and_items)
 **New in 2.46.0:** Page Element Refactoring - eliminated technical debt, Page now uses FormElement, DRY compliance improvements
 **New in 2.43.0:** InputField Styling - colors (title_text_color, text_color, back_color, border_color) and fonts (title_font, font with faceName, scale)

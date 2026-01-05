@@ -41,7 +41,7 @@ forms:
 | InputField | `attribute`, `width`, `multiline`, `read_only` |
 | Table | `tabular_section`, `is_value_table: true` |
 | Button | `command` |
-| LabelDecoration | `title`, `font: {bold: true}` |
+| LabelDecoration | `title`, `font: {bold, size, face_name}` |
 | UsualGroup | `group_direction`, `child_items: []` |
 
 ### Commands

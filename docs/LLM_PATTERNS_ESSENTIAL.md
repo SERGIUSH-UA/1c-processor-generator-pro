@@ -784,7 +784,7 @@ elements:
 - `hyperlink` - Clickable label (LabelDecoration)
 
 **Form Properties (2):**
-- `WindowOpeningMode` - Modal dialog behavior (LockOwnerWindow, LockWholeInterface)
+- `WindowOpeningMode` - Window opening mode (LockOwnerWindow, LockWholeInterface, Independent)
 - `CommandBarLocation` - Command bar position (Top, Bottom, None)
 
 **Element Events (2):**

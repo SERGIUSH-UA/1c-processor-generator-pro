@@ -92,6 +92,15 @@ SCHEMAS: Dict[str, ElementSchema] = {
                                                                       
             PropSpec("title_height"),
             PropSpec("footer_font"),
+                                                  
+            PropSpec("mark_negatives"),
+            PropSpec("open_button"),
+            PropSpec("clear_button"),
+            PropSpec("drop_list_button"),
+            PropSpec("spin_button"),
+            PropSpec("create_button"),
+                                          
+            PropSpec("auto_mark_incomplete"),
         ],
     ),
                                                                                
@@ -182,6 +191,14 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("header_height"),                                      
             PropSpec("title_height"),                                   
             PropSpec("footer_height"),                            
+                                        
+            PropSpec("search_string_location"),                      
+            PropSpec("row_picture_data_path"),                            
+            PropSpec("selection_mode"),                                 
+                                                   
+            PropSpec("auto_insert_new_row"),
+            PropSpec("enable_start_drag"),
+            PropSpec("enable_drag"),
         ],
     ),
                                                                                
@@ -196,6 +213,10 @@ SCHEMAS: Dict[str, ElementSchema] = {
             *ALIGNMENT_PROPS,
                                               
             PropSpec("conditional_appearances"),
+                                     
+            PropSpec("default_button"),
+                                           
+            PropSpec("shape_representation"),
         ],
     ),
                                                                                

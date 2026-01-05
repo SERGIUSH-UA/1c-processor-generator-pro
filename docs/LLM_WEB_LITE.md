@@ -57,7 +57,7 @@ forms:
 | `InputField` | `attribute`, `width`, `multiline`, `read_only` |
 | `Table` | `tabular_section`, `is_value_table`, `columns` |
 | `Button` | `command` |
-| `LabelDecoration` | `title`, `font` |
+| `LabelDecoration` | `title`, `font: {bold, size, face_name}` |
 | `UsualGroup` | `child_items`, `group_direction` |
 | `Pages` | `pages` |
 
@@ -452,4 +452,4 @@ python -m 1c_processor_generator yaml \
 
 ---
 
-*Version: 2.67.0 | Full docs: [LLM_CORE.md](LLM_CORE.md)*
+*Version: 2.71.4 | Full docs: [LLM_CORE.md](LLM_CORE.md)*

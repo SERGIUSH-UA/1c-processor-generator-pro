@@ -1,0 +1,186 @@
+# v2.71.x Features Demo
+# Demonstrates all new properties added in v2.71.0 - v2.71.3
+#
+# Features showcased:
+# - v2.71.0: InputField button controls (mark_negatives, open_button, clear_button,
+#            drop_list_button, spin_button, create_button)
+# - v2.71.1: default_button, auto_mark_incomplete
+# - v2.71.2: Table properties (search_string_location, row_picture_data_path, selection_mode)
+# - v2.71.3: shape_representation for Button
+
+processor:
+  name: ДемонстрацияV271
+  synonym_ru: Демонстрация возможностей v2.71
+  synonym_uk: Демонстрація можливостей v2.71
+
+attributes:
+  # Financial field - demonstrates mark_negatives
+  - name: Сумма
+    type: number
+    digits: 15
+    fraction_digits: 2
+    synonym_ru: Сумма
+
+  # Reference field - demonstrates open_button, create_button, clear_button
+  - name: Контрагент
+    type: string
+    length: 150
+    synonym_ru: Контрагент
+
+  # Numeric field - demonstrates spin_button
+  - name: Количество
+    type: number
+    digits: 10
+    fraction_digits: 0
+    synonym_ru: Количество
+
+  # Selection field - demonstrates drop_list_button
+  - name: Статус
+    type: string
+    length: 50
+    synonym_ru: Статус
+
+  # Required field - demonstrates auto_mark_incomplete
+  - name: Наименование
+    type: string
+    length: 200
+    synonym_ru: Наименование
+
+tabular_sections:
+  - name: Товары
+    synonym_ru: Товары
+    columns:
+      - name: Номенклатура
+        type: string
+        length: 150
+        synonym_ru: Номенклатура
+      - name: Количество
+        type: number
+        digits: 10
+        fraction_digits: 3
+        synonym_ru: Количество
+      - name: Цена
+        type: number
+        digits: 15
+        fraction_digits: 2
+        synonym_ru: Цена
+      - name: Сумма
+        type: number
+        digits: 15
+        fraction_digits: 2
+        synonym_ru: Сумма
+
+forms:
+  - name: Форма
+    title_ru: Демонстрация v2.71.x
+    title_uk: Демонстрація v2.71.x
+    default: true
+    elements:
+      # === Section 1: InputField Button Controls (v2.71.0) ===
+      - type: UsualGroup
+        name: ГруппаПоляВвода
+        title_ru: "1. InputField Button Controls (v2.71.0)"
+        group_direction: Vertical
+        child_items:
+          # mark_negatives - highlight negative numbers in red
+          - type: InputField
+            name: СуммаПоле
+            attribute: Сумма
+            title_ru: "Сумма (mark_negatives: true)"
+            mark_negatives: true
+            width: 20
+
+          # open_button, create_button, clear_button - reference field buttons
+          - type: InputField
+            name: КонтрагентПоле
+            attribute: Контрагент
+            title_ru: "Контрагент (open, create, clear buttons)"
+            open_button: true
+            create_button: true
+            clear_button: true
+            width: 40
+
+          # spin_button - numeric spinner
+          - type: InputField
+            name: КоличествоПоле
+            attribute: Количество
+            title_ru: "Количество (spin_button: true)"
+            spin_button: true
+            width: 15
+
+          # drop_list_button - dropdown
+          - type: InputField
+            name: СтатусПоле
+            attribute: Статус
+            title_ru: "Статус (drop_list_button: true)"
+            drop_list_button: true
+            width: 25
+            choice_list:
+              - { v: "Новый", ru: "Новый", uk: "Новий" }
+              - { v: "В работе", ru: "В работе", uk: "В роботі" }
+              - { v: "Завершен", ru: "Завершен", uk: "Завершено" }
+
+      # === Section 2: AutoMarkIncomplete (v2.71.1) ===
+      - type: UsualGroup
+        name: ГруппаОбязательные
+        title_ru: "2. AutoMarkIncomplete (v2.71.1)"
+        group_direction: Vertical
+        child_items:
+          - type: InputField
+            name: НаименованиеПоле
+            attribute: Наименование
+            title_ru: "Наименование (auto_mark_incomplete: true)"
+            auto_mark_incomplete: true
+            width: 50
+
+      # === Section 3: Table Properties (v2.71.2) ===
+      - type: UsualGroup
+        name: ГруппаТаблица
+        title_ru: "3. Table Properties (v2.71.2)"
+        group_direction: Vertical
+        child_items:
+          - type: Table
+            name: ТоварыТаблица
+            tabular_section: Товары
+            height: 8
+            horizontal_stretch: true
+            # v2.71.2 features:
+            search_string_location: CommandBar    # Search bar in toolbar
+            selection_mode: MultiRow              # Allow multiple selection
+            # Note: row_picture_data_path requires proper picture column setup
+
+      # === Section 4: Button Properties (v2.71.1 + v2.71.3) ===
+      - type: UsualGroup
+        name: ГруппаКнопки
+        title_ru: "4. Button Properties (v2.71.1 + v2.71.3)"
+        group_direction: Horizontal
+        child_items:
+          # default_button (v2.71.1) + shape_representation (v2.71.3)
+          - type: Button
+            name: ОККнопка
+            command: ВыполнитьОК
+            default_button: true
+            shape_representation: Always
+
+          - type: Button
+            name: ОтменаКнопка
+            command: Отмена
+            shape_representation: WhenActive
+
+          - type: Button
+            name: ПлоскаяКнопка
+            command: ПлоскоеДействие
+            shape_representation: None
+
+    commands:
+      - name: ВыполнитьОК
+        title_ru: OK (default_button + Always)
+        handler: ВыполнитьОК
+
+      - name: Отмена
+        title_ru: Отмена (WhenActive)
+        handler: Отмена
+
+      - name: ПлоскоеДействие
+        title_ru: Плоская (None)
+        handler: ПлоскоеДействие

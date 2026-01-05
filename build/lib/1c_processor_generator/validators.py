@@ -299,13 +299,15 @@ VALID_INITIAL_TREE_VIEW = {"no_expand", "expand_top_level", "expand_all_levels"}
 VALID_CHOICE_MODE = {"QuickChoice", "Parameters", "BothWays"}              
 VALID_CHOICE_FOLDERS_AND_ITEMS = {"Folders", "Items", "FoldersAndItems", "folders", "items", "folders_and_items"}                           
 VALID_CHOICE_HISTORY_ON_INPUT = {"Auto", "DontUse", "UseAlways"}              
-VALID_PAGES_REPRESENTATION = {"TabsOnTop", "TabsOnBottom", "None"}         
+VALID_PAGES_REPRESENTATION = {"TabsOnTop", "TabsOnBottom", "TabsOnLeftHorizontal", "None"}         
 VALID_STRETCH = {"No", "Horizontally", "Vertically", "HorizontalAndVertically"}                            
 VALID_PLANNER_PERIOD = {"Day", "Week", "Month", "Year"}                
 VALID_GROUP_LAYOUT = {"Horizontal", "Vertical"}               
-VALID_WINDOW_OPENING_MODE = {"LockOwnerWindow", "LockWholeInterface"}        
+VALID_WINDOW_OPENING_MODE = {"LockOwnerWindow", "LockWholeInterface", "Independent"}        
 VALID_COMMAND_BAR_LOCATION = {"None", "Top", "Bottom"}        
 VALID_TIME_SCALE = {"Hour", "Day", "Week", "Month"}                
+VALID_TOOLTIP_REPRESENTATION = {"None", "Button", "ShowTop", "ShowBottom", "ShowLeft", "ShowRight", "Balloon", "ShowAuto"}                
+VALID_CHOICE_BUTTON_REPRESENTATION = {"Auto", "ShowInInputField", "ShowInDropList", "ShowInDropListAndInInputField"}              
 
                                  
 ENUM_ALIASES = {
@@ -1120,6 +1122,8 @@ class ProcessorValidator:
                 ('period', VALID_PLANNER_PERIOD),
                 ('group_layout', VALID_GROUP_LAYOUT),
                 ('time_scale', VALID_TIME_SCALE),
+                ('tooltip_representation', VALID_TOOLTIP_REPRESENTATION),
+                ('choice_button_representation', VALID_CHOICE_BUTTON_REPRESENTATION),
             ]
             for prop_name, valid_values in enum_checks:
                 if prop_name in props:
