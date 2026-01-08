@@ -122,7 +122,8 @@ def cmd_yaml(args):
     processor = parse_yaml_config(
         args.config,
         handlers_dir=args.handlers,
-        handlers_file=args.handlers_file
+        handlers_file=args.handlers_file,
+        normalize_bsl_escapes=getattr(args, 'normalize_bsl_escapes', False)
     )
 
     if not processor:
@@ -1016,6 +1017,8 @@ def create_parser():
                             help="Вимкнути persistent IB кеш (повільніше, v2.8.1+)")
     parser_yaml.add_argument("--ignore-validation-errors", action="store_true",
                             help="Ігнорувати помилки BSL валідації під час компіляції (за замовчуванням зупиняється при помилках, v2.12.0+)")
+    parser_yaml.add_argument("--normalize-bsl-escapes", action="store_true",
+                            help="Нормалізувати escape-послідовності (\\n→newline) в BSL запитах (v2.72.0+)")
     parser_yaml.add_argument("--dry-run", action="store_true", help="Перевірка без створення файлів")
     parser_yaml.set_defaults(func=cmd_yaml)
 

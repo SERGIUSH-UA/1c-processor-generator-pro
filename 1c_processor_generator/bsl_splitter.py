@@ -49,6 +49,19 @@ class BSLSplitter:
         re.DOTALL | re.IGNORECASE
     )
 
+                                        
+                                                      
+                                                         
+                                                                                 
+    MODULE_VARIABLE_PATTERN = re.compile(
+        r'((?:^[ \t]*//[^\n]*\n)*'                                                      
+        r'(?:^[ \t]*&[^\n]+\n)?'                                     
+        r'^[ \t]*(?:Перем|Var)\s+'                                   
+        r'[^;]+;'                                                             
+        r'(?:[ \t]*//[^\n]*)?)',                                           
+        re.MULTILINE | re.IGNORECASE
+    )
+
     def __init__(self, bsl_file_path: Path):
                    
         self.bsl_file_path = Path(bsl_file_path)
@@ -105,6 +118,54 @@ class BSLSplitter:
         print(f"  ✓ Витягнуто регіон МодульОбъекта ({len(object_module_code)} символів)")
 
         return object_module_code
+
+    def extract_module_variables(self) -> Optional[str]:
+                   
+                                                    
+        first_proc_match = self.PROCEDURE_PATTERN.search(self.content)
+
+        if first_proc_match:
+                                                                      
+            preamble = self.content[:first_proc_match.start()]
+        else:
+                                                                          
+            preamble = self.content
+
+                                                   
+        var_matches = list(self.MODULE_VARIABLE_PATTERN.finditer(preamble))
+
+        if not var_matches:
+            return None
+
+                                             
+        var_declarations = []
+        for match in var_matches:
+            var_decl = match.group(1).strip()
+            if var_decl:
+                var_declarations.append(var_decl)
+
+        if not var_declarations:
+            return None
+
+                                                     
+                                             
+        modified_preamble = preamble
+        for match in reversed(var_matches):                                     
+            modified_preamble = modified_preamble[:match.start()] + modified_preamble[match.end():]
+
+                                                    
+        if first_proc_match:
+            self.content = modified_preamble + self.content[first_proc_match.start():]
+        else:
+            self.content = modified_preamble
+
+                               
+        module_vars = '\n'.join(var_declarations)
+
+        var_count = len(var_declarations)
+        print(f"  ✓ Витягнуто {var_count} модульн{'у' if var_count == 1 else 'их'} змінн{'у' if var_count == 1 else 'их'}")
+
+        return module_vars
 
     def extract_procedures(self) -> Dict[str, str]:
                    

@@ -27,6 +27,7 @@
 
 		</LabelDecoration>
 		<Pages name="ГлавныеВкладки" id="4">
+
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -41,6 +42,7 @@
 			<ExtendedTooltip name="ГлавныеВкладкиРасширеннаяПодсказка" id="5"/>
 			<ChildItems>
 				<Page name="СтраницаПроекты" id="6">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -164,7 +166,6 @@
 							</InputField>
 							<CheckBoxField name="ФлажокПоказыватьЗакрытые" id="19">
 								<DataPath>Объект.ПоказыватьЗакрытые</DataPath>
-
 								<TitleLocation>Right</TitleLocation>
 								<CheckBoxType>Auto</CheckBoxType>
 								<ContextMenu name="ФлажокПоказыватьЗакрытыеКонтекстноеМеню" id="20"/>
@@ -176,6 +177,7 @@
 						</ChildItems>
 					</UsualGroup>
 					<Table name="ТаблицаПроектов" id="22">
+
 						<Representation>List</Representation>
 						<AutoInsertNewRow>true</AutoInsertNewRow>
 						<EnableStartDrag>true</EnableStartDrag>
@@ -384,6 +386,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="СтраницаЗадачи" id="89">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -643,7 +646,6 @@
 							</InputField>
 							<CheckBoxField name="ФлажокГруппировкаПоПроектам" id="102">
 								<DataPath>Объект.ГруппировкаПоПроектам</DataPath>
-
 								<TitleLocation>Right</TitleLocation>
 								<CheckBoxType>Auto</CheckBoxType>
 								<ContextMenu name="ФлажокГруппировкаПоПроектамКонтекстноеМеню" id="103"/>
@@ -655,6 +657,7 @@
 						</ChildItems>
 					</UsualGroup>
 					<Table name="ТаблицаЗадач" id="105">
+
 						<Representation>List</Representation>
 						<AutoInsertNewRow>true</AutoInsertNewRow>
 						<EnableStartDrag>true</EnableStartDrag>
@@ -821,6 +824,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="СтраницаРесурсы" id="168">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -853,6 +857,7 @@
 
 					</LabelDecoration>
 					<Table name="ТаблицаРесурсов" id="173">
+
 						<Representation>List</Representation>
 						<AutoInsertNewRow>true</AutoInsertNewRow>
 						<EnableStartDrag>true</EnableStartDrag>

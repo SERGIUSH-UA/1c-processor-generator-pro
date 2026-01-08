@@ -1,0 +1,96 @@
+# Демонстрація модульних змінних (Перем) v2.73.0
+# Показує різні варіанти використання Перем в FormModule та ObjectModule
+
+processor:
+  name: ДемоМодульныхПеременных
+  synonym_ru: Демонстрация модульных переменных
+  synonym_uk: Демонстрація модульних змінних
+
+attributes:
+  - name: Счетчик
+    type: number
+    digits: 10
+  - name: СтатусИгры
+    type: string
+    length: 50
+
+forms:
+  - name: Форма
+    default: true
+    events:
+      OnCreateAtServer: ПриСозданииНаСервере
+    elements:
+      - type: LabelDecoration
+        name: Заголовок
+        title: "Демо модульних змінних (Перем)"
+        font:
+          size: 16
+          bold: true
+
+      - type: UsualGroup
+        name: ГруппаИгры
+        title: "Гра (клієнтські змінні)"
+        child_items:
+          - type: Button
+            name: КнопкаСтарт
+            command: НачатьИгру
+          - type: Button
+            name: КнопкаСтоп
+            command: ОстановитьИгру
+          - type: Button
+            name: КнопкаСброс
+            command: СбросИгры
+
+      - type: UsualGroup
+        name: ГруппаКеш
+        title: "Кеш (серверні змінні)"
+        child_items:
+          - type: Button
+            name: КнопкаЗагрузить
+            command: ЗагрузитьКеш
+          - type: Button
+            name: КнопкаОчистить
+            command: ОчиститьКеш
+
+      - type: InputField
+        name: ПолеСчетчик
+        attribute: Счетчик
+        read_only: true
+        title: "Лічильник:"
+
+      - type: InputField
+        name: ПолеСтатус
+        attribute: СтатусИгры
+        read_only: true
+        title: "Статус:"
+
+    commands:
+      - name: НачатьИгру
+        title_ru: Старт
+        title_uk: Старт
+        handler: НачатьИгру
+        picture: StdPicture.ExecuteTask
+
+      - name: ОстановитьИгру
+        title_ru: Стоп
+        title_uk: Стоп
+        handler: ОстановитьИгру
+        picture: StdPicture.Stop
+
+      - name: СбросИгры
+        title_ru: Сброс
+        title_uk: Скинути
+        handler: СбросИгры
+        picture: StdPicture.Refresh
+
+      - name: ЗагрузитьКеш
+        title_ru: Загрузить кеш
+        title_uk: Завантажити кеш
+        handler: ЗагрузитьКеш
+        picture: StdPicture.DataHistory
+
+      - name: ОчиститьКеш
+        title_ru: Очистить кеш
+        title_uk: Очистити кеш
+        handler: ОчиститьКеш
+        picture: StdPicture.ClearFilter

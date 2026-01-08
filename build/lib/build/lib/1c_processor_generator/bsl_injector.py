@@ -40,6 +40,7 @@ class BSLInjector:
         self,
         handlers_dir: Optional[Path] = None,
         handlers_file: Optional[Path] = None,
+        normalize_escapes: bool = False,
     ):
                    
         self.handlers_dir = None
@@ -48,6 +49,8 @@ class BSLInjector:
         self._form_handlers_cache: Dict[str, Dict[str, str]] = {}                                    
         self._documentation_from_handlers: Optional[str] = None                                                           
         self._object_module_from_handlers: Optional[str] = None                                                                    
+        self._module_variables_from_handlers: Optional[str] = None                                    
+        self._normalize_escapes = normalize_escapes            
 
                                                      
         if handlers_file:
@@ -55,6 +58,21 @@ class BSLInjector:
                                                   
         elif handlers_dir:
             self.handlers_dir = Path(handlers_dir)
+
+    def _normalize_bsl_escape_sequences(self, code: str) -> str:
+                   
+                                                                          
+                                                   
+        pattern = re.escape('\\') + r'n(\s*' + re.escape('|') + r')'
+        normalized = re.sub(pattern, '\n\\1', code)
+
+        if normalized != code:
+                                                   
+            count = code.count('\\n') - normalized.count('\\n')
+            if count > 0:
+                print(f"  🔄 Нормалізовано {count} escape-послідовностей в запитах")
+
+        return normalized
 
     def load_handlers_from_single_file(self, bsl_file: Path) -> None:
                    
@@ -82,8 +100,31 @@ class BSLInjector:
             if object_module_code:
                 self._object_module_from_handlers = object_module_code
 
+                                                                           
+            module_variables = splitter.extract_module_variables()
+            if module_variables:
+                self._module_variables_from_handlers = module_variables
+
                                  
             procedures = splitter.extract_procedures()
+
+                                                                         
+            if self._normalize_escapes:
+                procedures = {
+                    name: self._normalize_bsl_escape_sequences(code)
+                    for name, code in procedures.items()
+                }
+            else:
+                                                          
+                                                                      
+                escape_pattern = re.escape('\\') + r'n\s*' + re.escape('|')
+                handlers_with_escapes = [
+                    name for name, code in procedures.items()
+                    if re.search(escape_pattern, code)
+                ]
+                if handlers_with_escapes:
+                    print(f"⚠️  Виявлено literal \\n в {len(handlers_with_escapes)} handler(s): {', '.join(handlers_with_escapes[:3])}{'...' if len(handlers_with_escapes) > 3 else ''}")
+                    print(f"   💡 Використайте --normalize-bsl-escapes для автоматичного виправлення")
 
                               
             self._loaded_handlers = procedures
@@ -111,6 +152,24 @@ class BSLInjector:
         try:
             splitter = BSLSplitter(handlers_file)
             procedures = splitter.extract_procedures()
+
+                                                                         
+            if self._normalize_escapes:
+                procedures = {
+                    name: self._normalize_bsl_escape_sequences(code)
+                    for name, code in procedures.items()
+                }
+            else:
+                                               
+                escape_pattern = re.escape('\\') + r'n\s*' + re.escape('|')
+                handlers_with_escapes = [
+                    name for name, code in procedures.items()
+                    if re.search(escape_pattern, code)
+                ]
+                if handlers_with_escapes:
+                    print(f"  ⚠️  Виявлено literal \\n в {len(handlers_with_escapes)} handler(s) форми '{form_name}'")
+                    print(f"     💡 Використайте --normalize-bsl-escapes")
+
             self._form_handlers_cache[form_name] = procedures
             print(f"  📦 Завантажено {len(procedures)} handlers з {handlers_file.name} для форми '{form_name}'")
             return procedures
@@ -426,6 +485,10 @@ class BSLInjector:
         if documentation_parts:
             form.documentation = '\n\n'.join(documentation_parts)
             print(f"📚 Об'єднано документацію для форми {form.name} ({len(form.documentation)} символів)")
+
+                                                      
+        if self._module_variables_from_handlers:
+            form.module_variables = self._module_variables_from_handlers
 
         return used_handlers
 

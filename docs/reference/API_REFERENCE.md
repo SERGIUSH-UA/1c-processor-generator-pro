@@ -977,6 +977,26 @@ forms:
       BeforeClose: string         # ПередЗакрытием(Отказ, ЗавершениеРаботы, ТекстПредупреждения, СтандартнаяОбработка)
 ```
 
+### visible/enabled Properties (v2.72.0+)
+
+All elements support visibility control:
+
+```yaml
+elements:
+  - type: ButtonGroup
+    name: СкрытыеКнопки
+    visible: false          # Hide element
+    elements:
+      - type: Button
+        name: КнопкаW
+        command: ВверхКоманда
+
+  - type: InputField
+    name: ПолеТолькоЧтение
+    attribute: Данные
+    enabled: false          # Disable element
+```
+
 ### Події елементів
 
 ```yaml

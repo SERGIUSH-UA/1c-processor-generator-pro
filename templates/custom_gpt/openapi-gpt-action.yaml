@@ -1,0 +1,250 @@
+openapi: 3.1.0
+info:
+  title: 1C Processor Generator GPT API
+  version: 2.0.0
+  description: API for validating 1C code, searching documentation, and submitting to sessions
+servers:
+  - url: https://gen.itdeo.tech
+
+paths:
+  /gpt/validate:
+    post:
+      operationId: validateCode
+      summary: Dry-run validation (without session)
+      description: >
+        Test validation without session. For normal flow use /session/{code} with validate=true.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - yaml_config
+              properties:
+                yaml_config:
+                  type: string
+                  description: YAML processor configuration
+                handlers_content:
+                  type: string
+                  description: BSL handlers code (optional)
+      responses:
+        "200":
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationResult"
+
+  /gpt/docs/search:
+    post:
+      operationId: searchDocs
+      summary: Search documentation for guidance
+      description: >
+        Query documentation about features, patterns, syntax. Returns relevant sections.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: Search query (e.g., "master-detail form")
+                limit:
+                  type: integer
+                  default: 3
+                  description: Max results (1-10)
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResult"
+
+  /gpt/docs/feature/{name}:
+    get:
+      operationId: getFeature
+      summary: Get feature details by name
+      description: >
+        Lookup specific feature. Returns description, syntax, related features.
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Feature name (e.g., OnActivateRow, InputField)
+      responses:
+        "200":
+          description: Feature details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeatureResult"
+
+  /session/{code}:
+    post:
+      operationId: submitSessionCode
+      summary: Submit code to session with validation
+      description: >
+        Send code to session. Validates by default (validate=true).
+        Code is ALWAYS saved (even with errors) to preserve BSL.
+        Check validation.valid and validation.errors in response.
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Session code from user (format GEN-XXXXX)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                yaml_config:
+                  type: string
+                  description: YAML configuration
+                handlers_content:
+                  type: string
+                  description: BSL handlers code
+                template_files:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: Template files as path to content map
+                validate:
+                  type: boolean
+                  default: true
+                  description: Validate before saving (default true)
+      responses:
+        "200":
+          description: Submission result with validation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: False if validation failed
+                  message:
+                    type: string
+                  version:
+                    type: integer
+                    description: Data version (only if saved)
+                  validation:
+                    $ref: "#/components/schemas/ValidationResult"
+        "404":
+          description: Session not found or expired
+
+components:
+  schemas:
+    ValidationResult:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          description: True if no errors (warnings allowed)
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/ValidationIssue"
+        warnings:
+          type: array
+          items:
+            $ref: "#/components/schemas/ValidationIssue"
+        processor_name:
+          type: string
+          description: Processor name from YAML
+        stats:
+          type: object
+          properties:
+            attributes_count:
+              type: integer
+            forms_count:
+              type: integer
+            commands_count:
+              type: integer
+            handlers_found:
+              type: integer
+            handlers_missing:
+              type: integer
+
+    ValidationIssue:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [yaml, handler, syntax]
+        severity:
+          type: string
+          enum: [error, warning]
+        message:
+          type: string
+        location:
+          type: string
+        suggestion:
+          type: string
+        similar:
+          type: array
+          items:
+            type: string
+
+    SearchResult:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              source:
+                type: string
+              section:
+                type: string
+              relevance:
+                type: number
+              content:
+                type: string
+        total_matches:
+          type: integer
+
+    FeatureResult:
+      type: object
+      properties:
+        found:
+          type: boolean
+        feature:
+          type: object
+          properties:
+            name:
+              type: string
+            category:
+              type: string
+            description:
+              type: string
+            docs:
+              type: string
+            since:
+              type: string
+        related:
+          type: array
+          items:
+            type: string
+        examples:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              path:
+                type: string

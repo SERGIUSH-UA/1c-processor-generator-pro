@@ -184,7 +184,6 @@
 					<ChildItems>
 						<CheckBoxField name="ФлажокПоказыватьЗакрытыеОтчет" id="22">
 							<DataPath>Объект.ПоказыватьЗакрытые</DataPath>
-
 							<TitleLocation>Right</TitleLocation>
 							<CheckBoxType>Auto</CheckBoxType>
 							<ContextMenu name="ФлажокПоказыватьЗакрытыеОтчетКонтекстноеМеню" id="23"/>
@@ -193,7 +192,6 @@
 						</CheckBoxField>
 						<CheckBoxField name="ФлажокПоказыватьАрхивныеОтчет" id="25">
 							<DataPath>Объект.ПоказыватьАрхивные</DataPath>
-
 							<TitleLocation>Right</TitleLocation>
 							<CheckBoxType>Auto</CheckBoxType>
 							<ContextMenu name="ФлажокПоказыватьАрхивныеОтчетКонтекстноеМеню" id="26"/>
@@ -205,6 +203,7 @@
 			</ChildItems>
 		</UsualGroup>
 		<Pages name="СтраницыОтчетов" id="28">
+
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -219,6 +218,7 @@
 			<ExtendedTooltip name="СтраницыОтчетовРасширеннаяПодсказка" id="29"/>
 			<ChildItems>
 				<Page name="СтраницаОтчетПроектов" id="30">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -232,6 +232,7 @@
 					<ExtendedTooltip name="СтраницаОтчетПроектовРасширеннаяПодсказка" id="31"/>
 					<ChildItems>
 					<Table name="ТаблицаОтчетПроектов" id="32">
+
 						<Representation>List</Representation>
 						<AutoInsertNewRow>true</AutoInsertNewRow>
 						<EnableStartDrag>true</EnableStartDrag>
@@ -322,6 +323,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="СтраницаОтчетЗадач" id="68">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -335,6 +337,7 @@
 					<ExtendedTooltip name="СтраницаОтчетЗадачРасширеннаяПодсказка" id="69"/>
 					<ChildItems>
 					<Table name="ТаблицаОтчетЗадач" id="70">
+
 						<Representation>List</Representation>
 						<AutoInsertNewRow>true</AutoInsertNewRow>
 						<EnableStartDrag>true</EnableStartDrag>
@@ -413,6 +416,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="СтраницаОтчетРесурсов" id="100">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -426,6 +430,7 @@
 					<ExtendedTooltip name="СтраницаОтчетРесурсовРасширеннаяПодсказка" id="101"/>
 					<ChildItems>
 					<Table name="ТаблицаОтчетРесурсов" id="102">
+
 						<Representation>List</Representation>
 						<AutoInsertNewRow>true</AutoInsertNewRow>
 						<EnableStartDrag>true</EnableStartDrag>
@@ -498,6 +503,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="СтраницаОтчетВремени" id="129">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -511,6 +517,7 @@
 					<ExtendedTooltip name="СтраницаОтчетВремениРасширеннаяПодсказка" id="130"/>
 					<ChildItems>
 					<Table name="ТаблицаОтчетВремени" id="131">
+
 						<Representation>List</Representation>
 						<AutoInsertNewRow>true</AutoInsertNewRow>
 						<EnableStartDrag>true</EnableStartDrag>
@@ -583,6 +590,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="СтраницаТабличныйДокумент" id="158">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>

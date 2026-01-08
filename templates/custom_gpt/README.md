@@ -40,6 +40,21 @@ Enable:
 - [ ] DALL-E Image Generation (not needed)
 - [ ] Code Interpreter (not needed)
 
+### Step 5.5: Configure Actions (Required for Sessions)
+
+1. In the **Actions** section, click "Create new action"
+2. Import OpenAPI schema:
+   - URL: `https://gen.itdeo.tech/openapi-gpt-action.yaml`
+   - Or use local copy: `openapi-gpt-action.yaml` (keep in sync!)
+3. Authentication: **None**
+4. Available actions:
+   - `submitSessionCode` - send code to session with validation
+   - `validateCode` - dry-run validation
+   - `searchDocs` - search documentation (RAG)
+   - `getFeature` - lookup feature details
+
+**Note:** Consider disabling Web Browsing to prefer Actions.
+
 ### Step 6: Conversation Starters
 
 Add these:
@@ -64,6 +79,7 @@ Add these:
 | `instructions.md` | System instructions for GPT |
 | `knowledge_base.md` | YAML/BSL reference for knowledge upload |
 | `styling_guide.md` | UI styling: colors, fonts, ConditionalAppearance |
+| `openapi-gpt-action.yaml` | OpenAPI schema for Actions (sync with `itdeo-online-1C-generator/docs/`) |
 | `README.md` | This setup guide |
 
 ---

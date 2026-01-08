@@ -131,8 +131,8 @@ The generator automatically chooses the compilation mode:
 | **Multiple forms** | Can have 2+ forms in one processor | Use `forms:` array, set `default: true` on one form |
 | **Background Jobs** | Long operations (30s+) need special handling | Add `long_operation: true` to command (v2.17.0+) |
 | **DynamicList** | Live database queries need metadata | Add `is_dynamic_list: true` + `main_table:` (v2.6.0+) |
-| **FormAttributes** | SpreadsheetDocument, BinaryData, HTMLDocument | Use `form_attributes:` section, not `attributes:` (v2.15.1+) |
-| **HTMLDocumentField** | Display HTML content in forms | Use `type: HTMLDocumentField` + `form_attributes: HTMLDocument` (v2.39.0+) |
+| **FormAttributes** | spreadsheet_document, binary_data, string | Use `form_attributes:` section, not `attributes:` (v2.15.1+) |
+| **HTMLDocumentField** | Display HTML content in forms | Use `type: HTMLDocumentField` + `form_attributes: type: string` (v2.39.0+) |
 | **Templates (Макети)** | Store HTML/MXL layouts in processor | Use `templates:` section with external files (v2.40.0+) |
 | **Template Automation** | Auto-create fields, placeholders, assets | Use `auto_field: true` + `automation:` file (v2.41.0+) |
 | **Multiple languages** | Support ru, uk, en | Use Compact Multilang: `title: "RU \| UK"` or `title: [RU, UK]` (v2.69.0+). Legacy: `synonym_ru`, `synonym_uk` |
@@ -158,10 +158,10 @@ The generator automatically chooses the compilation mode:
 - **Access in BSL:** `Объект.AttributeName`
 
 **Use `form_attributes:` (form-level only, temporary):**
-- ✅ **SpreadsheetDocument** (reports, formatted output - MUST be form attribute)
-- ✅ **BinaryData** (files, images - MUST be form attribute)
-- ✅ **HTMLDocument** (HTML content for HTMLDocumentField - MUST be form attribute, v2.39.0+)
-- ✅ **ValueTable** (temporary calculation results, not saved)
+- ✅ **spreadsheet_document** (reports, formatted output - MUST be form attribute)
+- ✅ **binary_data** (files, images - MUST be form attribute)
+- ✅ **string** (HTML content for HTMLDocumentField - MUST be form attribute, v2.39.0+)
+- ✅ **ValueTable** (temporary calculation results, not saved via value_tables:)
 - ✅ Temporary UI state (exists only while form is open)
 - **Access in BSL:** `AttributeName` (no `Объект.` prefix)
 
@@ -176,17 +176,17 @@ attributes:
 
 form_attributes:
   - name: Report
-    type: SpreadsheetDocument       # ✅ MUST be form attribute!
+    type: spreadsheet_document      # ✅ MUST be form attribute!
 
   - name: HTMLContent
-    type: HTMLDocument              # ✅ For HTMLDocumentField (v2.39.0+)
+    type: string                    # ✅ For HTMLDocumentField (v2.39.0+)
 
 value_tables:
   - name: Results
     columns: [...]                  # ✅ Temporary table, not saved
 ```
 
-**Rule of thumb:** If it's `SpreadsheetDocument`, `BinaryData`, or `HTMLDocument` → **MUST** use `form_attributes:`
+**Rule of thumb:** If it's `spreadsheet_document`, `binary_data`, or `string` (for HTML) → **MUST** use `form_attributes:`
 
 **Why this matters:** Using wrong section → "Attribute not found" runtime error
 
@@ -1005,31 +1005,32 @@ commands:
 - type: DocumentRef.Накладная     # Reference to document
 
 # Form-level types (MUST use form_attributes:)
-- type: SpreadsheetDocument       # Reports, formatted output
-- type: BinaryData                # Files, images (MUST be form attribute)
-- type: ValueTable                # Temporary tables (use value_tables: section)
+- type: spreadsheet_document      # Reports, formatted output
+- type: binary_data               # Files, images (MUST be form attribute)
+- type: string                    # HTML content for HTMLDocumentField
 ```
 
 **Common mistakes:**
 
 | ❌ Invalid type | ✅ Correct approach |
 |----------------|---------------------|
-| `type: binary_data` | `type: BinaryData` + use `form_attributes:` |
-| `type: ValueStorage` | Use `BinaryData` in `form_attributes:` OR TabularSection column |
-| `type: file` | No file type - use `BinaryData` in `form_attributes:` |
-| `type: image` | Use `BinaryData` OR `PictureDecoration` with `svg_source:` |
+| `type: BinaryData` | `type: binary_data` (lowercase!) + use `form_attributes:` |
+| `type: HTMLDocument` | `type: string` + use `form_attributes:` for HTMLDocumentField |
+| `type: ValueStorage` | Use `binary_data` in `form_attributes:` OR TabularSection column |
+| `type: file` | No file type - use `binary_data` in `form_attributes:` |
+| `type: image` | Use `binary_data` OR `PictureDecoration` with `svg_source:` |
 
 **Example fix:**
 ```yaml
 # ❌ WRONG
 attributes:
   - name: Photo
-    type: binary_data    # Type doesn't exist
+    type: BinaryData    # Wrong section AND wrong case!
 
 # ✅ RIGHT - Option 1: Form attribute
 form_attributes:
   - name: Photo
-    type: BinaryData     # Correct type, correct section
+    type: binary_data   # Correct type (lowercase!), correct section
 
 # ✅ RIGHT - Option 2: Picture decoration (if displaying image)
 elements:

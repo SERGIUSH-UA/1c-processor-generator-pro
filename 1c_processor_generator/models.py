@@ -422,6 +422,10 @@ class Form:
     documentation_file: Optional[str] = None                                                     
     documentation: Optional[str] = None                                                             
 
+                                
+                                                            
+    module_variables: Optional[str] = None
+
                     
     uuid: str = field(default_factory=generate_uuid)
 
@@ -441,7 +445,7 @@ class ValidationConfig:
     check_thick_client: bool = False                    
 
                                       
-    semantic_check_enabled: bool = False                                                                 
+    semantic_check_enabled: bool = True                                                   
     check_incorrect_references: bool = True                               
     check_handlers_existence: bool = True                                     
     check_empty_handlers: bool = True                                  

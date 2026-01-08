@@ -349,6 +349,31 @@ STANDARD_FORM_COMMANDS = {
 }
 
                                                                               
+                                
+                                                                              
+
+                     
+VALID_FUNCTION_KEYS = {f"F{i}" for i in range(1, 13)}          
+
+                                        
+VALID_SPECIAL_KEYS = {
+    "Insert", "Delete", "Escape", "Home", "End",
+    "PageUp", "PageDown", "Tab", "Enter", "Backspace",
+    "Up", "Down", "Left", "Right", "Space",
+}
+
+                 
+VALID_MODIFIERS = {"Ctrl", "Alt", "Shift"}
+
+                                                 
+VALID_KEY_NAMES = (
+    VALID_FUNCTION_KEYS |
+    VALID_SPECIAL_KEYS |
+    set("ABCDEFGHIJKLMNOPQRSTUVWXYZ") |
+    set("0123456789")
+)
+
+                                                                              
                                                     
                                                                               
                                                                                      

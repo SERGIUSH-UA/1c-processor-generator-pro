@@ -48,6 +48,12 @@ SIZE_PROPS = [
     PropSpec("vertical_stretch"),
 ]
 
+                                                    
+VISIBILITY_PROPS = [
+    PropSpec("visible"),                                             
+    PropSpec("enabled"),                                                
+]
+
 
                                                                                
                                 
@@ -66,6 +72,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("input_hint", multilang=True),
             *SIZE_PROPS,
             *ALIGNMENT_PROPS,
+            *VISIBILITY_PROPS,            
             PropSpec("read_only"),
             PropSpec("multi_line", target="multiline"),
             PropSpec("multiline"),
@@ -114,6 +121,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("data_path"),
             PropSpec("hyperlink"),
             *ALIGNMENT_PROPS,
+            *VISIBILITY_PROPS,            
                                               
             PropSpec("conditional_appearances"),
         ],
@@ -129,6 +137,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("hyperlink"),
             PropSpec("font"),
             *ALIGNMENT_PROPS,
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -149,6 +158,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("hyperlink"),
             PropSpec("picture_size", default="Proportionally"),
             PropSpec("zoomable"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -163,6 +173,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("zoomable"),
             PropSpec("width"),
             PropSpec("height"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -199,6 +210,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("auto_insert_new_row"),
             PropSpec("enable_start_drag"),
             PropSpec("enable_drag"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -211,6 +223,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("width"),
             PropSpec("representation"),
             *ALIGNMENT_PROPS,
+            *VISIBILITY_PROPS,            
                                               
             PropSpec("conditional_appearances"),
                                      
@@ -229,6 +242,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("radio_button_type"),
             PropSpec("choice_list"),
             PropSpec("title_location"),
+            *VISIBILITY_PROPS,            
                                               
             PropSpec("conditional_appearances"),
         ],
@@ -242,6 +256,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
         props=[
             PropSpec("width"),
             PropSpec("title_location"),
+            *VISIBILITY_PROPS,            
                                               
             PropSpec("conditional_appearances"),
         ],
@@ -260,6 +275,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("show_headers"),
             PropSpec("edit"),
             PropSpec("protection"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -276,6 +292,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("vertical_stretch"),
             PropSpec("stretch"),
             PropSpec("template", target="template_ref"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -292,6 +309,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("first_day_of_week"),
             PropSpec("begin_of_representation_period"),
             PropSpec("end_of_representation_period"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -307,6 +325,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("chart_type"),
             PropSpec("show_legend"),
             PropSpec("transparent_background"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -323,6 +342,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("show_weekends"),
             PropSpec("period"),
             PropSpec("representation"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -338,6 +358,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("representation", default="None"),
             PropSpec("behavior"),
             PropSpec("read_only"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -349,6 +370,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
         props=[
             *MULTILANG_TITLE,
             PropSpec("group_direction", default="Horizontal"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -362,6 +384,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             PropSpec("group_layout", default="Horizontal"),
             PropSpec("show_in_header", default=True),
             *ALIGNMENT_PROPS,
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -375,6 +398,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
             *MULTILANG_TITLE,
             PropSpec("picture"),
             PropSpec("representation"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -387,6 +411,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
         children_key="pages",                     
         props=[
             PropSpec("pages_representation", default="TabsOnTop"),
+            *VISIBILITY_PROPS,            
         ],
     ),
                                                                                
@@ -398,6 +423,7 @@ SCHEMAS: Dict[str, ElementSchema] = {
         children_key="elements",
         props=[
             PropSpec("title", multilang=True),
+            *VISIBILITY_PROPS,            
         ],
     ),
 }

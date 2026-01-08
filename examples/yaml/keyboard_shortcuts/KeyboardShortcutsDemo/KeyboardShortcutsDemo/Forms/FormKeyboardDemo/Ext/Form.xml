@@ -1,0 +1,447 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcssch="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:mxl="http://v8.1c.ru/8.2/data/spreadsheet" xmlns:pl="http://v8.1c.ru/8.3/data/planner" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.11">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+	</AutoCommandBar>
+	<ChildItems>
+		<UsualGroup name="StatusGroup" id="1">
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+
+			<ExtendedTooltip name="StatusGroupРасширеннаяПодсказка" id="2"/>
+			<ChildItems>
+				<InputField name="FieldDirection" id="3">
+					<DataPath>Direction</DataPath>
+
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Направление:</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Напрямок:</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="FieldDirectionКонтекстноеМеню" id="4"/>
+					<ExtendedTooltip name="FieldDirectionРасширеннаяПодсказка" id="5"/>
+
+				</InputField>
+				<InputField name="FieldStatus" id="6">
+					<DataPath>Status</DataPath>
+
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус:</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Статус:</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="FieldStatusКонтекстноеМеню" id="7"/>
+					<ExtendedTooltip name="FieldStatusРасширеннаяПодсказка" id="8"/>
+
+				</InputField>
+				<InputField name="FieldScore" id="9">
+					<DataPath>Score</DataPath>
+
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Счёт:</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Рахунок:</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="FieldScoreКонтекстноеМеню" id="10"/>
+					<ExtendedTooltip name="FieldScoreРасширеннаяПодсказка" id="11"/>
+
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="GameControlsGroup" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Управление игрой</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Керування грою</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>true</ShowTitle>
+
+			<ExtendedTooltip name="GameControlsGroupРасширеннаяПодсказка" id="13"/>
+			<ChildItems>
+				<Button name="BtnStart" id="14">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.StartGame</CommandName>
+					<Picture>
+						<xr:Ref>StdPicture.ExecuteTask</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="BtnStartExtendedTooltip" id="15"/>
+				</Button>
+				<Button name="BtnPause" id="16">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.PauseGame</CommandName>
+					<Picture>
+						<xr:Ref>StdPicture.Stop</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="BtnPauseExtendedTooltip" id="17"/>
+				</Button>
+				<Button name="BtnRestart" id="18">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.RestartGame</CommandName>
+					<Picture>
+						<xr:Ref>StdPicture.Refresh</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="BtnRestartExtendedTooltip" id="19"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="DirectionControlsGroup" id="20">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Направление (F5-F8)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Напрямок (F5-F8)</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>true</ShowTitle>
+
+			<ExtendedTooltip name="DirectionControlsGroupРасширеннаяПодсказка" id="21"/>
+			<ChildItems>
+				<Button name="BtnUp" id="22">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.MoveUp</CommandName>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="BtnUpExtendedTooltip" id="23"/>
+				</Button>
+				<Button name="BtnDown" id="24">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.MoveDown</CommandName>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="BtnDownExtendedTooltip" id="25"/>
+				</Button>
+				<Button name="BtnLeft" id="26">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.MoveLeft</CommandName>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="BtnLeftExtendedTooltip" id="27"/>
+				</Button>
+				<Button name="BtnRight" id="28">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.MoveRight</CommandName>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="BtnRightExtendedTooltip" id="29"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="StateGroup" id="30">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранение (Ctrl+S/O)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Збереження (Ctrl+S/O)</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>true</ShowTitle>
+
+			<ExtendedTooltip name="StateGroupРасширеннаяПодсказка" id="31"/>
+			<ChildItems>
+				<Button name="BtnSave" id="32">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.SaveState</CommandName>
+					<Picture>
+						<xr:Ref>StdPicture.SaveFile</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="BtnSaveExtendedTooltip" id="33"/>
+				</Button>
+				<Button name="BtnLoad" id="34">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.LoadState</CommandName>
+					<Picture>
+						<xr:Ref>StdPicture.OpenFile</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</Picture>
+					<Representation>PictureAndText</Representation>
+
+					<ExtendedTooltip name="BtnLoadExtendedTooltip" id="35"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<LabelDecoration name="HelpLabel" id="36">
+			<Title formatted="false">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Используйте клавиши F5-F8 для управления направлением.
+F2 - Старт, F3 - Пауза, F4 - Рестарт.
+Ctrl+S - Сохранить, Ctrl+O - Загрузить.
+</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Використовуйте клавіші F5-F8 для керування напрямком.
+F2 - Старт, F3 - Пауза, F4 - Рестарт.
+Ctrl+S - Зберегти, Ctrl+O - Завантажити.
+</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="HelpLabelКонтекстноеМеню" id="37"/>
+			<ExtendedTooltip name="HelpLabelРасширеннаяПодсказка" id="38"/>
+
+		</LabelDecoration>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>ExternalDataProcessorObject.KeyboardShortcutsDemo</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+		<Attribute name="Direction" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Direction</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Direction</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Direction</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Status" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Status</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Status</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Status</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Score" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Score</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Score</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Score</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="MoveUp" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вверх</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Вгору</v8:content>
+				</v8:item>
+			</Title>
+			<Shortcut>F5</Shortcut>
+			<Action>MoveUpHandler</Action>
+		</Command>
+		<Command name="MoveDown" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вниз</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Вниз</v8:content>
+				</v8:item>
+			</Title>
+			<Shortcut>F6</Shortcut>
+			<Action>MoveDownHandler</Action>
+		</Command>
+		<Command name="MoveLeft" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Влево</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Вліво</v8:content>
+				</v8:item>
+			</Title>
+			<Shortcut>F7</Shortcut>
+			<Action>MoveLeftHandler</Action>
+		</Command>
+		<Command name="MoveRight" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вправо</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Вправо</v8:content>
+				</v8:item>
+			</Title>
+			<Shortcut>F8</Shortcut>
+			<Action>MoveRightHandler</Action>
+		</Command>
+		<Command name="StartGame" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Старт</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Старт</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.ExecuteTask</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Shortcut>F2</Shortcut>
+			<Action>StartGameHandler</Action>
+		</Command>
+		<Command name="PauseGame" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Пауза</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Пауза</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Stop</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Shortcut>F3</Shortcut>
+			<Action>PauseGameHandler</Action>
+		</Command>
+		<Command name="RestartGame" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Рестарт</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Рестарт</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Refresh</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Shortcut>F4</Shortcut>
+			<Action>RestartGameHandler</Action>
+		</Command>
+		<Command name="SaveState" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранить</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Зберегти</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.SaveFile</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Shortcut>Ctrl+S</Shortcut>
+			<Action>SaveStateHandler</Action>
+		</Command>
+		<Command name="LoadState" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Загрузить</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Завантажити</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.OpenFile</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Shortcut>Ctrl+O</Shortcut>
+			<Action>LoadStateHandler</Action>
+		</Command>
+	</Commands>
+</Form>

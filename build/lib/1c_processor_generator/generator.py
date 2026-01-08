@@ -386,6 +386,15 @@ class ProcessorGenerator:
                                                                         
         module_parts = []
 
+                                                                      
+                                                                        
+        if hasattr(form, "module_variables") and form.module_variables:
+            module_parts.append(f"""#Область ОписаниеПеременных
+
+{form.module_variables}
+
+#КонецОбласти""")
+
                                       
         if hasattr(form, "documentation") and form.documentation:
             module_parts.append(f"""#Область Документация

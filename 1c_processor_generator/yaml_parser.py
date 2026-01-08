@@ -290,6 +290,50 @@ def _normalize_element_types(config: Dict) -> tuple:
     return config, warnings
 
 
+def _normalize_attribute_types(config: Dict) -> tuple:
+           
+    warnings = []
+
+                                    
+    for attr in config.get("attributes", []):
+        if "type" in attr:
+            original = attr["type"]
+            normalized = FORM_ATTRIBUTE_TYPE_ALIASES.get(original, original)
+            if normalized != original:
+                attr["type"] = normalized
+                warnings.append(
+                    f"attribute '{attr.get('name', '?')}': type '{original}' → '{normalized}'"
+                )
+
+                                        
+    for ts in config.get("tabular_sections", []):
+        for col in ts.get("columns", []):
+            if "type" in col:
+                original = col["type"]
+                normalized = FORM_ATTRIBUTE_TYPE_ALIASES.get(original, original)
+                if normalized != original:
+                    col["type"] = normalized
+                    warnings.append(
+                        f"tabular_section '{ts.get('name', '?')}'.'{col.get('name', '?')}': "
+                        f"type '{original}' → '{normalized}'"
+                    )
+
+                                    
+    for vt in config.get("value_tables", []):
+        for col in vt.get("columns", []):
+            if "type" in col:
+                original = col["type"]
+                normalized = FORM_ATTRIBUTE_TYPE_ALIASES.get(original, original)
+                if normalized != original:
+                    col["type"] = normalized
+                    warnings.append(
+                        f"value_table '{vt.get('name', '?')}'.'{col.get('name', '?')}': "
+                        f"type '{original}' → '{normalized}'"
+                    )
+
+    return config, warnings
+
+
 class YAMLParser:
                                                       
 
@@ -335,21 +379,24 @@ class YAMLParser:
                                                               
                 self.config, attr_warnings = _normalize_form_attribute_types(self.config)
                 self.config, elem_warnings = _normalize_element_types(self.config)
+                self.config, type_warnings = _normalize_attribute_types(self.config)
 
                 jsonschema.validate(instance=self.config, schema=schema)
                 print("✅ YAML структура валідна")
 
                                                        
-                all_warnings = attr_warnings + elem_warnings
+                all_warnings = attr_warnings + elem_warnings + type_warnings
                 if all_warnings:
                     print(f"⚠️  Виправлено {len(all_warnings)} тип(ів) - використовуйте канонічні формати:")
                     for warning in all_warnings:
                         print(f"   • {warning}")
-                    print("   📖 Канонічні формати: form_attributes → snake_case, elements → PascalCase")
+                    print("   📖 Канонічні формати: types → snake_case, elements → PascalCase")
 
                 return True
             except jsonschema.ValidationError as e:
-                print(f"❌ YAML структура не валідна: {e.message}")
+                                                                      
+                enhanced_message = self._enhance_validation_error(e)
+                print(f"❌ YAML структура не валідна: {enhanced_message}")
                 print(f"   Шлях: {' -> '.join(str(p) for p in e.path)}")
 
                                                     
@@ -361,6 +408,47 @@ class YAMLParser:
         except Exception as e:
             print(f"❌ Помилка валідації: {e}")
             return False
+
+    def _enhance_validation_error(self, error) -> str:
+                   
+                                                           
+        if error.validator == "pattern":
+            instance = error.instance
+            if isinstance(instance, str):
+                                             
+                ukrainian_only = "іїєґІЇЄҐ"
+                found_ukrainian = [c for c in instance if c in ukrainian_only]
+                if found_ukrainian:
+                    chars = ", ".join(f"'{c}'" for c in set(found_ukrainian))
+                    return (
+                        f"'{instance}' містить українські літери: {chars}. "
+                        f"Використовуйте російські літери (и, е) або латиницю."
+                    )
+
+                                              
+                import re
+                identifier_pattern = r'^[А-ЯІЇЄҐа-яіїєґЁёA-Za-z_][А-ЯІЇЄҐа-яіїєґЁёA-Za-z0-9_]*$'
+                if not re.match(identifier_pattern, instance):
+                                             
+                    valid_chars = set("АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя"
+                                     "ЁёІіЇїЄєҐґABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_")
+                    invalid = [c for c in instance if c not in valid_chars]
+                    if invalid:
+                        chars = ", ".join(f"'{c}'" for c in set(invalid))
+                        return f"'{instance}' містить недопустимі символи: {chars}"
+
+                                       
+                    if instance and instance[0].isdigit():
+                        return f"'{instance}' не може починатися з цифри"
+
+                                
+        if error.validator == "enum":
+            valid_values = error.validator_value
+            if len(valid_values) <= 10:
+                return f"'{error.instance}' не є допустимим значенням. Допустимі: {', '.join(map(str, valid_values))}"
+
+                                                  
+        return error.message
 
     def _get_validation_suggestion(self, error) -> Optional[str]:
                    
@@ -1451,6 +1539,7 @@ def parse_yaml_config(
     yaml_path: Path,
     handlers_dir: Optional[Path] = None,
     handlers_file: Optional[Path] = None,
+    normalize_bsl_escapes: bool = False,
 ) -> Optional[Processor]:
            
     parser = YAMLParser(yaml_path)
@@ -1471,7 +1560,8 @@ def parse_yaml_config(
 
         injector = BSLInjector(
             handlers_dir=handlers_dir,
-            handlers_file=handlers_file
+            handlers_file=handlers_file,
+            normalize_escapes=normalize_bsl_escapes
         )
         injector.inject_all_handlers(processor)
 
@@ -1495,10 +1585,8 @@ def parse_yaml_config(
                 print(f"   - {warning}")
 
         if not is_valid:
-            print("❌ Помилки валідації handlers:")
+            print("⚠️  Проблеми валідації handlers (генерація продовжується):")
             for error in errors:
                 print(f"   - {error}")
-                                                            
-                                                        
 
     return processor

@@ -1,0 +1,204 @@
+# Keyboard Shortcuts Example
+# Demonstrates correct approach for keyboard controls in managed forms
+#
+# IMPORTANT: In managed forms (1C 8.3):
+# - OnKeyDown event does NOT work (only for regular forms)
+# - KeyboardInterceptionMode does NOT work (only for regular forms)
+# - Shortcuts work ONLY on VISIBLE buttons
+# - Use F-keys (F1-F12), Ctrl+X, Alt+X combinations
+# - Single letters (W, A, S, D) do NOT work as shortcuts
+#
+# This example shows a simple game controller with F-key shortcuts
+
+processor:
+  name: KeyboardShortcutsDemo
+  synonym_ru: Демо клавиатурных сочетаний
+  synonym_uk: Демо клавіатурних скорочень
+  comment: Example demonstrating keyboard shortcuts in managed forms
+
+forms:
+  - name: FormKeyboardDemo
+    default: true
+
+    # Form attributes for state
+    form_attributes:
+      - name: Direction
+        type: string
+      - name: Status
+        type: string
+      - name: Score
+        type: number
+
+    # Commands with shortcuts - the ONLY way to handle keyboard in managed forms
+    commands:
+      # Game controls
+      - name: MoveUp
+        title_ru: Вверх
+        title_uk: Вгору
+        shortcut: F5
+        handler: MoveUpHandler
+
+      - name: MoveDown
+        title_ru: Вниз
+        title_uk: Вниз
+        shortcut: F6
+        handler: MoveDownHandler
+
+      - name: MoveLeft
+        title_ru: Влево
+        title_uk: Вліво
+        shortcut: F7
+        handler: MoveLeftHandler
+
+      - name: MoveRight
+        title_ru: Вправо
+        title_uk: Вправо
+        shortcut: F8
+        handler: MoveRightHandler
+
+      # Game state controls
+      - name: StartGame
+        title_ru: Старт
+        title_uk: Старт
+        shortcut: F2
+        handler: StartGameHandler
+        picture: StdPicture.ExecuteTask
+
+      - name: PauseGame
+        title_ru: Пауза
+        title_uk: Пауза
+        shortcut: F3
+        handler: PauseGameHandler
+        picture: StdPicture.Stop
+
+      - name: RestartGame
+        title_ru: Рестарт
+        title_uk: Рестарт
+        shortcut: F4
+        handler: RestartGameHandler
+        picture: StdPicture.Refresh
+
+      # Ctrl+ shortcuts example
+      - name: SaveState
+        title_ru: Сохранить
+        title_uk: Зберегти
+        shortcut: Ctrl+S
+        handler: SaveStateHandler
+        picture: StdPicture.SaveFile
+
+      - name: LoadState
+        title_ru: Загрузить
+        title_uk: Завантажити
+        shortcut: Ctrl+O
+        handler: LoadStateHandler
+        picture: StdPicture.OpenFile
+
+    elements:
+      # Status display
+      - type: UsualGroup
+        name: StatusGroup
+        group_direction: Horizontal
+        elements:
+          - type: InputField
+            name: FieldDirection
+            attribute: Direction
+            read_only: true
+            title:
+              ru: "Направление:"
+              uk: "Напрямок:"
+
+          - type: InputField
+            name: FieldStatus
+            attribute: Status
+            read_only: true
+            title:
+              ru: "Статус:"
+              uk: "Статус:"
+
+          - type: InputField
+            name: FieldScore
+            attribute: Score
+            read_only: true
+            title:
+              ru: "Счёт:"
+              uk: "Рахунок:"
+
+      # Game controls - BUTTONS MUST BE VISIBLE for shortcuts to work!
+      - type: UsualGroup
+        name: GameControlsGroup
+        title:
+          ru: Управление игрой
+          uk: Керування грою
+        show_title: true
+        group_direction: Horizontal
+        elements:
+          - type: Button
+            name: BtnStart
+            command: StartGame
+
+          - type: Button
+            name: BtnPause
+            command: PauseGame
+
+          - type: Button
+            name: BtnRestart
+            command: RestartGame
+
+      # Direction controls - visible buttons with shortcuts
+      - type: UsualGroup
+        name: DirectionControlsGroup
+        title:
+          ru: Направление (F5-F8)
+          uk: Напрямок (F5-F8)
+        show_title: true
+        group_direction: Horizontal
+        elements:
+          - type: Button
+            name: BtnUp
+            command: MoveUp
+            representation: PictureAndText
+
+          - type: Button
+            name: BtnDown
+            command: MoveDown
+            representation: PictureAndText
+
+          - type: Button
+            name: BtnLeft
+            command: MoveLeft
+            representation: PictureAndText
+
+          - type: Button
+            name: BtnRight
+            command: MoveRight
+            representation: PictureAndText
+
+      # State management
+      - type: UsualGroup
+        name: StateGroup
+        title:
+          ru: Сохранение (Ctrl+S/O)
+          uk: Збереження (Ctrl+S/O)
+        show_title: true
+        group_direction: Horizontal
+        elements:
+          - type: Button
+            name: BtnSave
+            command: SaveState
+
+          - type: Button
+            name: BtnLoad
+            command: LoadState
+
+      # Help text
+      - type: LabelDecoration
+        name: HelpLabel
+        title:
+          ru: |
+            Используйте клавиши F5-F8 для управления направлением.
+            F2 - Старт, F3 - Пауза, F4 - Рестарт.
+            Ctrl+S - Сохранить, Ctrl+O - Загрузить.
+          uk: |
+            Використовуйте клавіші F5-F8 для керування напрямком.
+            F2 - Старт, F3 - Пауза, F4 - Рестарт.
+            Ctrl+S - Зберегти, Ctrl+O - Завантажити.

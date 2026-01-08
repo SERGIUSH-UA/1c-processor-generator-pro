@@ -4,7 +4,10 @@ import re
 from pathlib import Path
 from typing import List, Tuple, Dict, Optional, Set
 from difflib import get_close_matches
-from .constants import VALID_STD_PICTURES, BSL_RESERVED_KEYWORDS, FORM_BUILTIN_METHODS
+from .constants import (
+    VALID_STD_PICTURES, BSL_RESERVED_KEYWORDS, FORM_BUILTIN_METHODS,
+    VALID_FUNCTION_KEYS, VALID_SPECIAL_KEYS, VALID_MODIFIERS, VALID_KEY_NAMES,
+)
 
                                                                                                    
 RESERVED_METADATA_NAMES = {
@@ -457,6 +460,64 @@ def validate_color(color: str, property_name: str, context: str) -> Tuple[bool, 
     return True, ""
 
 
+def validate_shortcut(shortcut: str, context: str = "") -> Tuple[bool, str]:
+           
+    if not shortcut:
+        return True, ""
+
+    shortcut = shortcut.strip()
+
+                           
+    if re.match(r'^F([1-9]|1[0-2])$', shortcut):
+        return True, ""
+
+                                            
+    if shortcut in VALID_SPECIAL_KEYS:
+        return True, ""
+
+                                                                     
+    modifier_pattern = r'^(Ctrl\+)?(Alt\+)?(Shift\+)?(.+)$'
+    match = re.match(modifier_pattern, shortcut)
+
+    if not match:
+        return False, (
+            f"{context}: shortcut=\"{shortcut}\" - невірний формат\n\n"
+            f"💡 Валідні формати:\n"
+            f"    F1-F12, Escape, Insert, Delete\n"
+            f"    Ctrl+S, Alt+F4, Ctrl+Shift+S"
+        )
+
+    has_ctrl, has_alt, has_shift, key = match.groups()
+    has_modifier = has_ctrl or has_alt or has_shift
+
+                           
+    if key not in VALID_KEY_NAMES:
+                                   
+        suggestions = get_close_matches(key, VALID_KEY_NAMES, n=3, cutoff=0.4)
+        if suggestions:
+            return False, (
+                f"{context}: shortcut=\"{shortcut}\" - невідома клавіша '{key}'\n\n"
+                f"💡 Схожі: {', '.join(suggestions)}"
+            )
+        return False, (
+            f"{context}: shortcut=\"{shortcut}\" - невідома клавіша '{key}'\n\n"
+            f"💡 Валідні клавіші: F1-F12, A-Z, 0-9, Insert, Delete, Escape, Home, End, "
+            f"PageUp, PageDown, Tab, Enter, Backspace, Up, Down, Left, Right, Space"
+        )
+
+                                                  
+                                                      
+    single_letters = set("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    if not has_modifier and key in single_letters:
+        return True, (
+            f"⚠️ {context}: shortcut=\"{shortcut}\" - одиночна клавіша "
+            f"може конфліктувати з вводом тексту в InputField. "
+            f"Рекомендуємо: Ctrl+{key} або F1-F12."
+        )
+
+    return True, ""
+
+
 def validate_conditional_appearance(ca: dict, index: int, context: str) -> Tuple[bool, str]:
            
     if not ca:
@@ -895,6 +956,17 @@ class ProcessorValidator:
                     )
 
                 self._validate_handler(cmd.action, f"Форма '{form.name}' - Команда '{cmd.name}'")
+
+                                                      
+                if hasattr(cmd, 'shortcut') and cmd.shortcut:
+                    is_valid, message = validate_shortcut(
+                        cmd.shortcut,
+                        f"Форма '{form.name}' - Команда '{cmd.name}'"
+                    )
+                    if not is_valid:
+                        self.errors.append(message)
+                    elif message:                            
+                        self.warnings.append(message)
 
                                    
             for event_name, handler_name in form.events.items():

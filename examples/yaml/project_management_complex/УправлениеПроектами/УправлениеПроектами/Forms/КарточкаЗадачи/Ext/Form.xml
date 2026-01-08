@@ -27,6 +27,7 @@
 
 		</LabelDecoration>
 		<Pages name="СекцииЗадачи" id="4">
+
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -41,6 +42,7 @@
 			<ExtendedTooltip name="СекцииЗадачиРасширеннаяПодсказка" id="5"/>
 			<ChildItems>
 				<Page name="СтраницаОсновнаяИнформацияЗадачи" id="6">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -77,6 +79,7 @@
 					</InputField>
 					<InputField name="ПолеЗадачаОписание" id="11">
 						<DataPath>Описание</DataPath>
+
 						<MultiLine>true</MultiLine>
 						<Width>60</Width>
 						<Height>6</Height>
@@ -398,6 +401,7 @@
 							</InputField>
 							<InputField name="ПолеЗадачаАвтор" id="30">
 								<DataPath>Автор</DataPath>
+
 								<ReadOnly>true</ReadOnly>
 								<Width>25</Width>
 								<Title>
@@ -430,6 +434,7 @@
 						<ChildItems>
 							<InputField name="ПолеЗадачаДатаСоздания" id="35">
 								<DataPath>ДатаСоздания</DataPath>
+
 								<ReadOnly>true</ReadOnly>
 								<Width>18</Width>
 								<Title>
@@ -528,6 +533,7 @@
 							</InputField>
 							<InputField name="ПолеЗадачаФактическоеВремя" id="49">
 								<DataPath>ФактическоеВремя</DataPath>
+
 								<ReadOnly>true</ReadOnly>
 								<Width>18</Width>
 								<Title>
@@ -613,6 +619,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="СтраницаКомментарии" id="58">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -626,6 +633,7 @@
 					<ExtendedTooltip name="СтраницаКомментарииРасширеннаяПодсказка" id="59"/>
 					<ChildItems>
 					<Table name="ТаблицаКомментариев" id="60">
+
 						<Representation>List</Representation>
 						<AutoInsertNewRow>true</AutoInsertNewRow>
 						<EnableStartDrag>true</EnableStartDrag>

@@ -53,7 +53,7 @@
 | Секція | Зберігання | Доступ BSL | Типи |
 |--------|------------|------------|------|
 | `attributes:` | Персистентно в об'єкті | `Объект.Имя` | string, number, date, boolean, CatalogRef, DocumentRef |
-| `form_attributes:` | Тимчасово на формі | `Имя` | SpreadsheetDocument, BinaryData, HTMLDocument, ValueTable |
+| `form_attributes:` | Тимчасово на формі | `Имя` | spreadsheet_document, binary_data, string (для HTML), planner |
 
 ```yaml
 # ✅ ПРАВИЛЬНО
@@ -70,9 +70,9 @@ forms:
     default: true
     form_attributes:              # ВСЕРЕДИНІ form!
       - name: ОтчетТабличный
-        type: SpreadsheetDocument
-      - name: HTMLСодержимое
-        type: HTMLDocument
+        type: spreadsheet_document
+      - name: HTMLКонтент
+        type: string              # ⚠️ Для HTMLDocumentField!
 ```
 
 **❌ ПОМИЛКА:** `SpreadsheetDocument` в `attributes:` → runtime error!
@@ -126,12 +126,14 @@ forms:
 ```yaml
 form_attributes:
   - name: Отчет
-    type: SpreadsheetDocument    # Табличний документ
+    type: spreadsheet_document   # Табличний документ
   - name: Файл
-    type: BinaryData             # Двійкові дані
-  - name: HTML
-    type: HTMLDocument           # HTML вміст
+    type: binary_data            # Двійкові дані
+  - name: HTMLКонтент
+    type: string                 # ⚠️ HTML контент (для HTMLDocumentField)
 ```
+
+⚠️ **HTMLDocumentField використовує `type: string`, НЕ `type: HTMLDocument`!**
 
 ---
 
@@ -320,15 +322,30 @@ form_attributes:
 ```
 
 ### HTMLDocumentField
+
+⚠️ **КРИТИЧНО:** Атрибут для HTMLDocumentField = `type: string`, НЕ `HTMLDocument`!
+
 ```yaml
-- type: HTMLDocumentField
-  name: HTMLПоле
-  attribute: HTMLСодержимое      # Має бути в form_attributes!
-  horizontal_stretch: true
-  height: 15
-  events:
-    OnClick: HTMLПриКлике
-    DocumentComplete: HTMLДокументСформирован
+# Спочатку визначаємо form_attribute
+form_attributes:
+  - name: HTMLКонтент
+    type: string                 # ✅ ПРАВИЛЬНО! НЕ HTMLDocument!
+
+# Потім створюємо елемент
+elements:
+  - type: HTMLDocumentField
+    name: HTMLПоле
+    attribute: HTMLКонтент       # Посилання на form_attribute
+    horizontal_stretch: true
+    height: 15
+    events:
+      OnClick: HTMLПриКлике
+      DocumentComplete: HTMLДокументСформирован
+```
+
+```bsl
+// Встановлення HTML контенту - просто присвоюємо рядок
+HTMLКонтент = "<html><body>Hello!</body></html>";
 ```
 
 ---
@@ -1179,6 +1196,150 @@ forms:
     КонецЦикла;
 КонецПроцедуры
 ```
+
+---
+
+## Thin Client обмеження
+
+### Тільки &НаСервере
+| Операція | Чому |
+|----------|------|
+| `SpreadsheetDocument.Очистить()` | Метод недоступен на thin client |
+| `SpreadsheetDocument.Область()` | Метод недоступен на thin client |
+| `ДиалогВыбораФайла` | Сервер має доступ до ФС |
+| `Запрос` | Прямі запити до БД |
+| Файлові операції | Сервер має доступ до ФС |
+
+### Доступно на &НаКлиенте
+| Операція | Примітка |
+|----------|----------|
+| `Сообщить()` | Повідомлення користувачу |
+| `Вопрос()` | Діалог вибору |
+| `ПодключитьОбработчикОжидания()` | Таймери та асинхронні виклики |
+| `ОтключитьОбработчикОжидания()` | Зупинка таймера |
+| Доступ до `Элементы.*` | UI маніпуляції |
+| Читання/запис `form_attributes` | SpreadsheetDocument, BinaryData |
+
+### SpreadsheetDocument правильний патерн
+```bsl
+&НаКлиенте
+Процедура ОновитиДокумент(Команда)
+    // Виклик серверної процедури
+    ОновитиДокументНаСервере();
+КонецПроцедуры
+
+&НаСервере
+Процедура ОновитиДокументНаСервере()
+    // ВСЯ маніпуляція тут!
+    ТабДок.Очистить();
+    Область = ТабДок.Область(1, 1);
+    Область.Текст = "Значення";
+КонецПроцедуры
+```
+
+---
+
+## Таймери та асинхронні виклики
+
+**ЄДИНИЙ спосіб створити таймер в EPF:**
+
+```bsl
+&НаКлиенте
+Процедура СтартТаймера(Команда)
+    // Одноразовий виклик через 0.5 сек
+    ПодключитьОбработчикОжидания("МояПроцедура", 0.5, Истина);
+
+    // Повторюваний виклик кожні 0.5 сек
+    ПодключитьОбработчикОжидания("МояПроцедура", 0.5, Ложь);
+КонецПроцедуры
+
+&НаКлиенте
+Процедура СтопТаймера(Команда)
+    ОтключитьОбработчикОжидания("МояПроцедура");
+КонецПроцедуры
+
+&НаКлиенте
+Процедура МояПроцедура()
+    // Код що виконується по таймеру
+КонецПроцедуры
+```
+
+**Параметри:**
+- `ИмяПроцедуры` — рядок з ім'ям процедури (в лапках!)
+- `Интервал` — секунди (можна дробні: 0.5, 0.1)
+- `Однократно` — `Истина` (один раз) або `Ложь` (повторювано)
+
+---
+
+## patchSessionCode Action (часткові зміни)
+
+Застосовує часткові зміни до YAML/BSL без повної заміни коду.
+
+### YAML Patches (JSON Pointer paths)
+
+```json
+{
+  "yaml_patches": [
+    {"op": "add", "path": "/forms/0/commands/-", "value": {"name": "MoveUp", "handler": "ВгоруНатиснуто", "shortcut": "F5"}},
+    {"op": "replace", "path": "/forms/0/form_attributes/0/type", "value": "string"},
+    {"op": "add", "path": "/forms/0/commands/-", "value": {"name": "Pause", "handler": "ПаузаИгры"}},
+    {"op": "remove", "path": "/forms/0/elements/2"},
+    {"op": "merge", "path": "/processor", "value": {"synonym_uk": "Нова назва"}}
+  ]
+}
+```
+
+| op | Опис |
+|----|------|
+| `add` | Додати секцію/елемент. `-` в path = append до масиву |
+| `replace` | Замінити існуюче значення |
+| `remove` | Видалити елемент |
+| `merge` | Злити з існуючим об'єктом (не перезаписує все) |
+
+### BSL Patches (procedure-level)
+
+```json
+{
+  "bsl_patches": [
+    {
+      "op": "add_procedure",
+      "name": "ВгоруНатиснуто",
+      "directive": "&НаКлиенте",
+      "body": "Направление = \"Вверх\";"
+    },
+    {
+      "op": "replace_line",
+      "procedure": "НачатьИгру",
+      "line_pattern": "ПодключитьОбработчикОжидания.*0\\.3",
+      "new_line": "ПодключитьОбработчикОжидания(\"ВыполнитьШаг\", 1);"
+    },
+    {
+      "op": "add_variable",
+      "directive": "&НаКлиенте",
+      "names": ["НоваяЗмінна", "ІншаЗмінна"]
+    },
+    {
+      "op": "remove_procedure",
+      "name": "СтараПроцедура"
+    }
+  ]
+}
+```
+
+| op | Опис |
+|----|------|
+| `add_procedure` | Додати нову процедуру. `params` опційний |
+| `replace_line` | Замінити рядок за regex патерном в процедурі |
+| `add_variable` | Додати `Перем` з директивою |
+| `remove_procedure` | Видалити процедуру повністю |
+
+### Коли використовувати patchSessionCode
+
+- ✅ Додати нову подію (OnActivateRow) або команду з shortcut
+- ✅ Виправити параметр (інтервал таймера, тип атрибуту)
+- ✅ Додати нову команду або процедуру
+- ✅ Замінити конкретний рядок коду
+- ❌ Великі зміни структури → краще submitSessionCode
 
 ---
 

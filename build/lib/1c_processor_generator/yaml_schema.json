@@ -775,6 +775,22 @@
         }
       }
     },
+    "VisibilityProperties": {
+      "type": "object",
+      "description": "Element visibility properties (v2.72.0+)",
+      "properties": {
+        "visible": {
+          "type": "boolean",
+          "default": true,
+          "description": "Element visibility. Set to false to hide element (v2.72.0+)"
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Element enabled state. Set to false to disable element (v2.72.0+)"
+        }
+      }
+    },
     "FontProperties": {
       "type": "object",
       "properties": {
@@ -833,571 +849,614 @@
       "additionalProperties": false
     },
     "InputField": {
-      "type": "object",
-      "required": [
-        "type",
-        "name",
-        "attribute"
-      ],
-      "properties": {
-        "type": {
-          "const": "InputField"
-        },
-        "name": {
-          "$ref": "#/definitions/Identifier"
-        },
-        "attribute": {
-          "type": "string",
-          "description": "Reference to processor attribute"
-        },
-        "title": {
-          "$ref": "#/definitions/LocalizedString"
-        },
-        "tooltip": {
-          "$ref": "#/definitions/LocalizedString"
-        },
-        "input_hint": {
-          "$ref": "#/definitions/LocalizedString"
-        },
-        "read_only": {
-          "type": "boolean",
-          "default": false,
-          "description": "Field is read-only"
-        },
-        "multi_line": {
-          "type": "boolean",
-          "default": false,
-          "description": "Multi-line text input"
-        },
-        "password_mode": {
-          "type": "boolean",
-          "default": false,
-          "description": "Mask input for passwords"
-        },
-        "text_edit": {
-          "type": "boolean",
-          "default": false,
-          "description": "Text editing mode"
-        },
-        "auto_max_width": {
-          "type": "boolean",
-          "default": false,
-          "description": "Auto-size width"
-        },
-        "auto_max_height": {
-          "type": "boolean",
-          "default": false,
-          "description": "Auto-size height"
-        },
-        "choice_mode": {
-          "type": "string",
-          "enum": [
-            "QuickChoice",
-            "Parameters",
-            "BothWays"
-          ]
-        },
-        "choice_folders_and_items": {
-          "type": "string",
-          "enum": [
-            "Folders",
-            "Items",
-            "FoldersAndItems"
-          ]
-        },
-        "quick_choice": {
-          "type": "boolean",
-          "default": false
-        },
-        "choice_history_on_input": {
-          "type": "string",
-          "enum": [
-            "Auto",
-            "DontUse",
-            "UseAlways"
-          ]
-        },
-        "horizontal_align": {
-          "$ref": "#/definitions/HorizontalAlignment"
-        },
-        "vertical_align": {
-          "$ref": "#/definitions/VerticalAlignment"
-        },
-        "title_text_color": {
-          "type": "string",
-          "pattern": "^#[0-9A-Fa-f]{6}$",
-          "description": "Title text color in HEX format (#RRGGBB)"
-        },
-        "title_font": {
-          "$ref": "#/definitions/FontProperties",
-          "description": "Font for the field title/label"
-        },
-        "text_color": {
-          "type": "string",
-          "pattern": "^#[0-9A-Fa-f]{6}$",
-          "description": "Text color in HEX format (#RRGGBB)"
-        },
-        "back_color": {
-          "type": "string",
-          "pattern": "^#[0-9A-Fa-f]{6}$",
-          "description": "Background color in HEX format (#RRGGBB)"
-        },
-        "border_color": {
-          "type": "string",
-          "pattern": "^#[0-9A-Fa-f]{6}$",
-          "description": "Border color in HEX format (#RRGGBB)"
-        },
-        "font": {
-          "$ref": "#/definitions/FontProperties",
-          "description": "Font for the field text"
-        },
-        "choice_button_picture": {
-          "type": "string",
-          "description": "Picture for choice button (e.g. CommonPicture.Gmail)"
-        },
-        "events": {
-          "$ref": "#/definitions/InputFieldEvents"
-        },
-        "tooltip_representation": {
-          "$ref": "#/definitions/ToolTipRepresentation"
-        },
-        "choice_button_representation": {
-          "$ref": "#/definitions/ChoiceButtonRepresentation"
-        },
-        "mark_negatives": {
-          "type": "boolean",
-          "description": "Highlight negative numbers in red (v2.71.0+)"
-        },
-        "open_button": {
-          "type": "boolean",
-          "description": "Show/hide open (choice) button (v2.71.0+)"
-        },
-        "clear_button": {
-          "type": "boolean",
-          "description": "Show/hide clear button (v2.71.0+)"
-        },
-        "drop_list_button": {
-          "type": "boolean",
-          "description": "Show/hide dropdown list button (v2.71.0+)"
-        },
-        "spin_button": {
-          "type": "boolean",
-          "description": "Show/hide spin buttons for numeric fields (v2.71.0+)"
-        },
-        "create_button": {
-          "type": "boolean",
-          "description": "Show/hide create new item button (v2.71.0+)"
-        },
-        "auto_mark_incomplete": {
-          "type": "boolean",
-          "description": "Mark field as incomplete when empty (v2.71.1+)"
+      "allOf": [
+        { "$ref": "#/definitions/VisibilityProperties" },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "name",
+            "attribute"
+          ],
+          "properties": {
+            "type": {
+              "const": "InputField"
+            },
+            "name": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "attribute": {
+              "type": "string",
+              "description": "Reference to processor attribute"
+            },
+            "title": {
+              "$ref": "#/definitions/LocalizedString"
+            },
+            "tooltip": {
+              "$ref": "#/definitions/LocalizedString"
+            },
+            "input_hint": {
+              "$ref": "#/definitions/LocalizedString"
+            },
+            "read_only": {
+              "type": "boolean",
+              "default": false,
+              "description": "Field is read-only"
+            },
+            "multi_line": {
+              "type": "boolean",
+              "default": false,
+              "description": "Multi-line text input"
+            },
+            "password_mode": {
+              "type": "boolean",
+              "default": false,
+              "description": "Mask input for passwords"
+            },
+            "text_edit": {
+              "type": "boolean",
+              "default": false,
+              "description": "Text editing mode"
+            },
+            "auto_max_width": {
+              "type": "boolean",
+              "default": false,
+              "description": "Auto-size width"
+            },
+            "auto_max_height": {
+              "type": "boolean",
+              "default": false,
+              "description": "Auto-size height"
+            },
+            "choice_mode": {
+              "type": "string",
+              "enum": [
+                "QuickChoice",
+                "Parameters",
+                "BothWays"
+              ]
+            },
+            "choice_folders_and_items": {
+              "type": "string",
+              "enum": [
+                "Folders",
+                "Items",
+                "FoldersAndItems"
+              ]
+            },
+            "quick_choice": {
+              "type": "boolean",
+              "default": false
+            },
+            "choice_history_on_input": {
+              "type": "string",
+              "enum": [
+                "Auto",
+                "DontUse",
+                "UseAlways"
+              ]
+            },
+            "horizontal_align": {
+              "$ref": "#/definitions/HorizontalAlignment"
+            },
+            "vertical_align": {
+              "$ref": "#/definitions/VerticalAlignment"
+            },
+            "title_text_color": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Title text color in HEX format (#RRGGBB)"
+            },
+            "title_font": {
+              "$ref": "#/definitions/FontProperties",
+              "description": "Font for the field title/label"
+            },
+            "text_color": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Text color in HEX format (#RRGGBB)"
+            },
+            "back_color": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Background color in HEX format (#RRGGBB)"
+            },
+            "border_color": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Border color in HEX format (#RRGGBB)"
+            },
+            "font": {
+              "$ref": "#/definitions/FontProperties",
+              "description": "Font for the field text"
+            },
+            "choice_button_picture": {
+              "type": "string",
+              "description": "Picture for choice button (e.g. CommonPicture.Gmail)"
+            },
+            "events": {
+              "$ref": "#/definitions/InputFieldEvents"
+            },
+            "tooltip_representation": {
+              "$ref": "#/definitions/ToolTipRepresentation"
+            },
+            "choice_button_representation": {
+              "$ref": "#/definitions/ChoiceButtonRepresentation"
+            },
+            "mark_negatives": {
+              "type": "boolean",
+              "description": "Highlight negative numbers in red (v2.71.0+)"
+            },
+            "open_button": {
+              "type": "boolean",
+              "description": "Show/hide open (choice) button (v2.71.0+)"
+            },
+            "clear_button": {
+              "type": "boolean",
+              "description": "Show/hide clear button (v2.71.0+)"
+            },
+            "drop_list_button": {
+              "type": "boolean",
+              "description": "Show/hide dropdown list button (v2.71.0+)"
+            },
+            "spin_button": {
+              "type": "boolean",
+              "description": "Show/hide spin buttons for numeric fields (v2.71.0+)"
+            },
+            "create_button": {
+              "type": "boolean",
+              "description": "Show/hide create new item button (v2.71.0+)"
+            },
+            "auto_mark_incomplete": {
+              "type": "boolean",
+              "description": "Mark field as incomplete when empty (v2.71.1+)"
+            }
+          }
         }
-      }
+      ]
     },
     "LabelField": {
-      "type": "object",
-      "required": [
-        "type",
-        "name"
-      ],
-      "properties": {
-        "type": {
-          "const": "LabelField"
-        },
-        "name": {
-          "$ref": "#/definitions/Identifier"
-        },
-        "attribute": {
-          "type": "string"
-        },
-        "data_path": {
-          "type": "string",
-          "description": "Custom DataPath (e.g., Items.Table.CurrentData.Field)"
-        },
-        "title": {
-          "$ref": "#/definitions/LocalizedString"
-        },
-        "tooltip": {
-          "$ref": "#/definitions/LocalizedString"
-        },
-        "hyperlink": {
-          "type": "boolean"
-        },
-        "horizontal_align": {
-          "$ref": "#/definitions/HorizontalAlignment"
-        },
-        "vertical_align": {
-          "$ref": "#/definitions/VerticalAlignment"
-        },
-        "events": {
-          "$ref": "#/definitions/ClickEvents"
-        },
-        "tooltip_representation": {
-          "$ref": "#/definitions/ToolTipRepresentation"
+      "allOf": [
+        { "$ref": "#/definitions/VisibilityProperties" },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "name"
+          ],
+          "properties": {
+            "type": {
+              "const": "LabelField"
+            },
+            "name": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "attribute": {
+              "type": "string"
+            },
+            "data_path": {
+              "type": "string",
+              "description": "Custom DataPath (e.g., Items.Table.CurrentData.Field)"
+            },
+            "title": {
+              "$ref": "#/definitions/LocalizedString"
+            },
+            "tooltip": {
+              "$ref": "#/definitions/LocalizedString"
+            },
+            "hyperlink": {
+              "type": "boolean"
+            },
+            "horizontal_align": {
+              "$ref": "#/definitions/HorizontalAlignment"
+            },
+            "vertical_align": {
+              "$ref": "#/definitions/VerticalAlignment"
+            },
+            "events": {
+              "$ref": "#/definitions/ClickEvents"
+            },
+            "tooltip_representation": {
+              "$ref": "#/definitions/ToolTipRepresentation"
+            }
+          }
         }
-      }
+      ]
     },
     "LabelDecoration": {
-      "type": "object",
-      "required": [
-        "type",
-        "name"
-      ],
-      "properties": {
-        "type": {
-          "const": "LabelDecoration"
-        },
-        "name": {
-          "$ref": "#/definitions/Identifier"
-        },
-        "title": {
-          "$ref": "#/definitions/LocalizedString"
-        },
-        "hyperlink": {
-          "type": "boolean",
-          "default": false,
-          "description": "Make label clickable"
-        },
-        "horizontal_align": {
-          "$ref": "#/definitions/HorizontalAlignment"
-        },
-        "vertical_align": {
-          "$ref": "#/definitions/VerticalAlignment"
-        },
-        "font": {
-          "$ref": "#/definitions/FontProperties"
-        },
-        "events": {
-          "$ref": "#/definitions/ClickEvents"
-        },
-        "tooltip_representation": {
-          "$ref": "#/definitions/ToolTipRepresentation"
+      "allOf": [
+        { "$ref": "#/definitions/VisibilityProperties" },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "name"
+          ],
+          "properties": {
+            "type": {
+              "const": "LabelDecoration"
+            },
+            "name": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "title": {
+              "$ref": "#/definitions/LocalizedString"
+            },
+            "hyperlink": {
+              "type": "boolean",
+              "default": false,
+              "description": "Make label clickable"
+            },
+            "horizontal_align": {
+              "$ref": "#/definitions/HorizontalAlignment"
+            },
+            "vertical_align": {
+              "$ref": "#/definitions/VerticalAlignment"
+            },
+            "font": {
+              "$ref": "#/definitions/FontProperties"
+            },
+            "events": {
+              "$ref": "#/definitions/ClickEvents"
+            },
+            "tooltip_representation": {
+              "$ref": "#/definitions/ToolTipRepresentation"
+            }
+          }
         }
-      }
+      ]
     },
     "PictureDecoration": {
-      "type": "object",
-      "required": [
-        "type",
-        "name"
-      ],
-      "properties": {
-        "type": {
-          "const": "PictureDecoration"
-        },
-        "name": {
-          "$ref": "#/definitions/Identifier"
-        },
-        "svg_source": {
-          "type": "string",
-          "pattern": "^.*\\.svg$",
-          "description": "Path to SVG file (relative to config.yaml). Will be converted to PNG."
-        },
-        "picture": {
-          "type": "string",
-          "pattern": "^(StdPicture|CommonPicture)\\.",
-          "description": "Standard 1C picture reference (StdPicture.* or CommonPicture.*)"
-        },
-        "width": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "DEPRECATED (v2.23.1+): Use svg_width instead. Backward compatibility: maps to svg_width (PNG output in pixels)."
-        },
-        "height": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "DEPRECATED (v2.23.1+): Use svg_height instead. Backward compatibility: maps to svg_height (PNG output in pixels)."
-        },
-        "svg_width": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "PNG output width in pixels (for SVG→PNG conversion). Replaces 'width' field (v2.23.1+)."
-        },
-        "svg_height": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "PNG output height in pixels (for SVG→PNG conversion). Replaces 'height' field (v2.23.1+)."
-        },
-        "form_width": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "Form display width in character units (NOT pixels!). New in v2.23.1. Optional - if not set, uses picture_size for auto-scaling."
-        },
-        "form_height": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "Form display height in row units (NOT pixels!). New in v2.23.1. Optional - if not set, uses picture_size for auto-scaling."
-        },
-        "alignment": {
-          "type": "string",
-          "enum": [
-            "Left",
-            "Center",
-            "Right"
+      "allOf": [
+        { "$ref": "#/definitions/VisibilityProperties" },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "name"
           ],
-          "description": "Horizontal alignment"
-        },
-        "hyperlink": {
-          "type": "boolean",
-          "description": "Make picture clickable"
-        },
-        "picture_size": {"$ref": "#/definitions/PictureSize"},
-        "zoomable": {
-          "type": "boolean",
-          "description": "Allow zoom on click"
-        }
-      },
-      "oneOf": [
-        {
-          "required": [
-            "svg_source"
-          ]
-        },
-        {
-          "required": [
-            "picture"
+          "properties": {
+            "type": {
+              "const": "PictureDecoration"
+            },
+            "name": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "svg_source": {
+              "type": "string",
+              "pattern": "^.*\\.svg$",
+              "description": "Path to SVG file (relative to config.yaml). Will be converted to PNG."
+            },
+            "picture": {
+              "type": "string",
+              "pattern": "^(StdPicture|CommonPicture)\\.",
+              "description": "Standard 1C picture reference (StdPicture.* or CommonPicture.*)"
+            },
+            "width": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "DEPRECATED (v2.23.1+): Use svg_width instead. Backward compatibility: maps to svg_width (PNG output in pixels)."
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "DEPRECATED (v2.23.1+): Use svg_height instead. Backward compatibility: maps to svg_height (PNG output in pixels)."
+            },
+            "svg_width": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "PNG output width in pixels (for SVG→PNG conversion). Replaces 'width' field (v2.23.1+)."
+            },
+            "svg_height": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "PNG output height in pixels (for SVG→PNG conversion). Replaces 'height' field (v2.23.1+)."
+            },
+            "form_width": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Form display width in character units (NOT pixels!). New in v2.23.1. Optional - if not set, uses picture_size for auto-scaling."
+            },
+            "form_height": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Form display height in row units (NOT pixels!). New in v2.23.1. Optional - if not set, uses picture_size for auto-scaling."
+            },
+            "alignment": {
+              "type": "string",
+              "enum": [
+                "Left",
+                "Center",
+                "Right"
+              ],
+              "description": "Horizontal alignment"
+            },
+            "hyperlink": {
+              "type": "boolean",
+              "description": "Make picture clickable"
+            },
+            "picture_size": {"$ref": "#/definitions/PictureSize"},
+            "zoomable": {
+              "type": "boolean",
+              "description": "Allow zoom on click"
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "svg_source"
+              ]
+            },
+            {
+              "required": [
+                "picture"
+              ]
+            }
           ]
         }
       ]
     },
     "PictureField": {
-      "type": "object",
-      "required": [
-        "type",
-        "name",
-        "attribute"
-      ],
-      "properties": {
-        "type": {
-          "const": "PictureField"
-        },
-        "name": {
-          "$ref": "#/definitions/Identifier"
-        },
-        "attribute": {
-          "type": "string",
-          "description": "Reference to binary_data attribute"
-        },
-        "width": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "Field width in character units"
-        },
-        "height": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "Field height in row units"
-        },
-        "title_location": {"$ref": "#/definitions/TitleLocation"},
-        "picture_size": {"$ref": "#/definitions/PictureSize"},
-        "zoomable": {
-          "type": "boolean",
-          "description": "Allow zoom on click"
-        },
-        "events": {
+      "allOf": [
+        { "$ref": "#/definitions/VisibilityProperties" },
+        {
           "type": "object",
+          "required": [
+            "type",
+            "name",
+            "attribute"
+          ],
           "properties": {
-            "Click": {
-              "type": "string"
+            "type": {
+              "const": "PictureField"
             },
-            "OnChange": {
-              "type": "string"
+            "name": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "attribute": {
+              "type": "string",
+              "description": "Reference to binary_data attribute"
+            },
+            "width": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Field width in character units"
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Field height in row units"
+            },
+            "title_location": {"$ref": "#/definitions/TitleLocation"},
+            "picture_size": {"$ref": "#/definitions/PictureSize"},
+            "zoomable": {
+              "type": "boolean",
+              "description": "Allow zoom on click"
+            },
+            "events": {
+              "type": "object",
+              "properties": {
+                "Click": {
+                  "type": "string"
+                },
+                "OnChange": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "description": "Picture field element for displaying binary data (v2.36.0+ Phase 2)"
+        }
+      ]
+    },
+    "Table": {
+      "allOf": [
+        { "$ref": "#/definitions/VisibilityProperties" },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "name",
+            "tabular_section"
+          ],
+          "properties": {
+            "type": {
+              "const": "Table"
+            },
+            "name": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "tabular_section": {
+              "type": "string",
+              "description": "Reference to tabular_section, value_table, or value_tree"
+            },
+            "is_value_table": {
+              "type": "boolean",
+              "default": false
+            },
+            "is_dynamic_list": {
+              "type": "boolean",
+              "default": false,
+              "description": "Reference to dynamic_list attribute"
+            },
+            "read_only": {
+              "type": "boolean",
+              "default": false,
+              "description": "Table is read-only"
+            },
+            "representation": {
+              "type": "string",
+              "enum": ["list", "tree"],
+              "default": "list",
+              "description": "Table display mode: list (flat) or tree (hierarchical) (v2.64.0+)"
+            },
+            "initial_tree_view": {
+              "type": "string",
+              "enum": ["no_expand", "expand_top_level", "expand_all_levels"],
+              "description": "Initial tree expansion state (v2.64.0+)"
+            },
+            "show_root": {
+              "type": "boolean",
+              "description": "Show root element in tree (v2.64.0+)"
+            },
+            "allow_root_choice": {
+              "type": "boolean",
+              "description": "Allow selecting root element (v2.64.0+)"
+            },
+            "choice_folders_and_items": {
+              "type": "string",
+              "enum": ["folders", "items", "folders_and_items"],
+              "description": "What can be selected in tree (v2.64.0+)"
+            },
+            "events": {
+              "$ref": "#/definitions/TableEvents"
+            },
+            "tooltip_representation": {
+              "$ref": "#/definitions/ToolTipRepresentation"
+            },
+            "search_string_location": {
+              "type": "string",
+              "enum": ["None", "CommandBar"],
+              "description": "Search bar position: None (hidden), CommandBar (in toolbar) (v2.71.2+)"
+            },
+            "row_picture_data_path": {
+              "type": "string",
+              "description": "DataPath to column containing row icon (e.g. TableName.IconColumn) (v2.71.2+)"
+            },
+            "selection_mode": {
+              "type": "string",
+              "enum": ["SingleRow", "MultiRow"],
+              "description": "Row selection mode: SingleRow (one row), MultiRow (multiple rows) (v2.71.2+)"
             }
           }
         }
-      },
-      "description": "Picture field element for displaying binary data (v2.36.0+ Phase 2)"
-    },
-    "Table": {
-      "type": "object",
-      "required": [
-        "type",
-        "name",
-        "tabular_section"
-      ],
-      "properties": {
-        "type": {
-          "const": "Table"
-        },
-        "name": {
-          "$ref": "#/definitions/Identifier"
-        },
-        "tabular_section": {
-          "type": "string",
-          "description": "Reference to tabular_section, value_table, or value_tree"
-        },
-        "is_value_table": {
-          "type": "boolean",
-          "default": false
-        },
-        "is_dynamic_list": {
-          "type": "boolean",
-          "default": false,
-          "description": "Reference to dynamic_list attribute"
-        },
-        "read_only": {
-          "type": "boolean",
-          "default": false,
-          "description": "Table is read-only"
-        },
-        "representation": {
-          "type": "string",
-          "enum": ["list", "tree"],
-          "default": "list",
-          "description": "Table display mode: list (flat) or tree (hierarchical) (v2.64.0+)"
-        },
-        "initial_tree_view": {
-          "type": "string",
-          "enum": ["no_expand", "expand_top_level", "expand_all_levels"],
-          "description": "Initial tree expansion state (v2.64.0+)"
-        },
-        "show_root": {
-          "type": "boolean",
-          "description": "Show root element in tree (v2.64.0+)"
-        },
-        "allow_root_choice": {
-          "type": "boolean",
-          "description": "Allow selecting root element (v2.64.0+)"
-        },
-        "choice_folders_and_items": {
-          "type": "string",
-          "enum": ["folders", "items", "folders_and_items"],
-          "description": "What can be selected in tree (v2.64.0+)"
-        },
-        "events": {
-          "$ref": "#/definitions/TableEvents"
-        },
-        "tooltip_representation": {
-          "$ref": "#/definitions/ToolTipRepresentation"
-        },
-        "search_string_location": {
-          "type": "string",
-          "enum": ["None", "CommandBar"],
-          "description": "Search bar position: None (hidden), CommandBar (in toolbar) (v2.71.2+)"
-        },
-        "row_picture_data_path": {
-          "type": "string",
-          "description": "DataPath to column containing row icon (e.g. TableName.IconColumn) (v2.71.2+)"
-        },
-        "selection_mode": {
-          "type": "string",
-          "enum": ["SingleRow", "MultiRow"],
-          "description": "Row selection mode: SingleRow (one row), MultiRow (multiple rows) (v2.71.2+)"
-        }
-      }
+      ]
     },
     "Button": {
-      "type": "object",
-      "required": [
-        "type",
-        "name",
-        "command"
-      ],
-      "properties": {
-        "type": {
-          "const": "Button"
-        },
-        "name": {
-          "$ref": "#/definitions/Identifier"
-        },
-        "command": {
-          "type": "string",
-          "description": "Reference to command name"
-        },
-        "width": {
-          "type": "integer",
-          "description": "Button width in character units"
-        },
-        "representation": {
-          "type": "string",
-          "enum": [
-            "Text",
-            "Picture",
-            "PictureAndText",
-            "TextPicture"
-          ]
-        },
-        "horizontal_align": {
-          "$ref": "#/definitions/HorizontalAlignment"
-        },
-        "vertical_align": {
-          "$ref": "#/definitions/VerticalAlignment"
-        },
-        "tooltip_representation": {
-          "$ref": "#/definitions/ToolTipRepresentation"
-        },
-        "default_button": {
-          "type": "boolean",
-          "description": "Mark as default button (activated on Enter) (v2.71.1+)"
-        },
-        "shape_representation": {
-          "type": "string",
-          "enum": ["Auto", "None", "WhenActive", "Always"],
-          "description": "Button visual style: Auto (default), None (flat), WhenActive (on hover), Always (always visible) (v2.71.3+)"
+      "allOf": [
+        { "$ref": "#/definitions/VisibilityProperties" },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "name",
+            "command"
+          ],
+          "properties": {
+            "type": {
+              "const": "Button"
+            },
+            "name": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "command": {
+              "type": "string",
+              "description": "Reference to command name"
+            },
+            "width": {
+              "type": "integer",
+              "description": "Button width in character units"
+            },
+            "representation": {
+              "type": "string",
+              "enum": [
+                "Text",
+                "Picture",
+                "PictureAndText",
+                "TextPicture"
+              ]
+            },
+            "horizontal_align": {
+              "$ref": "#/definitions/HorizontalAlignment"
+            },
+            "vertical_align": {
+              "$ref": "#/definitions/VerticalAlignment"
+            },
+            "tooltip_representation": {
+              "$ref": "#/definitions/ToolTipRepresentation"
+            },
+            "default_button": {
+              "type": "boolean",
+              "description": "Mark as default button (activated on Enter) (v2.71.1+)"
+            },
+            "shape_representation": {
+              "type": "string",
+              "enum": ["Auto", "None", "WhenActive", "Always"],
+              "description": "Button visual style: Auto (default), None (flat), WhenActive (on hover), Always (always visible) (v2.71.3+)"
+            }
+          }
         }
-      }
+      ]
     },
     "UsualGroup": {
-      "type": "object",
-      "required": [
-        "type",
-        "name"
-      ],
-      "properties": {
-        "type": {
-          "const": "UsualGroup"
-        },
-        "name": {
-          "$ref": "#/definitions/Identifier"
-        },
-        "title": {
-          "$ref": "#/definitions/LocalizedString"
-        },
-        "show_title": {
-          "type": "boolean",
-          "default": false
-        },
-        "group_direction": {
-          "type": "string",
-          "enum": [
-            "Vertical",
-            "Horizontal"
+      "allOf": [
+        { "$ref": "#/definitions/VisibilityProperties" },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "name"
           ],
-          "default": "Vertical"
-        },
-        "representation": {
-          "type": "string",
-          "enum": [
-            "None",
-            "NormalSeparation",
-            "WeakSeparation",
-            "StrongSeparation"
-          ],
-          "default": "None"
-        },
-        "behavior": {
-          "type": "string",
-          "enum": [
-            "Usual",
-            "Collapsible"
-          ]
-        },
-        "read_only": {
-          "type": "boolean",
-          "default": false,
-          "description": "Group is read-only"
-        },
-        "child_items": {
-          "type": "array",
-          "description": "Nested form elements",
-          "items": {
-            "type": "object"
+          "properties": {
+            "type": {
+              "const": "UsualGroup"
+            },
+            "name": {
+              "$ref": "#/definitions/Identifier"
+            },
+            "title": {
+              "$ref": "#/definitions/LocalizedString"
+            },
+            "show_title": {
+              "type": "boolean",
+              "default": false
+            },
+            "group_direction": {
+              "type": "string",
+              "enum": [
+                "Vertical",
+                "Horizontal"
+              ],
+              "default": "Vertical"
+            },
+            "representation": {
+              "type": "string",
+              "enum": [
+                "None",
+                "NormalSeparation",
+                "WeakSeparation",
+                "StrongSeparation"
+              ],
+              "default": "None"
+            },
+            "behavior": {
+              "type": "string",
+              "enum": [
+                "Usual",
+                "Collapsible"
+              ]
+            },
+            "read_only": {
+              "type": "boolean",
+              "default": false,
+              "description": "Group is read-only"
+            },
+            "child_items": {
+              "type": "array",
+              "description": "Nested form elements",
+              "items": {
+                "type": "object"
+              }
+            },
+            "tooltip_representation": {
+              "$ref": "#/definitions/ToolTipRepresentation"
+            },
+            "elements": {
+              "$ref": "#/definitions/FormElementsList"
+            }
           }
-        },
-        "tooltip_representation": {
-          "$ref": "#/definitions/ToolTipRepresentation"
         }
-      }
+      ]
     },
     "ColumnGroup": {
       "type": "object",

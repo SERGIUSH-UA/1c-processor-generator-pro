@@ -27,6 +27,7 @@
 
 		</LabelDecoration>
 		<Pages name="СекцииНастроек" id="4">
+
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -41,6 +42,7 @@
 			<ExtendedTooltip name="СекцииНастроекРасширеннаяПодсказка" id="5"/>
 			<ChildItems>
 				<Page name="СтраницаОбщиеНастройки" id="6">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -319,6 +321,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="СтраницаФильтрыПоУмолчанию" id="27">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
@@ -340,7 +343,6 @@
 						<ChildItems>
 							<CheckBoxField name="ФлажокПоказыватьЗакрытыеНастройка" id="31">
 								<DataPath>Объект.ПоказыватьЗакрытые</DataPath>
-
 								<TitleLocation>Right</TitleLocation>
 								<CheckBoxType>Auto</CheckBoxType>
 								<ContextMenu name="ФлажокПоказыватьЗакрытыеНастройкаКонтекстноеМеню" id="32"/>
@@ -349,7 +351,6 @@
 							</CheckBoxField>
 							<CheckBoxField name="ФлажокПоказыватьАрхивныеНастройка" id="34">
 								<DataPath>Объект.ПоказыватьАрхивные</DataPath>
-
 								<TitleLocation>Right</TitleLocation>
 								<CheckBoxType>Auto</CheckBoxType>
 								<ContextMenu name="ФлажокПоказыватьАрхивныеНастройкаКонтекстноеМеню" id="35"/>
@@ -358,7 +359,6 @@
 							</CheckBoxField>
 							<CheckBoxField name="ФлажокГруппировкаПоПроектамНастройка" id="37">
 								<DataPath>Объект.ГруппировкаПоПроектам</DataPath>
-
 								<TitleLocation>Right</TitleLocation>
 								<CheckBoxType>Auto</CheckBoxType>
 								<ContextMenu name="ФлажокГруппировкаПоПроектамНастройкаКонтекстноеМеню" id="38"/>
@@ -543,6 +543,7 @@
 					</ChildItems>
 				</Page>
 				<Page name="СтраницаЭкспортИмпорт" id="49">
+
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
