@@ -111,11 +111,80 @@ def cmd_example(args):
     return generate_processor(args, processor)
 
 
+def _cloud_compile(args):
+                                                            
+    print(f"☁️  Хмарна компіляція EPF: {args.config}...")
+
+                                                      
+    mgr = get_license_manager()
+    is_licensed, error_msg = mgr.check_pro_feature("cloud_compilation")
+    if not is_licensed:
+        print(f"\n{error_msg}")
+        return 1
+
+                                                 
+    try:
+        from .pro.cloud_compiler import CloudCompiler
+    except ImportError:
+        try:
+            from pro.cloud_compiler import CloudCompiler
+        except ImportError:
+            print("❌ Модуль cloud_compiler недоступний")
+            return 1
+
+    compiler = CloudCompiler(mgr)
+
+                  
+    print("   Перевірка доступності хмарного сервісу...")
+    if not compiler.check_available():
+        print("❌ Хмарний сервіс недоступний. Спробуйте пізніше")
+        return 1
+
+                        
+    version_info = compiler.get_version()
+    if version_info:
+        cloud_ver = version_info.get("version", "?")
+        print(f"   Версія хмарного генератора: {cloud_ver}")
+
+             
+    output_dir = args.output or Path.cwd() / "tmp"
+    success, messages, errors = compiler.compile(
+        config_path=args.config,
+        handlers_file=getattr(args, 'handlers_file', None),
+        handlers_dir=getattr(args, 'handlers', None),
+        output_dir=output_dir,
+        ignore_validation_errors=getattr(args, 'ignore_validation_errors', False),
+    )
+
+                  
+    for msg in messages:
+        print(f"   {msg}")
+
+    if errors:
+        for err in errors:
+            print(f"❌ {err}")
+
+    if success:
+        print(f"\n🎉 Хмарна компіляція завершена успішно!")
+    else:
+        print(f"\n❌ Помилка хмарної компіляції")
+        return 1
+
+    return 0
+
+
 def cmd_yaml(args):
                                                        
     if not args.config.exists():
         print(f"❌ Помилка: Файл не знайдено: {args.config}")
         sys.exit(1)
+
+                                                                                  
+    if getattr(args, 'cloud', False):
+        if args.output_format != "epf":
+            print("❌ --cloud потребує --output-format epf")
+            sys.exit(1)
+        return _cloud_compile(args)
 
     print(f"🚀 Генерація обробки з YAML: {args.config}...")
 
@@ -706,6 +775,7 @@ def compile_to_epf(args, processor, processor_root, output_dir, generator):
         print("❌ Компілятор не знайдено!")
         print("   Перевірте системні вимоги або вкажіть шлях через --compiler-path")
         print("   Альтернатива: використайте --output-format xml та скомпілюйте вручну")
+        print("   Альтернатива: --cloud для хмарної компіляції (потребує PRO ліцензію)")
         sys.exit(1)
 
     xml_root = processor_root / f"{processor.name}.xml"
@@ -1019,6 +1089,8 @@ def create_parser():
                             help="Ігнорувати помилки BSL валідації під час компіляції (за замовчуванням зупиняється при помилках, v2.12.0+)")
     parser_yaml.add_argument("--normalize-bsl-escapes", action="store_true",
                             help="Нормалізувати escape-послідовності (\\n→newline) в BSL запитах (v2.72.0+)")
+    parser_yaml.add_argument("--cloud", action="store_true",
+                            help="Компілювати EPF через хмарний сервіс (потребує PRO ліцензію з cloud_compilation)")
     parser_yaml.add_argument("--dry-run", action="store_true", help="Перевірка без створення файлів")
     parser_yaml.set_defaults(func=cmd_yaml)
 

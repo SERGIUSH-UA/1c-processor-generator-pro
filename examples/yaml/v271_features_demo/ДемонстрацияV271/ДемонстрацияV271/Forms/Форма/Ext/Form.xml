@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcssch="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:mxl="http://v8.1c.ru/8.2/data/spreadsheet" xmlns:pl="http://v8.1c.ru/8.3/data/planner" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.11">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+	</AutoCommandBar>
+	<ChildItems>
+		<UsualGroup name="ГруппаПоляВвода" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>1. InputField Button Controls (v2.71.0)</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+
+			<ExtendedTooltip name="ГруппаПоляВводаРасширеннаяПодсказка" id="2"/>
+			<ChildItems>
+				<InputField name="СуммаПоле" id="3">
+					<DataPath>Объект.Сумма</DataPath>
+					<Width>20</Width>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Сумма (mark_negatives: true)</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="СуммаПолеКонтекстноеМеню" id="4"/>
+					<ExtendedTooltip name="СуммаПолеРасширеннаяПодсказка" id="5"/>
+
+				</InputField>
+				<InputField name="КонтрагентПоле" id="6">
+					<DataPath>Объект.Контрагент</DataPath>
+					<Width>40</Width>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Контрагент (open, create, clear buttons)</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+
+					<OpenButton>true</OpenButton>
+					<ClearButton>true</ClearButton>
+					<CreateButton>true</CreateButton>
+					<ContextMenu name="КонтрагентПолеКонтекстноеМеню" id="7"/>
+					<ExtendedTooltip name="КонтрагентПолеРасширеннаяПодсказка" id="8"/>
+
+				</InputField>
+				<InputField name="КоличествоПоле" id="9">
+					<DataPath>Объект.Количество</DataPath>
+					<Width>15</Width>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Количество (spin_button: true)</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+
+					<SpinButton>true</SpinButton>
+					<ContextMenu name="КоличествоПолеКонтекстноеМеню" id="10"/>
+					<ExtendedTooltip name="КоличествоПолеРасширеннаяПодсказка" id="11"/>
+
+				</InputField>
+				<InputField name="СтатусПоле" id="12">
+					<DataPath>Объект.Статус</DataPath>
+					<Width>25</Width>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус (drop_list_button: true)</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+
+					<DropListButton>true</DropListButton>
+					<ChoiceList>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Новый</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Новий</v8:content>
+									</v8:item>
+								</Presentation>
+								<Value xsi:type="xs:string">Новый</Value>
+							</xr:Value>
+						</xr:Item>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>В работе</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>В роботі</v8:content>
+									</v8:item>
+								</Presentation>
+								<Value xsi:type="xs:string">В работе</Value>
+							</xr:Value>
+						</xr:Item>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Завершен</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Завершено</v8:content>
+									</v8:item>
+								</Presentation>
+								<Value xsi:type="xs:string">Завершен</Value>
+							</xr:Value>
+						</xr:Item>
+					</ChoiceList>
+					<ListChoiceMode>true</ListChoiceMode>
+					<ContextMenu name="СтатусПолеКонтекстноеМеню" id="13"/>
+					<ExtendedTooltip name="СтатусПолеРасширеннаяПодсказка" id="14"/>
+
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаОбязательные" id="15">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>2. AutoMarkIncomplete (v2.71.1)</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+
+			<ExtendedTooltip name="ГруппаОбязательныеРасширеннаяПодсказка" id="16"/>
+			<ChildItems>
+				<InputField name="НаименованиеПоле" id="17">
+					<DataPath>Объект.Наименование</DataPath>
+					<Width>50</Width>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Наименование (auto_mark_incomplete: true)</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+
+					<AutoMarkIncomplete>true</AutoMarkIncomplete>
+					<ContextMenu name="НаименованиеПолеКонтекстноеМеню" id="18"/>
+					<ExtendedTooltip name="НаименованиеПолеРасширеннаяПодсказка" id="19"/>
+
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаТаблица" id="20">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>3. Table Properties (v2.71.2)</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+
+			<ExtendedTooltip name="ГруппаТаблицаРасширеннаяПодсказка" id="21"/>
+			<ChildItems>
+				<Table name="ТоварыТаблица" id="22">
+
+					<Representation>List</Representation>
+					<AutoInsertNewRow>true</AutoInsertNewRow>
+					<EnableStartDrag>true</EnableStartDrag>
+					<EnableDrag>true</EnableDrag>
+					<Height>8</Height>
+					<HorizontalStretch>true</HorizontalStretch>
+					<SearchStringLocation>CommandBar</SearchStringLocation>
+					<SelectionMode>MultiRow</SelectionMode>
+					<DataPath>Объект.Товары</DataPath>
+					<RowFilter xsi:nil="true"/>
+					<ContextMenu name="ТоварыТаблицаКонтекстноеМеню" id="23"/>
+					<AutoCommandBar name="ТоварыТаблицаКоманднаяПанель" id="24"/>
+					<ExtendedTooltip name="ТоварыТаблицаРасширеннаяПодсказка" id="25"/>
+
+					<ChildItems>
+						<LabelField name="ТоварыТаблицаНомерСтроки" id="26">
+							<DataPath>Объект.Товары.LineNumber</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ТоварыТаблицаНомерСтрокиКонтекстноеМеню" id="27"/>
+							<ExtendedTooltip name="ТоварыТаблицаНомерСтрокиРасширеннаяПодсказка" id="28"/>
+						</LabelField>
+						<InputField name="ТоварыТаблицаНоменклатура" id="29">
+							<DataPath>Объект.Товары.Номенклатура</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ТоварыТаблицаНоменклатураКонтекстноеМеню" id="30"/>
+							<ExtendedTooltip name="ТоварыТаблицаНоменклатураРасширеннаяПодсказка" id="31"/>
+						</InputField>
+						<InputField name="ТоварыТаблицаКоличество" id="32">
+							<DataPath>Объект.Товары.Количество</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ТоварыТаблицаКоличествоКонтекстноеМеню" id="33"/>
+							<ExtendedTooltip name="ТоварыТаблицаКоличествоРасширеннаяПодсказка" id="34"/>
+						</InputField>
+						<InputField name="ТоварыТаблицаЦена" id="35">
+							<DataPath>Объект.Товары.Цена</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ТоварыТаблицаЦенаКонтекстноеМеню" id="36"/>
+							<ExtendedTooltip name="ТоварыТаблицаЦенаРасширеннаяПодсказка" id="37"/>
+						</InputField>
+						<InputField name="ТоварыТаблицаСумма" id="38">
+							<DataPath>Объект.Товары.Сумма</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ТоварыТаблицаСуммаКонтекстноеМеню" id="39"/>
+							<ExtendedTooltip name="ТоварыТаблицаСуммаРасширеннаяПодсказка" id="40"/>
+						</InputField>
+					</ChildItems>
+				</Table>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаКнопки" id="41">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>4. Button Properties (v2.71.1 + v2.71.3)</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+
+			<ExtendedTooltip name="ГруппаКнопкиРасширеннаяПодсказка" id="42"/>
+			<ChildItems>
+				<Button name="ОККнопка" id="43">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ВыполнитьОК</CommandName>
+
+					<DefaultButton>true</DefaultButton>
+					<ShapeRepresentation>Always</ShapeRepresentation>
+					<ExtendedTooltip name="ОККнопкаExtendedTooltip" id="44"/>
+				</Button>
+				<Button name="ОтменаКнопка" id="45">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.Отмена</CommandName>
+
+					<ShapeRepresentation>WhenActive</ShapeRepresentation>
+					<ExtendedTooltip name="ОтменаКнопкаExtendedTooltip" id="46"/>
+				</Button>
+				<Button name="ПлоскаяКнопка" id="47">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ПлоскоеДействие</CommandName>
+
+					<ShapeRepresentation>None</ShapeRepresentation>
+					<ExtendedTooltip name="ПлоскаяКнопкаExtendedTooltip" id="48"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>ExternalDataProcessorObject.ДемонстрацияV271</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ВыполнитьОК" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>OK (default_button + Always)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ВыполнитьОК</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ВыполнитьОК</Action>
+		</Command>
+		<Command name="Отмена" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена (WhenActive)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+			</Title>
+			<Action>Отмена</Action>
+		</Command>
+		<Command name="ПлоскоеДействие" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Плоская (None)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ПлоскоеДействие</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ПлоскоеДействие</Action>
+		</Command>
+	</Commands>
+</Form>
