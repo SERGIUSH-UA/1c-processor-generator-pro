@@ -316,6 +316,9 @@ BSL_RESERVED_KEYWORDS = {
 
                          
     "Перейти", "Goto",
+
+                                                                       
+    "Найти", "Find",                                             
 }
 
                                                                     

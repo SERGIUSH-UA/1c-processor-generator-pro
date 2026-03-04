@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "version": "2.45.0",
+  "version": "2.76.0",
   "generated": "2025-12-03T13:53:15.985697",
   "description": "Machine-readable feature registry for 1C Processor Generator. For AI agents: use this file for programmatic feature discovery.",
   "categories": {
@@ -436,16 +436,30 @@
             "--handlers: Directory with handler files",
             "--output: Output directory",
             "--output-format: xml or epf (default: xml)",
+            "--cloud: Cloud EPF compilation via gen.itdeo.tech (PRO, v2.75.0+)",
             "--validate: Validate EPF after generation",
-            "--dry-run: Validate without creating files"
+            "--dry-run: Validate without creating files",
+            "--ignore-validation-errors: Skip validation errors (force compilation)"
           ]
         }
       ]
     },
     "tools": {
       "description": "Built-in tooling capabilities",
-      "count": 7,
+      "count": 8,
       "items": [
+        {
+          "name": "Cloud Compiler",
+          "description": "Remote EPF compilation via cloud service (no local Designer needed)",
+          "docs": "CLAUDE.md#commands",
+          "since": "2.75.0",
+          "capabilities": [
+            "Cloud EPF compilation via gen.itdeo.tech",
+            "Local pre-validation before cloud send (v2.76.0+)",
+            "Local XML generation alongside cloud EPF (v2.76.0+)",
+            "Structured cloud error display (v2.76.0+)"
+          ]
+        },
         {
           "name": "Sync",
           "description": "Bidirectional YAML+BSL <-> EPF/XML synchronization",

@@ -132,10 +132,62 @@ def _cloud_compile(args):
             print("❌ Модуль cloud_compiler недоступний")
             return 1
 
+    ignore_validation_errors = getattr(args, 'ignore_validation_errors', False)
+
+                                                           
+                                                                         
+    print("   Локальний парсинг YAML+BSL...")
+    processor = parse_yaml_config(
+        args.config,
+        handlers_dir=args.handlers,
+        handlers_file=args.handlers_file,
+        normalize_bsl_escapes=getattr(args, 'normalize_bsl_escapes', False)
+    )
+    if not processor:
+        print("❌ Помилка парсингу YAML")
+        return 1
+
+                                                         
+    try:
+        from .validators import ProcessorValidator
+    except ImportError:
+        from validators import ProcessorValidator
+
+    print("🔍 Валідація BSL коду та структури обробки...")
+    validator = ProcessorValidator(processor)
+    is_valid, val_errors, val_warnings = validator.validate()
+
+    if val_warnings:
+        print(f"\n⚠️  Попередження: {len(val_warnings)}")
+        for w in val_warnings:
+            print(f"   ⚠️  {w}")
+
+    if not is_valid:
+        print(f"\n❌ Помилки валідації: {len(val_errors)}")
+        for e in val_errors:
+            print(f"   ❌ {e}")
+        if not ignore_validation_errors:
+            print("\n💡 Use --ignore-validation-errors to force compilation")
+            return 1
+        print("\n⚠️  Продовження попри помилки (--ignore-validation-errors)")
+    else:
+        print("✅ Валідація пройдена успішно")
+
+                                                                             
+    output_dir = args.output or Path.cwd() / "tmp"
+    print(f"\n📁 Генерація локального XML: {output_dir}")
+    generator = ProcessorGenerator(processor)
+    processor_root = generator.generate(str(output_dir))
+    if processor_root:
+        print(f"   ✅ XML згенеровано локально")
+    else:
+        print(f"   ⚠️  Помилка локальної генерації XML (продовжую хмарну компіляцію)")
+
+                       
     compiler = CloudCompiler(mgr)
 
                   
-    print("   Перевірка доступності хмарного сервісу...")
+    print("\n   Перевірка доступності хмарного сервісу...")
     if not compiler.check_available():
         print("❌ Хмарний сервіс недоступний. Спробуйте пізніше")
         return 1
@@ -147,13 +199,12 @@ def _cloud_compile(args):
         print(f"   Версія хмарного генератора: {cloud_ver}")
 
              
-    output_dir = args.output or Path.cwd() / "tmp"
     success, messages, errors = compiler.compile(
         config_path=args.config,
         handlers_file=getattr(args, 'handlers_file', None),
         handlers_dir=getattr(args, 'handlers', None),
         output_dir=output_dir,
-        ignore_validation_errors=getattr(args, 'ignore_validation_errors', False),
+        ignore_validation_errors=ignore_validation_errors,
     )
 
                   
@@ -161,8 +212,17 @@ def _cloud_compile(args):
         print(f"   {msg}")
 
     if errors:
+        print(f"\n❌ Помилки хмарної компіляції: {len(errors)}")
         for err in errors:
-            print(f"❌ {err}")
+                                                                                  
+            if isinstance(err, dict):
+                module = err.get('module', '?')
+                line = err.get('line', '')
+                message = err.get('message', str(err))
+                line_info = f":{line}" if line else ""
+                print(f"   ❌ {module}{line_info}: {message}")
+            else:
+                print(f"   ❌ {err}")
 
     if success:
         print(f"\n🎉 Хмарна компіляція завершена успішно!")

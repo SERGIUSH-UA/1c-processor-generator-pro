@@ -809,11 +809,30 @@ forms:
 Сообщить("Поле1 = " + Объект.Поле1);
 ```
 
-**Generate:**
+**Generate XML:**
 ```bash
 python -m 1c_processor_generator yaml \
   --config processors/МояОбробка/config.yaml \
   --handlers-file processors/МояОбробка/handlers.bsl
+```
+
+**Generate EPF (local Designer):**
+```bash
+python -m 1c_processor_generator yaml \
+  --config config.yaml \
+  --handlers-file handlers.bsl \
+  --output output_dir \
+  --output-format epf
+```
+
+**Generate EPF (cloud, no Designer needed, PRO):**
+```bash
+python -m 1c_processor_generator yaml \
+  --config config.yaml \
+  --handlers-file handlers.bsl \
+  --output output_dir \
+  --output-format epf \
+  --cloud
 ```
 
 ---
@@ -870,7 +889,8 @@ forms:
 
 **For full documentation:** See YAML_GUIDE.md, LLM_PROMPT.md
 
-**Version:** 2.70.4 (2026-01-05)
+**Version:** 2.76.0 (2026-03-04)
+**New in 2.76.0:** Cloud Pre-Validation - local YAML+BSL validation before cloud send, local XML generation for `--cloud`, structured cloud error display
 **New in 2.64.0:** ValueTree Support - hierarchical data visualization (tree representation for Table, value_trees section, tree-specific properties: representation, initial_tree_view, show_root, allow_root_choice, choice_folders_and_items)
 **New in 2.46.0:** Page Element Refactoring - eliminated technical debt, Page now uses FormElement, DRY compliance improvements
 **New in 2.43.0:** InputField Styling - colors (title_text_color, text_color, back_color, border_color) and fonts (title_font, font with faceName, scale)
