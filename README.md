@@ -10,13 +10,13 @@
 
 <br>
 
-<a href="https://github.com/SERGIUSH-UA/1c-processor-generator">
+<a href="https://github.com/SERGIUSH-UA/1c-processor-generator-ce">
   <img src="https://img.shields.io/badge/Go_to_Community_Edition-Open_Source-brightgreen?style=for-the-badge&logo=github" alt="Community Edition">
 </a>
 
 <br><br>
 
-**[github.com/SERGIUSH-UA/1c-processor-generator](https://github.com/SERGIUSH-UA/1c-processor-generator)**
+**[github.com/SERGIUSH-UA/1c-processor-generator-ce](https://github.com/SERGIUSH-UA/1c-processor-generator-ce)**
 
 <br>
 
@@ -46,7 +46,7 @@ Everything else is free and open-source.
 
 ---
 
-*This repository is archived. All future development happens in the [Community Edition](https://github.com/SERGIUSH-UA/1c-processor-generator).*
+*This repository is archived. All future development happens in the [Community Edition](https://github.com/SERGIUSH-UA/1c-processor-generator-ce).*
 
 Made with love by [SERGIUSH](https://github.com/SERGIUSH-UA)
 
